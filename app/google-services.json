@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "391157926108",
+    "firebase_url": "https://memoryroadapp.firebaseio.com",
+    "project_id": "memoryroadapp",
+    "storage_bucket": "memoryroadapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:391157926108:android:3b010103d3ba73b81e8c19",
+        "android_client_info": {
+          "package_name": "com.example.memoryroadapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "391157926108-qvdo1f80tejrdiolhlbta5nkdctpqv72.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-tXcVg2tqPiY_vQxcZAp5Ukpvvg63Ow0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "391157926108-qvdo1f80tejrdiolhlbta5nkdctpqv72.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

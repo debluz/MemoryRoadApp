@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">MemoryRoadApp</string>
+    <string name="sign_in_button">Sign In</string>
+    <string name="sign_up_button">Sign Up</string>
+    <string name="hint_email">email</string>
+    <string name="hint_password">password</string>
+    <string name="hint_first_name">first name</string>
+    <string name="hint_last_name">last name</string>
+    <string name="sign_out_button">Sign Out</string>
+</resources>
