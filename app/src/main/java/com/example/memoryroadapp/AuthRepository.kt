@@ -8,6 +8,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthCredential
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.toObject
+import io.grpc.LoadBalancer
 
 class AuthRepository {
     private val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
@@ -15,15 +17,28 @@ class AuthRepository {
     private val usersRef: CollectionReference = rootRef.collection(Constants.USERS)
 
     fun firebaseSignInWithEmail(email: String, password: String): MutableLiveData<User>{
-        val authenticatedUser = MutableLiveData<User>()
+        val authenticatedUserMutableLiveData = MutableLiveData<User>()
         firebaseAuth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener {authTask ->
                 if(authTask.isSuccessful){
-                    val firebaseUser = firebaseAuth.currentUser
-
+                    HelperClass.logErrorMessage("firebaseSignInWithEmail: success")
+                    var uid = firebaseAuth.currentUser!!.uid
+                    val uidRef = usersRef.document(uid)
+                    uidRef.get()
+                        .addOnSuccessListener {foundUser ->
+                            if(foundUser != null){
+                                val user = foundUser.toObject<User>()
+                                authenticatedUserMutableLiveData.value = user
+                                HelperClass.logErrorMessage("firebaseSignInWithEmail: 1")
+                            } else {
+                                HelperClass.logErrorMessage("firebaseSignInWithEmail: 2")
+                            }
+                        }
+                } else {
+                    HelperClass.logErrorMessage(authTask.exception?.message)
                 }
             }
-        return authenticatedUser
+        return authenticatedUserMutableLiveData
     }
 
     fun firebaseSignInWithGoogle(googleAuthCredential: AuthCredential): MutableLiveData<User> {

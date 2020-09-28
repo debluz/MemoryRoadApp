@@ -3,12 +3,10 @@ package com.example.memoryroadapp
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
@@ -27,19 +25,14 @@ class AuthActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        initSignInButton()
+        //Google authentication
+        initGoogleSignInButton()
         initAuthViewModel()
         initGoogleSignInClient()
 
+        //Email authentication
+        initSignInButton()
 
-
-
-        //Sign in by email and password , custom
-        sign_in_button.setOnClickListener {
-            val email = email_edit_text_login.text.toString()
-            val password = password_edit_text_login.text.toString()
-            signInByEmail(email, password)
-        }
 
         sign_up_button_login.setOnClickListener {
             val intent = Intent(this, SignUpActivity::class.java)
@@ -51,7 +44,15 @@ class AuthActivity : AppCompatActivity() {
 
     }
 
-    private fun initSignInButton() {
+    private fun initSignInButton(){
+        sign_in_button.setOnClickListener {
+            val email = email_edit_text_login.text.toString()
+            val password = password_edit_text_login.text.toString()
+            signInWithEmail(email, password)
+        }
+    }
+
+    private fun initGoogleSignInButton() {
         google_sign_in_button.setOnClickListener {
             signInWithGoogle()
         }
@@ -67,14 +68,12 @@ class AuthActivity : AppCompatActivity() {
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
-
         googleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions)
     }
 
     private fun signInWithGoogle(){
         val signInIntent = googleSignInClient.signInIntent
         startActivityForResult(signInIntent, Constants.RC_SING_IN)
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -138,8 +137,16 @@ class AuthActivity : AppCompatActivity() {
             }
     }*/
 
+    private fun signInWithEmail(email: String, password: String){
+        authViewModel.signInWithEmail(email, password)
+        authViewModel.authenticatedUserLiveData.observe(this, Observer { user ->
+            Toast.makeText(this, "Hi ${user.name}! You've been successfully logged in!", Toast.LENGTH_SHORT).show()
+            goToMainActivity()
+        })
+    }
 
-    private fun signInByEmail(email: String, password: String){
+
+    /*private fun signInByEmail(email: String, password: String){
         firebaseAuth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this){authTask ->
                 if(authTask.isSuccessful){
@@ -151,7 +158,7 @@ class AuthActivity : AppCompatActivity() {
             .addOnFailureListener(this){
                 Toast.makeText(this, it.message , Toast.LENGTH_SHORT).show()
             }
-    }
+    }*/
 
     override fun onStart() {
         super.onStart()
