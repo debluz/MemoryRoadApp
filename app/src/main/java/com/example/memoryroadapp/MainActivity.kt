@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
             welcome_message_text_view.text = "Welcome $name $surname $email!"
         } else {
             currentUser?.let {user ->
-                welcome_message_text_view.text = "Welcome ${user.displayName}, ${user.email}!"
+                welcome_message_text_view.text = "Welcome ${user.email}!"
             }
         }
     }

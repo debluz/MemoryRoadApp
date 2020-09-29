@@ -32,16 +32,20 @@ class AuthActivity : AppCompatActivity() {
 
         //Email authentication
         initSignInButton()
+        initSignUpButton()
 
 
+
+
+
+
+    }
+
+    private fun initSignUpButton(){
         sign_up_button_login.setOnClickListener {
             val intent = Intent(this, SignUpActivity::class.java)
             startActivity(intent)
         }
-
-
-
-
     }
 
     private fun initSignInButton(){
@@ -121,22 +125,6 @@ class AuthActivity : AppCompatActivity() {
     }
 
 
-    /*private fun firebaseAuthWithGoogle(idToken: String?) {
-        val googleCredential = GoogleAuthProvider.getCredential(idToken, null)
-        firebaseAuth.signInWithCredential(googleCredential)
-            .addOnCompleteListener(this){authTask ->
-                if(authTask.isSuccessful){
-                    Toast.makeText(this, "Login by google has been succesful", Toast.LENGTH_SHORT).show()
-                    Log.d("Tamik", "signInWithCredential:succes")
-                    goToMainActivity()
-                    finish()
-                } else {
-                    Log.w("Tamik", "signInWithCredential:failure")
-                    Toast.makeText(this, "Login by google was failure", Toast.LENGTH_SHORT).show()
-                }
-            }
-    }*/
-
     private fun signInWithEmail(email: String, password: String){
         authViewModel.signInWithEmail(email, password)
         authViewModel.authenticatedUserLiveData.observe(this, Observer { user ->
@@ -145,20 +133,6 @@ class AuthActivity : AppCompatActivity() {
         })
     }
 
-
-    /*private fun signInByEmail(email: String, password: String){
-        firebaseAuth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener(this){authTask ->
-                if(authTask.isSuccessful){
-                    Toast.makeText(this, "Login successful!", Toast.LENGTH_SHORT).show()
-                    goToMainActivity()
-                    finish()
-                }
-            }
-            .addOnFailureListener(this){
-                Toast.makeText(this, it.message , Toast.LENGTH_SHORT).show()
-            }
-    }*/
 
     override fun onStart() {
         super.onStart()

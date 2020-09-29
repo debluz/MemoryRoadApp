@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
@@ -12,24 +14,17 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_sign_up.*
 
 class SignUpActivity : AppCompatActivity() {
-    private val firebaseAuth = FirebaseAuth.getInstance()
-    private val rootRef: FirebaseFirestore = Firebase.firestore
+    private lateinit var signUpViewModel: SignUpViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
 
-        /*val newUser = User("tam@gmail.com", "Tam", "Mat")
-        rootRef.collection("users").document().set(newUser)
-        rootRef.collection("users").document("NewasCKz7qosDBaTOMVU").get()
-            .addOnSuccessListener {
-                val user = it.toObject(User::class.java)
-                Toast.makeText(this, user.toString(), Toast.LENGTH_SHORT).show()
-                Log.v("Tamik", "asdasdasd")
-            }*/
 
+        initSignUpViewModel()
+        initSignUpButton()
 
-        sign_up_button.setOnClickListener {
+       /* sign_up_button.setOnClickListener {
             val email = email_edit_text_sign_up.text.toString()
             val password = password_edit_text_sign_up.text.toString()
             val firstName = first_name_edit_text_sign_up.text.toString()
@@ -41,7 +36,7 @@ class SignUpActivity : AppCompatActivity() {
                         val currentUser = firebaseAuth.currentUser
                         if(currentUser != null){
                             Log.d("Tamik", "Before adding user to db")
-                            val user = User(email, firstName, lastName)
+                            val user = User(currentUser.uid, email, "$firstName $lastName",)
                             Log.v("Tamik", user.toString())
 
                             rootRef.collection("users").document(currentUser.uid).set(user)
@@ -53,29 +48,51 @@ class SignUpActivity : AppCompatActivity() {
                                 }
 
 
-                            /*rootRef.collection("users").document(currentUser.uid).set(newUser)
+                            *//*rootRef.collection("users").document(currentUser.uid).set(newUser)
                                 .addOnSuccessListener{
                                     Toast.makeText(this, "New user has been added to database!", Toast.LENGTH_SHORT).show()
                                 }
                                 .addOnFailureListener{
                                     Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
-                                }*/
+                                }*//*
                         }
 
                     } else {
                         Toast.makeText(this, authTask.exception.toString(), Toast.LENGTH_SHORT).show()
                     }
                 }
+        }*/
+
+    }
+
+    private fun initSignUpButton(){
+        sign_up_button.setOnClickListener {
+            val email = email_edit_text_sign_up.text.toString()
+            val password = password_edit_text_sign_up.text.toString()
+            val firstName = first_name_edit_text_sign_up.text.toString()
+            val lastName = last_name_edit_text_sign_up.text.toString()
+            createNewUser(email, password, "$firstName $lastName")
         }
+
+    }
+
+    private fun initSignUpViewModel(){
+        signUpViewModel = ViewModelProvider(this).get(SignUpViewModel::class.java)
+    }
+
+    private fun createNewUser(email: String, password: String, name: String){
+        signUpViewModel.createUserWithEmail(email, password, name)
+        signUpViewModel.createdUserLiveData.observe(this, Observer {
+            Toast.makeText(this, "New user has been created!", Toast.LENGTH_SHORT).show()
+            signUpViewModel.signOut()
+            goToLoginActivity()
+            finish()
+        })
 
     }
 
     private fun goToLoginActivity() {
         val intent = Intent(this, AuthActivity::class.java)
         startActivity(intent)
-    }
-
-    private fun createNewUser(){
-
     }
 }
