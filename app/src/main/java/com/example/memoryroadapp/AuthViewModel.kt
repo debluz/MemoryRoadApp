@@ -23,4 +23,7 @@ class AuthViewModel(application: Application): AndroidViewModel(application) {
         createdUserLiveData = authRepository.createUserInFirestoreIfNotExists(authenticatedUser)
     }
 
+    fun signOut(){
+        authRepository.signOut()
+    }
 }

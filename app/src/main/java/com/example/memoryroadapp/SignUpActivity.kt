@@ -24,11 +24,21 @@ class SignUpActivity : AppCompatActivity() {
         initSignUpViewModel()
         initSignUpButton()
 
-       /* sign_up_button.setOnClickListener {
+       /* val rootRef = FirebaseFirestore.getInstance()
+        val firebaseAuth = FirebaseAuth.getInstance()
+        sign_up_button.setOnClickListener {
             val email = email_edit_text_sign_up.text.toString()
             val password = password_edit_text_sign_up.text.toString()
             val firstName = first_name_edit_text_sign_up.text.toString()
             val lastName = last_name_edit_text_sign_up.text.toString()
+            val user = User("sadas1", email, "$firstName $lastName",)
+            *//*rootRef.collection("users").document(user.uid).set(user)
+                .addOnSuccessListener {
+                    Log.v("Tamik", "New user added to db!")
+                    //firebaseAuth.signOut()
+                    goToLoginActivity()
+                    finish()
+                }*//**//*
             firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this){authTask ->
                     if(authTask.isSuccessful){
@@ -48,19 +58,13 @@ class SignUpActivity : AppCompatActivity() {
                                 }
 
 
-                            *//*rootRef.collection("users").document(currentUser.uid).set(newUser)
-                                .addOnSuccessListener{
-                                    Toast.makeText(this, "New user has been added to database!", Toast.LENGTH_SHORT).show()
-                                }
-                                .addOnFailureListener{
-                                    Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
-                                }*//*
+
                         }
 
                     } else {
                         Toast.makeText(this, authTask.exception.toString(), Toast.LENGTH_SHORT).show()
                     }
-                }
+                }*//*
         }*/
 
     }
@@ -72,6 +76,8 @@ class SignUpActivity : AppCompatActivity() {
             val firstName = first_name_edit_text_sign_up.text.toString()
             val lastName = last_name_edit_text_sign_up.text.toString()
             createNewUser(email, password, "$firstName $lastName")
+            setResult(RESULT_OK)
+            finish()
         }
 
     }
@@ -84,11 +90,8 @@ class SignUpActivity : AppCompatActivity() {
         signUpViewModel.createUserWithEmail(email, password, name)
         signUpViewModel.createdUserLiveData.observe(this, Observer {
             Toast.makeText(this, "New user has been created!", Toast.LENGTH_SHORT).show()
-            signUpViewModel.signOut()
-            goToLoginActivity()
-            finish()
+            HelperClass.logErrorMessage("SignUpActivity: $it has been created")
         })
-
     }
 
     private fun goToLoginActivity() {

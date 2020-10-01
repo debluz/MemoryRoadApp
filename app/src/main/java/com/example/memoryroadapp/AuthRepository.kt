@@ -6,14 +6,17 @@ import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthCredential
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
+import com.google.firebase.ktx.Firebase
 import io.grpc.LoadBalancer
 
 class AuthRepository {
-    private val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
-    private val rootRef: FirebaseFirestore = FirebaseFirestore.getInstance()
+    private val firebaseAuth: FirebaseAuth = Firebase.auth
+    private val rootRef: FirebaseFirestore = Firebase.firestore
     private val usersRef: CollectionReference = rootRef.collection(Constants.USERS)
 
     fun firebaseSignInWithEmail(email: String, password: String): MutableLiveData<User>{
@@ -37,6 +40,7 @@ class AuthRepository {
                 } else {
                     HelperClass.logErrorMessage(authTask.exception?.message)
                 }
+                signOut()
             }
         return authenticatedUserMutableLiveData
     }
@@ -105,19 +109,24 @@ class AuthRepository {
                     HelperClass.logErrorMessage("createUserWithEmail: ${currentUser?.uid}")
                     if (currentUser != null) {
                         val user = User(currentUser.uid, email, name)
-
-                        usersRef.document(currentUser.uid).set(user)
-                            .addOnSuccessListener {
-                                HelperClass.logErrorMessage("New user: $user has been added to FirestoreDB")
-                            }
-
                         newUserMutableLiveData.value = user
+                        updateFirestore(user)
                     }
                 } else {
                     HelperClass.logErrorMessage(authTask.exception?.message)
                 }
             }
         return newUserMutableLiveData
+    }
+
+    fun updateFirestore(user: User){
+        usersRef.document(user.uid).set(user)
+            .addOnSuccessListener {
+                HelperClass.logErrorMessage("New user: $user has been added to FirestoreDB")
+            }
+            .addOnFailureListener {
+                HelperClass.logErrorMessage(it.message)
+            }
     }
 
     fun signOut(){

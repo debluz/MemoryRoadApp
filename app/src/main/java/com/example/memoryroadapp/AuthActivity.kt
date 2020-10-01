@@ -33,18 +33,13 @@ class AuthActivity : AppCompatActivity() {
         //Email authentication
         initSignInButton()
         initSignUpButton()
-
-
-
-
-
-
     }
 
     private fun initSignUpButton(){
         sign_up_button_login.setOnClickListener {
             val intent = Intent(this, SignUpActivity::class.java)
-            startActivity(intent)
+            //startActivity(intent)
+            startActivityForResult(intent, Constants.RC_SIGN_UP)
         }
     }
 
@@ -94,6 +89,9 @@ class AuthActivity : AppCompatActivity() {
             } catch (e: ApiException){
                 HelperClass.logErrorMessage(e.message)
             }
+        } else if (requestCode == Constants.RC_SIGN_UP && resultCode == RESULT_OK){
+            authViewModel.signOut()
+            Toast.makeText(this, "Sign out successful", Toast.LENGTH_SHORT).show()
         }
     }
 
