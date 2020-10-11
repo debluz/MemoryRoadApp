@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_web_client_id" translatable="false">391157926108-qvdo1f80tejrdiolhlbta5nkdctpqv72.apps.googleusercontent.com</string>
+    <string name="firebase_database_url" translatable="false">https://memoryroadapp.firebaseio.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">391157926108</string>
+    <string name="google_api_key" translatable="false">AIzaSyC-tXcVg2tqPiY_vQxcZAp5Ukpvvg63Ow0</string>
+    <string name="google_app_id" translatable="false">1:391157926108:android:3b010103d3ba73b81e8c19</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyC-tXcVg2tqPiY_vQxcZAp5Ukpvvg63Ow0</string>
+    <string name="google_storage_bucket" translatable="false">memoryroadapp.appspot.com</string>
+    <string name="project_id" translatable="false">memoryroadapp</string>
+</resources>
