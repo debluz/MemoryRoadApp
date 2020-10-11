@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.example.memoryroadapp.data.SignUpViewModel
 import com.example.memoryroadapp.databinding.ActivityLoginBinding
 import com.example.memoryroadapp.databinding.ActivitySignUpBinding
 import com.google.firebase.auth.FirebaseAuth

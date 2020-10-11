@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.example.memoryroadapp.data.AuthViewModel
 import com.example.memoryroadapp.databinding.ActivityLoginBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -19,15 +20,13 @@ import kotlinx.android.synthetic.main.activity_login.*
 class AuthActivity : AppCompatActivity() {
     private val firebaseAuth = FirebaseAuth.getInstance()
     private lateinit var googleSignInClient: GoogleSignInClient
-    private lateinit var authViewModel: AuthViewModel
+    private val authViewModel: AuthViewModel by lazy { ViewModelProvider(this).get(AuthViewModel::class.java) }
 
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
-        initAuthViewModel()
         val binding = DataBindingUtil.setContentView<ActivityLoginBinding>(this, R.layout.activity_login)
         binding.lifecycleOwner = this
         binding.viewmodel = authViewModel
@@ -40,17 +39,12 @@ class AuthActivity : AppCompatActivity() {
         initButtons()
     }
 
-    private fun initSignUpButton(){
-        sign_up_button_login.setOnClickListener {
-
-        }
-    }
 
     private fun initButtons(){
         authViewModel.eventCode.observe(this, Observer { eventCode ->
             when(eventCode){
-                1 -> Toast.makeText(this, "All fields must be filled", Toast.LENGTH_LONG).show()
-                2 -> {
+                Constants.EC_EMPTY_FIELDS -> Toast.makeText(this, "All fields must be filled", Toast.LENGTH_LONG).show()
+                Constants.EC_SIGN_IN_WITH_EMAIL -> {
                     authViewModel.authenticatedUserLiveData.observe(this, Observer { user ->
                         HelperClass.logErrorMessage("AuthActivity: authenticatedUserLiveData - $user")
                         if(user.isAuthenticated!!){
@@ -60,22 +54,12 @@ class AuthActivity : AppCompatActivity() {
                         }
                     })
                 }
-                3 -> goToSignUpActivity()
-                4 -> signInWithGoogle()
+                Constants.EC_SIGN_IN_GOOGLE -> signInWithGoogle()
             }
         })
 
     }
 
-    private fun initGoogleSignInButton() {
-        google_sign_in_button.setOnClickListener {
-            signInWithGoogle()
-        }
-    }
-
-    private fun initAuthViewModel() {
-        authViewModel = ViewModelProvider(this).get(AuthViewModel::class.java)
-    }
 
     private fun initGoogleSignInClient() {
         val googleSignInOptions = GoogleSignInOptions
@@ -165,3 +149,4 @@ class AuthActivity : AppCompatActivity() {
         startActivity(intent)
     }
 }
+

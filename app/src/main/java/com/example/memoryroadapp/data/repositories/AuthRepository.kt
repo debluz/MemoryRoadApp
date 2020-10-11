@@ -1,8 +1,8 @@
 package com.example.memoryroadapp.repositories
 
 import androidx.lifecycle.MutableLiveData
-import com.example.memoryroadapp.util.Constants
-import com.example.memoryroadapp.util.HelperClass
+import com.example.memoryroadapp.Constants
+import com.example.memoryroadapp.HelperClass
 import com.example.memoryroadapp.User
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth

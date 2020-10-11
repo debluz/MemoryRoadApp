@@ -8,5 +8,10 @@ open class Constants{
         const val RC_SIGN_UP: Int = 321
         const val USER: String = "user"
         const val USERS: String = "users"
+        const val EC_EMPTY_FIELDS = 111
+        const val EC_SIGN_IN_WITH_EMAIL = 222
+        const val EC_SIGN_IN_GOOGLE = 333
+        const val EC_REGISTRATION_COMPLETED = 444
+        const val EC_REGISTRATION_FAILURE = 555
     }
 }
