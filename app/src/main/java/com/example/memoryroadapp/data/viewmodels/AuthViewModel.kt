@@ -35,7 +35,7 @@ class AuthViewModel: ViewModel() {
         _eventCode.value = Constants.EC_SIGN_IN_GOOGLE
     }
 
-    fun signInWithEmail(email: String, password: String){
+    private fun signInWithEmail(email: String, password: String){
         authenticatedUserLiveData = authRepository.firebaseSignInWithEmail(email, password)
     }
 
@@ -49,9 +49,5 @@ class AuthViewModel: ViewModel() {
 
     fun checkIfAnyoneIsAuthenticated(){
         currentUser = authRepository.getCurrentUser()
-    }
-
-    fun signOut(){
-        authRepository.signOut()
     }
 }
