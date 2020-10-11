@@ -89,8 +89,6 @@ class AuthActivity : AppCompatActivity() {
             } catch (e: ApiException){
                 HelperClass.logErrorMessage(e.message)
             }
-        } else if (requestCode == Constants.RC_SIGN_UP && resultCode == RESULT_OK){
-            Toast.makeText(this, "New user created", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -121,27 +119,18 @@ class AuthActivity : AppCompatActivity() {
         })
     }
 
-
-    private fun signInWithEmail(email: String, password: String){
-        authViewModel.signInWithEmail(email, password)
-        authViewModel.authenticatedUserLiveData.observe(this, Observer { user ->
-            Toast.makeText(this, "Hi ${user.name}! You've been successfully logged in!", Toast.LENGTH_SHORT).show()
-            goToMainActivity()
-        })
-    }
-
-
     override fun onStart() {
         super.onStart()
-        if(firebaseAuth.currentUser != null){
-            goToMainActivity()
-            finish()
-        }
+        checkIfUserIsAlreadyAuthenticated()
     }
 
-    fun goToSignUpActivity(){
-        val intent = Intent(this, SignUpActivity::class.java)
-        startActivityForResult(intent, Constants.RC_SIGN_UP)
+    private fun checkIfUserIsAlreadyAuthenticated(){
+        authViewModel.checkIfAnyoneIsAuthenticated()
+        authViewModel.currentUser.observe(this, Observer { currentUser ->
+            if(currentUser != null){
+                goToMainActivity()
+            }
+        })
     }
 
     private fun goToMainActivity() {

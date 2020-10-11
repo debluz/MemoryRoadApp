@@ -6,6 +6,7 @@ import com.example.memoryroadapp.HelperClass
 import com.example.memoryroadapp.User
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObject
@@ -134,6 +135,12 @@ class AuthRepository {
                 }
             }
         return newUserMutableLiveData
+    }
+
+    fun getCurrentUser(): MutableLiveData<FirebaseUser> {
+        val userMutableLiveData = MutableLiveData<FirebaseUser>()
+        userMutableLiveData.value = firebaseAuth.currentUser
+        return  userMutableLiveData
     }
 
     fun signOut(){

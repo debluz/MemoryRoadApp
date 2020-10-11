@@ -33,7 +33,7 @@
                 android:id="@+id/email_edit_text_login"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="@{viewmodel.emailEditTextContent}"
+                android:text="@={viewmodel.emailEditTextContent}"
                 android:inputType="textEmailAddress"/>
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -57,7 +57,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:inputType="textPassword"
-                android:text="@{viewmodel.passwordEditTextContent}" />
+                android:text="@={viewmodel.passwordEditTextContent}" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

@@ -9,9 +9,11 @@ import com.example.memoryroadapp.Constants
 import com.example.memoryroadapp.User
 import com.example.memoryroadapp.repositories.AuthRepository
 import com.google.firebase.auth.AuthCredential
+import com.google.firebase.auth.FirebaseUser
 
 class AuthViewModel: ViewModel() {
     private val authRepository = AuthRepository()
+    lateinit var currentUser: LiveData<FirebaseUser?>
     lateinit var authenticatedUserLiveData: LiveData<User>
     lateinit var createdUserLiveData: LiveData<User>
     val emailEditTextContent = MutableLiveData<String>()
@@ -45,4 +47,11 @@ class AuthViewModel: ViewModel() {
         createdUserLiveData = authRepository.createUserInFirestoreIfNotExists(authenticatedUser)
     }
 
+    fun checkIfAnyoneIsAuthenticated(){
+        currentUser = authRepository.getCurrentUser()
+    }
+
+    fun signOut(){
+        authRepository.signOut()
+    }
 }

@@ -18,62 +18,45 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_sign_up.*
 
 class SignUpActivity : AppCompatActivity() {
-    private lateinit var signUpViewModel: SignUpViewModel
+    private val signUpViewModel: SignUpViewModel by lazy { ViewModelProvider(this).get(SignUpViewModel::class.java) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
 
-        initSignUpViewModel()
+
         val binding = DataBindingUtil.setContentView<ActivitySignUpBinding>(this, R.layout.activity_sign_up)
         binding.lifecycleOwner = this
         binding.viewmodel = signUpViewModel
-        //initSignUpButton()
-        //checkIfValid()
+        initSignUpProcess()
 
 
 
     }
 
-    private fun initSignUpButton(){
-
-
-        /*sign_up_button.setOnClickListener {
-            if(email_edit_text_sign_up.text.isNullOrEmpty()){
-                email_edit_text_sign_up.setError("blabla")
-                Toast.makeText(this, "Adasdasd", Toast.LENGTH_SHORT).show()
-            } else {
-                if(email_edit_text_sign_up.error == null){
-                    val email = email_edit_text_sign_up.text.toString()
-                    val password = password_edit_text_sign_up.text.toString()
-                    val firstName = first_name_edit_text_sign_up.text.toString()
-                    val lastName = last_name_edit_text_sign_up.text.toString()
-                    //createNewUser(email, password, "$firstName $lastName")
-                    Toast.makeText(this, "OK", Toast.LENGTH_SHORT).show()
+    private fun initSignUpProcess(){
+        signUpViewModel.eventCode.observe(this, Observer { eventCode ->
+            when(eventCode){
+                Constants.EC_REGISTRATION_COMPLETED -> {
+                    signUpViewModel.createdUserLiveData.observe(this, Observer {createdUser ->
+                        if(createdUser.isCreated!!){
+                            Toast.makeText(this, resources.getString(R.string.registration_completed), Toast.LENGTH_SHORT).show()
+                            finish()
+                        } else {
+                            Toast.makeText(this, resources.getString(R.string.email_already_taken), Toast.LENGTH_SHORT).show()
+                        }
+                    })
                 }
+                Constants.EC_REGISTRATION_FAILURE -> Toast.makeText(this, resources.getString(R.string.registration_failure), Toast.LENGTH_SHORT).show()
             }
-
-
-            *//*setResult(RESULT_OK)
-            finish()*//*
-        }*/
-
+        })
     }
 
-    private fun initSignUpViewModel(){
-        signUpViewModel = ViewModelProvider(this).get(SignUpViewModel::class.java)
-    }
+
 
     private fun createNewUser(email: String, password: String, name: String){
         signUpViewModel.createUserWithEmail(email, password, name)
-        signUpViewModel.createdUserLiveData.observe(this, Observer {createdUser ->
-            if(createdUser.isCreated!!){
-                setResult(RESULT_OK)
-                finish()
-            } else {
-                Toast.makeText(this, resources.getString(R.string.email_already_taken), Toast.LENGTH_SHORT).show()
-            }
-        })
+
     }
 
 

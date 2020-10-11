@@ -9,4 +9,6 @@
     <string name="sign_out_button">Sign Out</string>
     <string name="email_already_taken">Email is already in use by another account</string>
     <string name="sign_up_text_view">Don\'t have an account? Register here.</string>
+    <string name="registration_completed">Registration was successful</string>
+    <string name="registration_failure">Something went wrong</string>
 </resources>
