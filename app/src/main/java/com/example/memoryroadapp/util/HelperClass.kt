@@ -7,7 +7,11 @@ import android.widget.Toast
 class HelperClass {
     companion object{
         fun logErrorMessage(errorMessage: String?){
-            Log.d(Constants.TAG, errorMessage)
+            Log.d(Constants.AUTH_TAG, errorMessage)
+        }
+
+        fun logTestMessage(testMessage: String?){
+            Log.d(Constants.TEST_TAG, testMessage)
         }
 
     }

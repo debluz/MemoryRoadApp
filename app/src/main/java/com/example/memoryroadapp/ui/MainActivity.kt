@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import com.example.memoryroadapp.ui.AuthActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
@@ -48,8 +49,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun goToLoginActivity(){
-        val intent = Intent(this, AuthActivity::class.java)
-        startActivity(intent)
         val gso = GoogleSignInOptions
             .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .build()
@@ -59,5 +58,7 @@ class MainActivity : AppCompatActivity() {
                 Log.d("Tamik", "googleSignInClient has been signed out")
             }
         firebaseAuth.signOut()
+        val intent = Intent(this, AuthActivity::class.java)
+        startActivity(intent)
     }
 }

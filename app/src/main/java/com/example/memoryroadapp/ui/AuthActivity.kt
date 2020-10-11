@@ -4,8 +4,10 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.example.memoryroadapp.databinding.ActivityLoginBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -23,32 +25,46 @@ class AuthActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
+
+
+        initAuthViewModel()
+        val binding = DataBindingUtil.setContentView<ActivityLoginBinding>(this, R.layout.activity_login)
+        binding.lifecycleOwner = this
+        binding.viewmodel = authViewModel
 
         //Google authentication
-        initGoogleSignInButton()
-        initAuthViewModel()
+        //initGoogleSignInButton()
         initGoogleSignInClient()
 
         //Email authentication
-        initSignInButton()
-        initSignUpButton()
+        initButtons()
     }
 
     private fun initSignUpButton(){
         sign_up_button_login.setOnClickListener {
-            val intent = Intent(this, SignUpActivity::class.java)
-            //startActivity(intent)
-            startActivityForResult(intent, Constants.RC_SIGN_UP)
+
         }
     }
 
-    private fun initSignInButton(){
-        sign_in_button.setOnClickListener {
-            val email = email_edit_text_login.text.toString()
-            val password = password_edit_text_login.text.toString()
-            signInWithEmail(email, password)
-        }
+    private fun initButtons(){
+        authViewModel.eventCode.observe(this, Observer { eventCode ->
+            when(eventCode){
+                1 -> Toast.makeText(this, "All fields must be filled", Toast.LENGTH_LONG).show()
+                2 -> {
+                    authViewModel.authenticatedUserLiveData.observe(this, Observer { user ->
+                        HelperClass.logErrorMessage("AuthActivity: authenticatedUserLiveData - $user")
+                        if(user.isAuthenticated!!){
+                            goToMainActivity()
+                        } else {
+                            Toast.makeText(this, "Email or password is invalid", Toast.LENGTH_LONG).show()
+                        }
+                    })
+                }
+                3 -> goToSignUpActivity()
+                4 -> signInWithGoogle()
+            }
+        })
+
     }
 
     private fun initGoogleSignInButton() {
@@ -90,8 +106,7 @@ class AuthActivity : AppCompatActivity() {
                 HelperClass.logErrorMessage(e.message)
             }
         } else if (requestCode == Constants.RC_SIGN_UP && resultCode == RESULT_OK){
-            authViewModel.signOut()
-            Toast.makeText(this, "Sign out successful", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "New user created", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -138,6 +153,11 @@ class AuthActivity : AppCompatActivity() {
             goToMainActivity()
             finish()
         }
+    }
+
+    fun goToSignUpActivity(){
+        val intent = Intent(this, SignUpActivity::class.java)
+        startActivityForResult(intent, Constants.RC_SIGN_UP)
     }
 
     private fun goToMainActivity() {
