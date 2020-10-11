@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">MemoryRoadApp</string>
+    <string name="sign_in_button">Sign In</string>
+    <string name="sign_up_button">Sign Up</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_first_name">First name</string>
+    <string name="hint_last_name">Last name</string>
+    <string name="sign_out_button">Sign Out</string>
+    <string name="email_already_taken">Email is already in use by another account</string>
+    <string name="sign_up_text_view">Don\'t have an account? Register here.</string>
+    <string name="registration_completed">Registration was successful</string>
+    <string name="registration_failure">Something went wrong</string>
+</resources>

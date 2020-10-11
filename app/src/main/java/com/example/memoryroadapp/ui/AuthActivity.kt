@@ -3,12 +3,13 @@ package com.example.memoryroadapp
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.example.memoryroadapp.data.AuthViewModel
+import com.example.memoryroadapp.databinding.ActivityLoginBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
@@ -19,47 +20,46 @@ import kotlinx.android.synthetic.main.activity_login.*
 class AuthActivity : AppCompatActivity() {
     private val firebaseAuth = FirebaseAuth.getInstance()
     private lateinit var googleSignInClient: GoogleSignInClient
-    private lateinit var authViewModel: AuthViewModel
+    private val authViewModel: AuthViewModel by lazy { ViewModelProvider(this).get(AuthViewModel::class.java) }
 
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
 
-        initSignInButton()
-        initAuthViewModel()
+        val binding = DataBindingUtil.setContentView<ActivityLoginBinding>(this, R.layout.activity_login)
+        binding.lifecycleOwner = this
+        binding.viewmodel = authViewModel
+
+        //Google authentication
+        //initGoogleSignInButton()
         initGoogleSignInClient()
 
+        //Email authentication
+        initButtons()
+    }
 
 
-
-        //Sign in by email and password , custom
-        sign_in_button.setOnClickListener {
-            val email = email_edit_text_login.text.toString()
-            val password = password_edit_text_login.text.toString()
-            signInByEmail(email, password)
-        }
-
-        sign_up_button_login.setOnClickListener {
-            val intent = Intent(this, SignUpActivity::class.java)
-            startActivity(intent)
-        }
-
-
-
+    private fun initButtons(){
+        authViewModel.eventCode.observe(this, Observer { eventCode ->
+            when(eventCode){
+                Constants.EC_EMPTY_FIELDS -> Toast.makeText(this, "All fields must be filled", Toast.LENGTH_LONG).show()
+                Constants.EC_SIGN_IN_WITH_EMAIL -> {
+                    authViewModel.authenticatedUserLiveData.observe(this, Observer { user ->
+                        HelperClass.logErrorMessage("AuthActivity: authenticatedUserLiveData - $user")
+                        if(user.isAuthenticated!!){
+                            goToMainActivity()
+                        } else {
+                            Toast.makeText(this, "Email or password is invalid", Toast.LENGTH_LONG).show()
+                        }
+                    })
+                }
+                Constants.EC_SIGN_IN_GOOGLE -> signInWithGoogle()
+            }
+        })
 
     }
 
-    private fun initSignInButton() {
-        google_sign_in_button.setOnClickListener {
-            signInWithGoogle()
-        }
-    }
-
-    private fun initAuthViewModel() {
-        authViewModel = ViewModelProvider(this).get(AuthViewModel::class.java)
-    }
 
     private fun initGoogleSignInClient() {
         val googleSignInOptions = GoogleSignInOptions
@@ -67,14 +67,12 @@ class AuthActivity : AppCompatActivity() {
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
-
         googleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions)
     }
 
     private fun signInWithGoogle(){
         val signInIntent = googleSignInClient.signInIntent
         startActivityForResult(signInIntent, Constants.RC_SING_IN)
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -121,44 +119,18 @@ class AuthActivity : AppCompatActivity() {
         })
     }
 
-
-    /*private fun firebaseAuthWithGoogle(idToken: String?) {
-        val googleCredential = GoogleAuthProvider.getCredential(idToken, null)
-        firebaseAuth.signInWithCredential(googleCredential)
-            .addOnCompleteListener(this){authTask ->
-                if(authTask.isSuccessful){
-                    Toast.makeText(this, "Login by google has been succesful", Toast.LENGTH_SHORT).show()
-                    Log.d("Tamik", "signInWithCredential:succes")
-                    goToMainActivity()
-                    finish()
-                } else {
-                    Log.w("Tamik", "signInWithCredential:failure")
-                    Toast.makeText(this, "Login by google was failure", Toast.LENGTH_SHORT).show()
-                }
-            }
-    }*/
-
-
-    private fun signInByEmail(email: String, password: String){
-        firebaseAuth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener(this){authTask ->
-                if(authTask.isSuccessful){
-                    Toast.makeText(this, "Login successful!", Toast.LENGTH_SHORT).show()
-                    goToMainActivity()
-                    finish()
-                }
-            }
-            .addOnFailureListener(this){
-                Toast.makeText(this, it.message , Toast.LENGTH_SHORT).show()
-            }
-    }
-
     override fun onStart() {
         super.onStart()
-        if(firebaseAuth.currentUser != null){
-            goToMainActivity()
-            finish()
-        }
+        checkIfUserIsAlreadyAuthenticated()
+    }
+
+    private fun checkIfUserIsAlreadyAuthenticated(){
+        authViewModel.checkIfAnyoneIsAuthenticated()
+        authViewModel.currentUser.observe(this, Observer { currentUser ->
+            if(currentUser != null){
+                goToMainActivity()
+            }
+        })
     }
 
     private fun goToMainActivity() {
@@ -166,3 +138,4 @@ class AuthActivity : AppCompatActivity() {
         startActivity(intent)
     }
 }
+

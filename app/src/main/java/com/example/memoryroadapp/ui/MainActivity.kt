@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
             welcome_message_text_view.text = "Welcome $name $surname $email!"
         } else {
             currentUser?.let {user ->
-                welcome_message_text_view.text = "Welcome ${user.displayName}, ${user.email}!"
+                welcome_message_text_view.text = "Welcome ${user.email}!"
             }
         }
     }
@@ -48,8 +48,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun goToLoginActivity(){
-        val intent = Intent(this, AuthActivity::class.java)
-        startActivity(intent)
         val gso = GoogleSignInOptions
             .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .build()
@@ -59,5 +57,7 @@ class MainActivity : AppCompatActivity() {
                 Log.d("Tamik", "googleSignInClient has been signed out")
             }
         firebaseAuth.signOut()
+        val intent = Intent(this, AuthActivity::class.java)
+        startActivity(intent)
     }
 }

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewmodel"
+            type="com.example.memoryroadapp.data.SignUpViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".SignUpActivity">
+
+        <!--EMAIL INPUT-->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/emailTextInputLayout_registration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:validation="@{viewmodel.validEmail}"
+            app:errorMessage="@{viewmodel.errorEmail}"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="8dp"
+            app:endIconMode="clear_text"
+            app:errorEnabled="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/email_edit_text_registration"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@={viewmodel.emailEditTextContent}"
+                app:textWatcher="@{viewmodel.emailTextWatcher}"
+                android:importantForAutofill="no"
+                android:hint="@string/hint_email"
+                android:inputType="textEmailAddress"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!--PASSWORD INPUT-->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/passwordInputLayout_registration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:validation="@{viewmodel.validPassword}"
+            app:errorMessage="@{viewmodel.errorPassword}"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="8dp"
+            app:passwordToggleEnabled="true"
+            app:errorEnabled="true"
+            app:layout_constraintEnd_toEndOf="@+id/emailTextInputLayout_registration"
+            app:layout_constraintStart_toStartOf="@+id/emailTextInputLayout_registration"
+            app:layout_constraintTop_toBottomOf="@id/emailTextInputLayout_registration">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/password_edit_text_registration"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@={viewmodel.passwordEditTextContent}"
+                app:textWatcher="@{viewmodel.passwordTextWatcher}"
+                android:importantForAutofill="no"
+                android:hint="@string/hint_password"
+                android:inputType="textPassword"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!--FIRST_NAME INPUT-->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/firstNameInputLayout_registration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:validation="@{viewmodel.validFirstName}"
+            app:errorMessage="@{viewmodel.errorName}"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="8dp"
+            app:endIconMode="clear_text"
+            app:errorEnabled="true"
+            app:layout_constraintEnd_toEndOf="@+id/passwordInputLayout_registration"
+            app:layout_constraintStart_toStartOf="@+id/passwordInputLayout_registration"
+            app:layout_constraintTop_toBottomOf="@id/passwordInputLayout_registration">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/first_name_edit_text_registration"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@={viewmodel.firstNameEditTextContent}"
+                app:textWatcher="@{viewmodel.firstNameTextWatcher}"
+                android:hint="@string/hint_first_name"
+                android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!--LAST_NAME INPUT-->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/lastNameInputLayout_registration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:validation="@{viewmodel.validLastName}"
+            app:errorMessage="@{viewmodel.errorName}"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="8dp"
+            app:endIconMode="clear_text"
+            app:errorEnabled="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/firstNameInputLayout_registration"
+            app:layout_constraintStart_toStartOf="@+id/firstNameInputLayout_registration"
+            app:layout_constraintTop_toBottomOf="@+id/firstNameInputLayout_registration"
+            app:layout_constraintVertical_bias="0.0">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/last_name_edit_text_registration"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@={viewmodel.lastNameEditTextContent}"
+                app:textWatcher="@{viewmodel.lastNameTextWatcher}"
+                android:hint="@string/hint_last_name"
+                android:inputType="text"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/sign_up_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> viewmodel.onSignUpButtonClick()}"
+            app:ifFormValid="@{viewmodel.enabled}"
+            android:text="@string/sign_up_button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/lastNameInputLayout_registration"
+            app:layout_constraintStart_toStartOf="@+id/lastNameInputLayout_registration"
+            app:layout_constraintTop_toBottomOf="@+id/lastNameInputLayout_registration" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
