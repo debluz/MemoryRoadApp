@@ -72,13 +72,13 @@ class AuthActivity : AppCompatActivity() {
 
     private fun signInWithGoogle(){
         val signInIntent = googleSignInClient.signInIntent
-        startActivityForResult(signInIntent, Constants.RC_SING_IN)
+        startActivityForResult(signInIntent, Constants.REQ_C_SING_IN)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if(requestCode == Constants.RC_SING_IN){
+        if(requestCode == Constants.REQ_C_SING_IN){
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
                 val googleAccount = task.getResult(ApiException::class.java)

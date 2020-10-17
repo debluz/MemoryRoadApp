@@ -1454,6 +1454,10 @@ drawable design_password_eye
 drawable design_snackbar_background
 drawable googleg_disabled_color_18
 drawable googleg_standard_color_18
+drawable ic_baseline_add_location_40
+drawable ic_baseline_check_24
+drawable ic_baseline_photo_camera_24
+drawable ic_baseline_photo_size_select_actual_40
 drawable ic_launcher_background
 drawable ic_launcher_foreground
 drawable ic_mtrl_checked_circle
@@ -1597,6 +1601,7 @@ id dataBinding
 id date_picker_actions
 id decor_content_parent
 id default_activity_button
+id descriptionInputLayout
 id design_bottom_sheet
 id design_menu_item_action_area
 id design_menu_item_action_area_stub
@@ -1628,6 +1633,7 @@ id first_name_edit_text_registration
 id fitToContents
 id fixed
 id floating
+id floatingActionButton
 id forever
 id fragment_container_view_tag
 id ghost_view
@@ -1644,6 +1650,7 @@ id icon_group
 id icon_only
 id ifRoom
 id image
+id imageView
 id info
 id invisible
 id italic
@@ -1652,12 +1659,20 @@ id labeled
 id largeLabel
 id lastNameInputLayout_registration
 id last_name_edit_text_registration
+id latitudeInputLayout
 id left
 id light
 id line1
 id line3
+id linearLayoutCompat
 id listMode
 id list_item
+id location_description_text_view
+id location_image_view
+id location_name_edit_text
+id location_name_text_view
+id location_select_button
+id longitudeInputLayout
 id masked
 id message
 id middle
@@ -1690,6 +1705,7 @@ id mtrl_picker_text_input_range_end
 id mtrl_picker_text_input_range_start
 id mtrl_picker_title_text
 id multiply
+id nameInputLayout
 id navigation_header_container
 id never
 id noScroll
@@ -1717,6 +1733,7 @@ id pin
 id progress_circular
 id progress_horizontal
 id radio
+id recyclerView
 id right
 id right_icon
 id right_side
@@ -1819,7 +1836,6 @@ id useLogo
 id view_offset_helper
 id visible
 id visible_removing_fragment_view_tag
-id welcome_message_text_view
 id wide
 id withText
 id withinBounds
@@ -1887,6 +1903,8 @@ layout abc_search_dropdown_item_icons_2line
 layout abc_search_view
 layout abc_select_dialog_material
 layout abc_tooltip
+layout activity_add_edit_location
+layout activity_location_info
 layout activity_login
 layout activity_main
 layout activity_sign_up
@@ -1906,6 +1924,7 @@ layout design_navigation_menu
 layout design_navigation_menu_item
 layout design_text_input_end_icon
 layout design_text_input_start_icon
+layout item_location
 layout mtrl_alert_dialog
 layout mtrl_alert_dialog_actions
 layout mtrl_alert_dialog_title

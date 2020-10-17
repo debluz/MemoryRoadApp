@@ -20,7 +20,7 @@ public class ActivitySignUpBindingImpl extends ActivitySignUpBinding implements 
     private final androidx.constraintlayout.widget.ConstraintLayout mboundView0;
     // variables
     @Nullable
-    private final android.view.View.OnClickListener mCallback1;
+    private final android.view.View.OnClickListener mCallback2;
     // values
     // listeners
     // Inverse Binding Event Handlers
@@ -201,7 +201,7 @@ public class ActivitySignUpBindingImpl extends ActivitySignUpBinding implements 
         this.signUpButton.setTag(null);
         setRootTag(root);
         // listeners
-        mCallback1 = new com.example.memoryroadapp.generated.callback.OnClickListener(this, 1);
+        mCallback2 = new com.example.memoryroadapp.generated.callback.OnClickListener(this, 1);
         invalidateAll();
     }
 
@@ -584,7 +584,7 @@ public class ActivitySignUpBindingImpl extends ActivitySignUpBinding implements 
             androidx.databinding.adapters.TextViewBindingAdapter.setTextWatcher(this.firstNameEditTextRegistration, (androidx.databinding.adapters.TextViewBindingAdapter.BeforeTextChanged)null, (androidx.databinding.adapters.TextViewBindingAdapter.OnTextChanged)null, (androidx.databinding.adapters.TextViewBindingAdapter.AfterTextChanged)null, firstNameEditTextRegistrationandroidTextAttrChanged);
             androidx.databinding.adapters.TextViewBindingAdapter.setTextWatcher(this.lastNameEditTextRegistration, (androidx.databinding.adapters.TextViewBindingAdapter.BeforeTextChanged)null, (androidx.databinding.adapters.TextViewBindingAdapter.OnTextChanged)null, (androidx.databinding.adapters.TextViewBindingAdapter.AfterTextChanged)null, lastNameEditTextRegistrationandroidTextAttrChanged);
             androidx.databinding.adapters.TextViewBindingAdapter.setTextWatcher(this.passwordEditTextRegistration, (androidx.databinding.adapters.TextViewBindingAdapter.BeforeTextChanged)null, (androidx.databinding.adapters.TextViewBindingAdapter.OnTextChanged)null, (androidx.databinding.adapters.TextViewBindingAdapter.AfterTextChanged)null, passwordEditTextRegistrationandroidTextAttrChanged);
-            this.signUpButton.setOnClickListener(mCallback1);
+            this.signUpButton.setOnClickListener(mCallback2);
         }
         if ((dirtyFlags & 0x604L) != 0) {
             // api target 1

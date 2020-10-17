@@ -5,7 +5,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import android.view.View;
 @SuppressWarnings("unchecked")
-public class ActivityLoginBindingImpl extends ActivityLoginBinding implements com.example.memoryroadapp.generated.callback.Function0.Listener, com.example.memoryroadapp.generated.callback.OnClickListener.Listener {
+public class ActivityLoginBindingImpl extends ActivityLoginBinding implements com.example.memoryroadapp.generated.callback.OnClickListener.Listener, com.example.memoryroadapp.generated.callback.Function0.Listener {
 
     @Nullable
     private static final androidx.databinding.ViewDataBinding.IncludedLayouts sIncludes;
@@ -24,9 +24,9 @@ public class ActivityLoginBindingImpl extends ActivityLoginBinding implements co
     private final com.google.android.material.textfield.TextInputEditText mboundView2;
     // variables
     @Nullable
-    private final kotlin.jvm.functions.Function0 mCallback3;
+    private final android.view.View.OnClickListener mCallback3;
     @Nullable
-    private final android.view.View.OnClickListener mCallback2;
+    private final kotlin.jvm.functions.Function0 mCallback4;
     // values
     // listeners
     // Inverse Binding Event Handlers
@@ -127,8 +127,8 @@ public class ActivityLoginBindingImpl extends ActivityLoginBinding implements co
         this.signUpTextView.setTag(null);
         setRootTag(root);
         // listeners
-        mCallback3 = new com.example.memoryroadapp.generated.callback.Function0(this, 2);
-        mCallback2 = new com.example.memoryroadapp.generated.callback.OnClickListener(this, 1);
+        mCallback3 = new com.example.memoryroadapp.generated.callback.OnClickListener(this, 1);
+        mCallback4 = new com.example.memoryroadapp.generated.callback.Function0(this, 2);
         invalidateAll();
     }
 
@@ -263,9 +263,9 @@ public class ActivityLoginBindingImpl extends ActivityLoginBinding implements co
             // api target 1
 
             androidx.databinding.adapters.TextViewBindingAdapter.setTextWatcher(this.emailEditTextLogin, (androidx.databinding.adapters.TextViewBindingAdapter.BeforeTextChanged)null, (androidx.databinding.adapters.TextViewBindingAdapter.OnTextChanged)null, (androidx.databinding.adapters.TextViewBindingAdapter.AfterTextChanged)null, emailEditTextLoginandroidTextAttrChanged);
-            com.example.memoryroadapp.util.BindingAdaptersKt.signInWithGoogle(this.googleSignInButton, mCallback3);
+            com.example.memoryroadapp.util.BindingAdaptersKt.signInWithGoogle(this.googleSignInButton, mCallback4);
             androidx.databinding.adapters.TextViewBindingAdapter.setTextWatcher(this.mboundView2, (androidx.databinding.adapters.TextViewBindingAdapter.BeforeTextChanged)null, (androidx.databinding.adapters.TextViewBindingAdapter.OnTextChanged)null, (androidx.databinding.adapters.TextViewBindingAdapter.AfterTextChanged)null, mboundView2androidTextAttrChanged);
-            this.signInButton.setOnClickListener(mCallback2);
+            this.signInButton.setOnClickListener(mCallback3);
         }
         if ((dirtyFlags & 0xeL) != 0) {
             // api target 1
@@ -280,6 +280,22 @@ public class ActivityLoginBindingImpl extends ActivityLoginBinding implements co
     }
     // Listener Stub Implementations
     // callback impls
+    public final void _internalCallbackOnClick(int sourceId , android.view.View callbackArg_0) {
+        // localize variables for thread safety
+        // viewmodel != null
+        boolean viewmodelJavaLangObjectNull = false;
+        // viewmodel
+        com.example.memoryroadapp.data.AuthViewModel viewmodel = mViewmodel;
+
+
+
+        viewmodelJavaLangObjectNull = (viewmodel) != (null);
+        if (viewmodelJavaLangObjectNull) {
+
+
+            viewmodel.onSignInButtonClick();
+        }
+    }
     public final kotlin.Unit _internalCallbackInvoke(int sourceId ) {
         // localize variables for thread safety
         // viewmodel != null
@@ -296,22 +312,6 @@ public class ActivityLoginBindingImpl extends ActivityLoginBinding implements co
             viewmodel.onGoogleSignInButtonClick();
         }
         return null;
-    }
-    public final void _internalCallbackOnClick(int sourceId , android.view.View callbackArg_0) {
-        // localize variables for thread safety
-        // viewmodel != null
-        boolean viewmodelJavaLangObjectNull = false;
-        // viewmodel
-        com.example.memoryroadapp.data.AuthViewModel viewmodel = mViewmodel;
-
-
-
-        viewmodelJavaLangObjectNull = (viewmodel) != (null);
-        if (viewmodelJavaLangObjectNull) {
-
-
-            viewmodel.onSignInButtonClick();
-        }
     }
     // dirty flag
     private  long mDirtyFlags = 0xffffffffffffffffL;
