@@ -5,7 +5,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import android.view.View;
 @SuppressWarnings("unchecked")
-public class ActivityLoginBindingImpl extends ActivityLoginBinding implements com.example.memoryroadapp.generated.callback.OnClickListener.Listener, com.example.memoryroadapp.generated.callback.Function0.Listener {
+public class ActivityLoginBindingImpl extends ActivityLoginBinding implements com.example.memoryroadapp.generated.callback.OnClickListener.Listener {
 
     @Nullable
     private static final androidx.databinding.ViewDataBinding.IncludedLayouts sIncludes;
@@ -14,8 +14,9 @@ public class ActivityLoginBindingImpl extends ActivityLoginBinding implements co
     static {
         sIncludes = null;
         sViewsWithIds = new android.util.SparseIntArray();
-        sViewsWithIds.put(R.id.emailTextInputLayout, 6);
-        sViewsWithIds.put(R.id.textInputLayout, 7);
+        sViewsWithIds.put(R.id.emailTextInputLayout, 5);
+        sViewsWithIds.put(R.id.textInputLayout, 6);
+        sViewsWithIds.put(R.id.google_sign_in_button, 7);
     }
     // views
     @NonNull
@@ -24,9 +25,7 @@ public class ActivityLoginBindingImpl extends ActivityLoginBinding implements co
     private final com.google.android.material.textfield.TextInputEditText mboundView2;
     // variables
     @Nullable
-    private final android.view.View.OnClickListener mCallback3;
-    @Nullable
-    private final kotlin.jvm.functions.Function0 mCallback4;
+    private final android.view.View.OnClickListener mCallback6;
     // values
     // listeners
     // Inverse Binding Event Handlers
@@ -111,14 +110,13 @@ public class ActivityLoginBindingImpl extends ActivityLoginBinding implements co
     private ActivityLoginBindingImpl(androidx.databinding.DataBindingComponent bindingComponent, View root, Object[] bindings) {
         super(bindingComponent, root, 2
             , (com.google.android.material.textfield.TextInputEditText) bindings[1]
+            , (com.google.android.material.textfield.TextInputLayout) bindings[5]
+            , (com.google.android.gms.common.SignInButton) bindings[7]
+            , (com.google.android.material.button.MaterialButton) bindings[3]
+            , (com.google.android.material.textview.MaterialTextView) bindings[4]
             , (com.google.android.material.textfield.TextInputLayout) bindings[6]
-            , (com.google.android.gms.common.SignInButton) bindings[4]
-            , (android.widget.Button) bindings[3]
-            , (com.google.android.material.textview.MaterialTextView) bindings[5]
-            , (com.google.android.material.textfield.TextInputLayout) bindings[7]
             );
         this.emailEditTextLogin.setTag(null);
-        this.googleSignInButton.setTag(null);
         this.mboundView0 = (androidx.constraintlayout.widget.ConstraintLayout) bindings[0];
         this.mboundView0.setTag(null);
         this.mboundView2 = (com.google.android.material.textfield.TextInputEditText) bindings[2];
@@ -127,8 +125,7 @@ public class ActivityLoginBindingImpl extends ActivityLoginBinding implements co
         this.signUpTextView.setTag(null);
         setRootTag(root);
         // listeners
-        mCallback3 = new com.example.memoryroadapp.generated.callback.OnClickListener(this, 1);
-        mCallback4 = new com.example.memoryroadapp.generated.callback.Function0(this, 2);
+        mCallback6 = new com.example.memoryroadapp.generated.callback.OnClickListener(this, 1);
         invalidateAll();
     }
 
@@ -263,9 +260,8 @@ public class ActivityLoginBindingImpl extends ActivityLoginBinding implements co
             // api target 1
 
             androidx.databinding.adapters.TextViewBindingAdapter.setTextWatcher(this.emailEditTextLogin, (androidx.databinding.adapters.TextViewBindingAdapter.BeforeTextChanged)null, (androidx.databinding.adapters.TextViewBindingAdapter.OnTextChanged)null, (androidx.databinding.adapters.TextViewBindingAdapter.AfterTextChanged)null, emailEditTextLoginandroidTextAttrChanged);
-            com.example.memoryroadapp.util.BindingAdaptersKt.signInWithGoogle(this.googleSignInButton, mCallback4);
             androidx.databinding.adapters.TextViewBindingAdapter.setTextWatcher(this.mboundView2, (androidx.databinding.adapters.TextViewBindingAdapter.BeforeTextChanged)null, (androidx.databinding.adapters.TextViewBindingAdapter.OnTextChanged)null, (androidx.databinding.adapters.TextViewBindingAdapter.AfterTextChanged)null, mboundView2androidTextAttrChanged);
-            this.signInButton.setOnClickListener(mCallback3);
+            this.signInButton.setOnClickListener(mCallback6);
         }
         if ((dirtyFlags & 0xeL) != 0) {
             // api target 1
@@ -295,23 +291,6 @@ public class ActivityLoginBindingImpl extends ActivityLoginBinding implements co
 
             viewmodel.onSignInButtonClick();
         }
-    }
-    public final kotlin.Unit _internalCallbackInvoke(int sourceId ) {
-        // localize variables for thread safety
-        // viewmodel != null
-        boolean viewmodelJavaLangObjectNull = false;
-        // viewmodel
-        com.example.memoryroadapp.data.AuthViewModel viewmodel = mViewmodel;
-
-
-
-        viewmodelJavaLangObjectNull = (viewmodel) != (null);
-        if (viewmodelJavaLangObjectNull) {
-
-
-            viewmodel.onGoogleSignInButtonClick();
-        }
-        return null;
     }
     // dirty flag
     private  long mDirtyFlags = 0xffffffffffffffffL;

@@ -6,6 +6,8 @@ import android.view.View;
 import androidx.databinding.DataBinderMapper;
 import androidx.databinding.DataBindingComponent;
 import androidx.databinding.ViewDataBinding;
+import com.example.memoryroadapp.databinding.ActivityAddEditLocationBindingImpl;
+import com.example.memoryroadapp.databinding.ActivityLocationInfoBindingImpl;
 import com.example.memoryroadapp.databinding.ActivityLoginBindingImpl;
 import com.example.memoryroadapp.databinding.ActivityMainBindingImpl;
 import com.example.memoryroadapp.databinding.ActivitySignUpBindingImpl;
@@ -21,17 +23,23 @@ import java.util.HashMap;
 import java.util.List;
 
 public class DataBinderMapperImpl extends DataBinderMapper {
-  private static final int LAYOUT_ACTIVITYLOGIN = 1;
+  private static final int LAYOUT_ACTIVITYADDEDITLOCATION = 1;
 
-  private static final int LAYOUT_ACTIVITYMAIN = 2;
+  private static final int LAYOUT_ACTIVITYLOCATIONINFO = 2;
 
-  private static final int LAYOUT_ACTIVITYSIGNUP = 3;
+  private static final int LAYOUT_ACTIVITYLOGIN = 3;
 
-  private static final int LAYOUT_ITEMLOCATION = 4;
+  private static final int LAYOUT_ACTIVITYMAIN = 4;
 
-  private static final SparseIntArray INTERNAL_LAYOUT_ID_LOOKUP = new SparseIntArray(4);
+  private static final int LAYOUT_ACTIVITYSIGNUP = 5;
+
+  private static final int LAYOUT_ITEMLOCATION = 6;
+
+  private static final SparseIntArray INTERNAL_LAYOUT_ID_LOOKUP = new SparseIntArray(6);
 
   static {
+    INTERNAL_LAYOUT_ID_LOOKUP.put(com.example.memoryroadapp.R.layout.activity_add_edit_location, LAYOUT_ACTIVITYADDEDITLOCATION);
+    INTERNAL_LAYOUT_ID_LOOKUP.put(com.example.memoryroadapp.R.layout.activity_location_info, LAYOUT_ACTIVITYLOCATIONINFO);
     INTERNAL_LAYOUT_ID_LOOKUP.put(com.example.memoryroadapp.R.layout.activity_login, LAYOUT_ACTIVITYLOGIN);
     INTERNAL_LAYOUT_ID_LOOKUP.put(com.example.memoryroadapp.R.layout.activity_main, LAYOUT_ACTIVITYMAIN);
     INTERNAL_LAYOUT_ID_LOOKUP.put(com.example.memoryroadapp.R.layout.activity_sign_up, LAYOUT_ACTIVITYSIGNUP);
@@ -47,6 +55,18 @@ public class DataBinderMapperImpl extends DataBinderMapper {
         throw new RuntimeException("view must have a tag");
       }
       switch(localizedLayoutId) {
+        case  LAYOUT_ACTIVITYADDEDITLOCATION: {
+          if ("layout/activity_add_edit_location_0".equals(tag)) {
+            return new ActivityAddEditLocationBindingImpl(component, view);
+          }
+          throw new IllegalArgumentException("The tag for activity_add_edit_location is invalid. Received: " + tag);
+        }
+        case  LAYOUT_ACTIVITYLOCATIONINFO: {
+          if ("layout/activity_location_info_0".equals(tag)) {
+            return new ActivityLocationInfoBindingImpl(component, view);
+          }
+          throw new IllegalArgumentException("The tag for activity_location_info is invalid. Received: " + tag);
+        }
         case  LAYOUT_ACTIVITYLOGIN: {
           if ("layout/activity_login_0".equals(tag)) {
             return new ActivityLoginBindingImpl(component, view);
@@ -116,19 +136,22 @@ public class DataBinderMapperImpl extends DataBinderMapper {
   }
 
   private static class InnerBrLookup {
-    static final SparseArray<String> sKeys = new SparseArray<String>(3);
+    static final SparseArray<String> sKeys = new SparseArray<String>(4);
 
     static {
       sKeys.put(0, "_all");
       sKeys.put(1, "item");
-      sKeys.put(2, "viewmodel");
+      sKeys.put(2, "location");
+      sKeys.put(3, "viewmodel");
     }
   }
 
   private static class InnerLayoutIdLookup {
-    static final HashMap<String, Integer> sKeys = new HashMap<String, Integer>(4);
+    static final HashMap<String, Integer> sKeys = new HashMap<String, Integer>(6);
 
     static {
+      sKeys.put("layout/activity_add_edit_location_0", com.example.memoryroadapp.R.layout.activity_add_edit_location);
+      sKeys.put("layout/activity_location_info_0", com.example.memoryroadapp.R.layout.activity_location_info);
       sKeys.put("layout/activity_login_0", com.example.memoryroadapp.R.layout.activity_login);
       sKeys.put("layout/activity_main_0", com.example.memoryroadapp.R.layout.activity_main);
       sKeys.put("layout/activity_sign_up_0", com.example.memoryroadapp.R.layout.activity_sign_up);

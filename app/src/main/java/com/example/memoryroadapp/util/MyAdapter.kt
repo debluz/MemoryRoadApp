@@ -1,33 +1,71 @@
 package com.example.memoryroadapp.util
 
+import android.annotation.SuppressLint
+import android.graphics.Bitmap
+import android.graphics.Color
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.example.memoryroadapp.HelperClass
 import com.example.memoryroadapp.R
 import com.example.memoryroadapp.data.models.MyLocation
 import com.example.memoryroadapp.databinding.ItemLocationBinding
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter
+import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.android.gms.common.util.DataUtils
+import com.google.firebase.database.collection.LLRBNode
+import com.google.rpc.Help
+import com.google.type.ColorOrBuilder
+import kotlinx.android.synthetic.main.item_location.view.*
+import java.lang.reflect.Array
 
-class MyAdapter() : RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
-    private var locations = emptyList<MyLocation>()
+interface OnItemListener {
+    fun onItemClickListener(location: MyLocation)
+
+}
+
+class MyAdapter(private val onItemListener: OnItemListener)
+    : RecyclerView.Adapter<MyAdapter.MyViewHolder>()
+{
+    private var locations: ArrayList<MyLocation> = ArrayList()
+    private var selectedLocations: ArrayList<MyLocation> = ArrayList()
+    private var checkBoxFlag : Boolean = false
+    private var listOfImages : ArrayList<Uri> = ArrayList()
+
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder.
     // Each data item is just a string in this case that is shown in a TextView.
-    inner class MyViewHolder(val binding: ItemLocationBinding) : RecyclerView.ViewHolder(binding.root){
+    inner class MyViewHolder(val binding: ItemLocationBinding, private val onItemListener: OnItemListener) : RecyclerView.ViewHolder(binding.root), View.OnClickListener{
+        init {
+            itemView.setOnClickListener(this)
+        }
+
+        override fun onClick(v: View?) {
+            if(adapterPosition != RecyclerView.NO_POSITION){
+                if(checkBoxFlag){
+                    v?.checkBox?.isChecked = !v?.checkBox?.isChecked!!
+                } else {
+                    onItemListener.onItemClickListener(locations[adapterPosition])
+                }
+
+            }
+        }
 
     }
 
     // Create new views (invoked by the layout manager)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        //val view = inflater.inflate(R.layout.item_location, parent, false)
-        val binding = ItemLocationBinding.inflate(inflater)
+        val binding = ItemLocationBinding.inflate(inflater, parent, false)
 
-        return MyViewHolder(binding)
+        return MyViewHolder(binding, onItemListener)
     }
 
     // Replace the contents of a view (invoked by the layout manager)
@@ -35,18 +73,62 @@ class MyAdapter() : RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         val location = locations[position]
+
+        if(checkBoxFlag){
+            holder.itemView.checkBox.visibility = View.VISIBLE
+        } else {
+            holder.itemView.checkBox.visibility = View.GONE
+            holder.itemView.checkBox.isChecked = false
+            selectedLocations.clear()
+        }
+
+        holder.itemView.checkBox.setOnCheckedChangeListener { _, isChecked ->
+            if(isChecked){
+                selectedLocations.add(location)
+                HelperClass.logTestMessage("Added to selectedLocations: ${location.name}")
+            } else {
+                selectedLocations.remove(location)
+                HelperClass.logTestMessage("Removed from selectedLocations: ${location.name}")
+            }
+        }
+
         holder.binding.apply {
             this.item = location
             this.executePendingBindings()
         }
 
+        if(listOfImages.size > 0){
+            Glide.with(holder.itemView)
+                .asBitmap()
+                .load(listOfImages[position])
+                .into(holder.itemView.location_image_view)
+        }
+
     }
+
+    fun setCheckBoxFlag(flag: Boolean){
+        checkBoxFlag = flag
+        notifyDataSetChanged()
+    }
+
+    fun getCheckBoxFlag(): Boolean = checkBoxFlag
+
+    fun getLocationAt(position: Int): MyLocation = locations[position]
+
+    fun getSelectedLocations(): ArrayList<MyLocation> = selectedLocations
 
     // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount(): Int = locations.size
 
-    internal fun setLocations(locations: List<MyLocation>){
+    internal fun setLocations(locations: ArrayList<MyLocation>){
         this.locations = locations
         notifyDataSetChanged()
     }
+
+    internal fun setImages(images: ArrayList<Uri>){
+        listOfImages = images
+        notifyDataSetChanged()
+    }
+
 }
+

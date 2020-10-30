@@ -4,7 +4,6 @@ package com.example.memoryroadapp.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.Bindable;
@@ -13,6 +12,7 @@ import androidx.databinding.ViewDataBinding;
 import com.example.memoryroadapp.R;
 import com.example.memoryroadapp.data.AuthViewModel;
 import com.google.android.gms.common.SignInButton;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.textview.MaterialTextView;
@@ -30,7 +30,7 @@ public abstract class ActivityLoginBinding extends ViewDataBinding {
   public final SignInButton googleSignInButton;
 
   @NonNull
-  public final Button signInButton;
+  public final MaterialButton signInButton;
 
   @NonNull
   public final MaterialTextView signUpTextView;
@@ -43,7 +43,7 @@ public abstract class ActivityLoginBinding extends ViewDataBinding {
 
   protected ActivityLoginBinding(Object _bindingComponent, View _root, int _localFieldCount,
       TextInputEditText emailEditTextLogin, TextInputLayout emailTextInputLayout,
-      SignInButton googleSignInButton, Button signInButton, MaterialTextView signUpTextView,
+      SignInButton googleSignInButton, MaterialButton signInButton, MaterialTextView signUpTextView,
       TextInputLayout textInputLayout) {
     super(_bindingComponent, _root, _localFieldCount);
     this.emailEditTextLogin = emailEditTextLogin;

@@ -1,15 +1,17 @@
 package com.example.memoryroadapp.data
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.example.memoryroadapp.Constants
+import com.example.memoryroadapp.HelperClass
 import com.example.memoryroadapp.User
-import com.example.memoryroadapp.repositories.AuthRepository
+import com.example.memoryroadapp.data.repositories.AuthRepository
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseUser
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.lang.Exception
+import javax.xml.transform.Result
 
 class AuthViewModel: ViewModel() {
     private val authRepository = AuthRepository()
@@ -31,16 +33,28 @@ class AuthViewModel: ViewModel() {
         }
     }
 
-    fun onGoogleSignInButtonClick(){
-        _eventCode.value = Constants.EC_SIGN_IN_GOOGLE
+
+    private fun signUserWithEmail(email: String, password: String){
+
+
     }
 
     private fun signInWithEmail(email: String, password: String){
-        authenticatedUserLiveData = authRepository.firebaseSignInWithEmail(email, password)
+        authenticatedUserLiveData = liveData {
+            try{
+                val data = authRepository.signUser(emailEditTextContent.value.toString(), passwordEditTextContent.value.toString())
+                emit(data)
+            }catch (e: Exception){
+                _eventCode.value = Constants.EC_SIGN_IN_WITH_EMAIL_FAIL
+                HelperClass.logTestMessage(e.message)
+            }
+
+        }
+        //authenticatedUserLiveData = authRepository.firebaseSignInWithEmail(email, password)
     }
 
     fun signInWithGoogle(googleAuthCredential: AuthCredential){
-        authenticatedUserLiveData = authRepository.firebaseSignInWithGoogle(googleAuthCredential)
+        //authenticatedUserLiveData = authRepository.firebaseSignInWithGoogle(googleAuthCredential)
     }
 
     fun createUser(authenticatedUser: User){

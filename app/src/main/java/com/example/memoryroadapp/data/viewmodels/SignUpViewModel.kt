@@ -5,8 +5,9 @@ import android.text.Editable
 import android.text.TextWatcher
 import androidx.lifecycle.*
 import com.example.memoryroadapp.Constants
+import com.example.memoryroadapp.HelperClass
 import com.example.memoryroadapp.User
-import com.example.memoryroadapp.repositories.AuthRepository
+import com.example.memoryroadapp.data.repositories.AuthRepository
 
 class SignUpViewModel(application: Application): AndroidViewModel(application) {
     private val authRepository = AuthRepository()
@@ -22,13 +23,13 @@ class SignUpViewModel(application: Application): AndroidViewModel(application) {
 
     //Validation
     private var _validEmail = MutableLiveData<Boolean>(true)
-    val validEmail: LiveData<Boolean> = _validEmail
+    val validEmail : LiveData<Boolean> = _validEmail
     private var _validPassword = MutableLiveData<Boolean>(true)
-    val validPassword: LiveData<Boolean> = _validPassword
+    val validPassword : LiveData<Boolean> = _validPassword
     private var _validFirstName = MutableLiveData<Boolean>(true)
-    val validFirstName = _validFirstName
+    val validFirstName : LiveData<Boolean> = _validFirstName
     private var _validLastName = MutableLiveData<Boolean>(true)
-    val validLastName = _validLastName
+    val validLastName : LiveData<Boolean> = _validLastName
 
 
     private val emailRegex: Regex = Regex("^[a-zA-Z]+[@][a-zA-Z]+[.][a-zA-Z]{2,}$")
@@ -56,14 +57,12 @@ class SignUpViewModel(application: Application): AndroidViewModel(application) {
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 
         override fun afterTextChanged(s: Editable?) {
-            checkIfCanBeEnabled()
             if(!emailEditTextContent.value.toString().trim().isNullOrEmpty()){
                 _validEmail.value = emailRegex.matches(emailEditTextContent.value.toString().trim())
             } else {
-                _validEmail.value = true
+                _validEmail.value = false
             }
-            //HelperClass.logTestMessage("Email: ${emailEditTextContent.value.toString()} valid: ${_validEmail.value}")
-
+            checkIfCanBeEnabled()
         }
     }
 
@@ -72,12 +71,12 @@ class SignUpViewModel(application: Application): AndroidViewModel(application) {
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 
         override fun afterTextChanged(s: Editable?) {
-            checkIfCanBeEnabled()
             if(!passwordEditTextContent.value.toString().trim().isNullOrEmpty()){
                 _validPassword.value = passwordRegex.matches(passwordEditTextContent.value.toString().trim())
             } else {
-                _validPassword.value = true
+                _validPassword.value = false
             }
+            checkIfCanBeEnabled()
             //HelperClass.logTestMessage("Password: ${passwordEditTextContent.value.toString()} valid: ${_validPassword.value}")
 
         }
@@ -89,8 +88,8 @@ class SignUpViewModel(application: Application): AndroidViewModel(application) {
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 
         override fun afterTextChanged(s: Editable?) {
-            checkIfCanBeEnabled()
             _validFirstName.value = !firstNameEditTextContent.value.toString().trim().isNullOrEmpty()
+            checkIfCanBeEnabled()
         }
 
     }
@@ -100,8 +99,8 @@ class SignUpViewModel(application: Application): AndroidViewModel(application) {
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 
         override fun afterTextChanged(s: Editable?) {
-            checkIfCanBeEnabled()
             _validLastName.value = !lastNameEditTextContent.value.toString().trim().isNullOrEmpty()
+            checkIfCanBeEnabled()
         }
 
     }
@@ -126,7 +125,7 @@ class SignUpViewModel(application: Application): AndroidViewModel(application) {
 
 
 
-    fun createUserWithEmail(email: String, password: String, name: String){
+    private fun createUserWithEmail(email: String, password: String, name: String){
         createdUserLiveData = authRepository.createUserWithEmail(email, password, name)
     }
 

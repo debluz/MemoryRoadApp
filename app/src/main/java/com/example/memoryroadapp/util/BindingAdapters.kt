@@ -1,6 +1,7 @@
 package com.example.memoryroadapp.util
 
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.text.Spannable
 import android.text.SpannableString
@@ -11,6 +12,7 @@ import android.text.style.ClickableSpan
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.example.memoryroadapp.SignUpActivity
@@ -67,4 +69,11 @@ fun checkIfValid(view: TextInputLayout, validation: Boolean, errorMessage: Strin
 @BindingAdapter("app:textWatcher")
 fun addTextWatcher(view: TextInputEditText, textWatcher: TextWatcher){
     view.addTextChangedListener(textWatcher)
+}
+
+@BindingAdapter("app:loadImage")
+fun loadImage(view: ImageView, bitmap: Bitmap?){
+    if(bitmap != null){
+        view.setImageBitmap(bitmap)
+    }
 }

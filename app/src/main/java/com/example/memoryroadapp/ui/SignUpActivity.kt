@@ -54,12 +54,6 @@ class SignUpActivity : AppCompatActivity() {
 
 
 
-    private fun createNewUser(email: String, password: String, name: String){
-        signUpViewModel.createUserWithEmail(email, password, name)
-
-    }
-
-
 
 
 

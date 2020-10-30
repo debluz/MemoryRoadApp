@@ -1,4 +1,4 @@
-package com.example.memoryroadapp
+package com.example.memoryroadapp.ui
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -7,18 +7,20 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.example.memoryroadapp.Constants
+import com.example.memoryroadapp.HelperClass
+import com.example.memoryroadapp.R
+import com.example.memoryroadapp.User
 import com.example.memoryroadapp.data.AuthViewModel
 import com.example.memoryroadapp.databinding.ActivityLoginBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.android.synthetic.main.activity_login.*
 
 class AuthActivity : AppCompatActivity() {
-    private val firebaseAuth = FirebaseAuth.getInstance()
     private lateinit var googleSignInClient: GoogleSignInClient
     private val authViewModel: AuthViewModel by lazy { ViewModelProvider(this).get(AuthViewModel::class.java) }
 
@@ -27,20 +29,20 @@ class AuthActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val binding = DataBindingUtil.setContentView<ActivityLoginBinding>(this, R.layout.activity_login)
+        val binding = DataBindingUtil.setContentView<ActivityLoginBinding>(this,
+            R.layout.activity_login
+        )
         binding.lifecycleOwner = this
         binding.viewmodel = authViewModel
 
-        //Google authentication
-        //initGoogleSignInButton()
-        initGoogleSignInClient()
 
-        //Email authentication
-        initButtons()
+        initGoogleSignInClient()
+        initSignInWithGoogleButton()
+        initSignInWithEmailButton()
     }
 
 
-    private fun initButtons(){
+    private fun initSignInWithEmailButton(){
         authViewModel.eventCode.observe(this, Observer { eventCode ->
             when(eventCode){
                 Constants.EC_EMPTY_FIELDS -> Toast.makeText(this, "All fields must be filled", Toast.LENGTH_LONG).show()
@@ -49,12 +51,10 @@ class AuthActivity : AppCompatActivity() {
                         HelperClass.logErrorMessage("AuthActivity: authenticatedUserLiveData - $user")
                         if(user.isAuthenticated!!){
                             goToMainActivity()
-                        } else {
-                            Toast.makeText(this, "Email or password is invalid", Toast.LENGTH_LONG).show()
                         }
                     })
                 }
-                Constants.EC_SIGN_IN_GOOGLE -> signInWithGoogle()
+                Constants.EC_SIGN_IN_WITH_EMAIL_FAIL -> Toast.makeText(this, "Email or password is invalid", Toast.LENGTH_LONG).show()
             }
         })
 
@@ -70,15 +70,17 @@ class AuthActivity : AppCompatActivity() {
         googleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions)
     }
 
-    private fun signInWithGoogle(){
-        val signInIntent = googleSignInClient.signInIntent
-        startActivityForResult(signInIntent, Constants.REQ_C_SING_IN)
+    private fun initSignInWithGoogleButton(){
+        google_sign_in_button.setOnClickListener {
+            val signInIntent = googleSignInClient.signInIntent
+            startActivityForResult(signInIntent, Constants.REQUEST_CODE_SING_IN)
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if(requestCode == Constants.REQ_C_SING_IN){
+        if(requestCode == Constants.REQUEST_CODE_SING_IN){
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
                 val googleAccount = task.getResult(ApiException::class.java)
@@ -97,10 +99,8 @@ class AuthActivity : AppCompatActivity() {
         authViewModel.signInWithGoogle(googleAuthCredential)
         authViewModel.authenticatedUserLiveData.observe(this, Observer {authenticatedUser ->
             if(authenticatedUser.isNew!!){
-                HelperClass.logErrorMessage("signInWithGoogleAuthCredential: 1")
                 createNewUser(authenticatedUser)
             } else {
-                HelperClass.logErrorMessage("signInWithGoogleAuthCredential: 2")
                 goToMainActivity()
             }
 
@@ -111,10 +111,8 @@ class AuthActivity : AppCompatActivity() {
         authViewModel.createUser(authenticatedUser)
         authViewModel.createdUserLiveData.observe(this, Observer { user ->
             if(user.isCreated!!){
-                HelperClass.logErrorMessage("createNewUser: 1")
                 Toast.makeText(this, "Hi ${user.name}!\n Your account was succesfully created.", Toast.LENGTH_LONG).show()
             }
-            HelperClass.logErrorMessage("createNewUser: 2")
             goToMainActivity()
         })
     }

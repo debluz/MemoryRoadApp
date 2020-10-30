@@ -20,7 +20,7 @@ public class ActivitySignUpBindingImpl extends ActivitySignUpBinding implements 
     private final androidx.constraintlayout.widget.ConstraintLayout mboundView0;
     // variables
     @Nullable
-    private final android.view.View.OnClickListener mCallback2;
+    private final android.view.View.OnClickListener mCallback5;
     // values
     // listeners
     // Inverse Binding Event Handlers
@@ -201,7 +201,7 @@ public class ActivitySignUpBindingImpl extends ActivitySignUpBinding implements 
         this.signUpButton.setTag(null);
         setRootTag(root);
         // listeners
-        mCallback2 = new com.example.memoryroadapp.generated.callback.OnClickListener(this, 1);
+        mCallback5 = new com.example.memoryroadapp.generated.callback.OnClickListener(this, 1);
         invalidateAll();
     }
 
@@ -256,7 +256,7 @@ public class ActivitySignUpBindingImpl extends ActivitySignUpBinding implements 
             case 3 :
                 return onChangeViewmodelEmailEditTextContent((androidx.lifecycle.MutableLiveData<java.lang.String>) object, fieldId);
             case 4 :
-                return onChangeViewmodelValidFirstName((androidx.lifecycle.MutableLiveData<java.lang.Boolean>) object, fieldId);
+                return onChangeViewmodelValidFirstName((androidx.lifecycle.LiveData<java.lang.Boolean>) object, fieldId);
             case 5 :
                 return onChangeViewmodelEnabled((androidx.lifecycle.LiveData<java.lang.Boolean>) object, fieldId);
             case 6 :
@@ -264,7 +264,7 @@ public class ActivitySignUpBindingImpl extends ActivitySignUpBinding implements 
             case 7 :
                 return onChangeViewmodelPasswordEditTextContent((androidx.lifecycle.MutableLiveData<java.lang.String>) object, fieldId);
             case 8 :
-                return onChangeViewmodelValidLastName((androidx.lifecycle.MutableLiveData<java.lang.Boolean>) object, fieldId);
+                return onChangeViewmodelValidLastName((androidx.lifecycle.LiveData<java.lang.Boolean>) object, fieldId);
         }
         return false;
     }
@@ -304,7 +304,7 @@ public class ActivitySignUpBindingImpl extends ActivitySignUpBinding implements 
         }
         return false;
     }
-    private boolean onChangeViewmodelValidFirstName(androidx.lifecycle.MutableLiveData<java.lang.Boolean> ViewmodelValidFirstName, int fieldId) {
+    private boolean onChangeViewmodelValidFirstName(androidx.lifecycle.LiveData<java.lang.Boolean> ViewmodelValidFirstName, int fieldId) {
         if (fieldId == BR._all) {
             synchronized(this) {
                     mDirtyFlags |= 0x10L;
@@ -340,7 +340,7 @@ public class ActivitySignUpBindingImpl extends ActivitySignUpBinding implements 
         }
         return false;
     }
-    private boolean onChangeViewmodelValidLastName(androidx.lifecycle.MutableLiveData<java.lang.Boolean> ViewmodelValidLastName, int fieldId) {
+    private boolean onChangeViewmodelValidLastName(androidx.lifecycle.LiveData<java.lang.Boolean> ViewmodelValidLastName, int fieldId) {
         if (fieldId == BR._all) {
             synchronized(this) {
                     mDirtyFlags |= 0x100L;
@@ -374,7 +374,7 @@ public class ActivitySignUpBindingImpl extends ActivitySignUpBinding implements 
         java.lang.Boolean viewmodelEnabledGetValue = null;
         java.lang.String viewmodelFirstNameEditTextContentGetValue = null;
         androidx.lifecycle.MutableLiveData<java.lang.String> viewmodelEmailEditTextContent = null;
-        androidx.lifecycle.MutableLiveData<java.lang.Boolean> viewmodelValidFirstName = null;
+        androidx.lifecycle.LiveData<java.lang.Boolean> viewmodelValidFirstName = null;
         android.text.TextWatcher viewmodelLastNameTextWatcher = null;
         java.lang.String viewmodelLastNameEditTextContentGetValue = null;
         java.lang.Boolean viewmodelValidPasswordGetValue = null;
@@ -382,7 +382,7 @@ public class ActivitySignUpBindingImpl extends ActivitySignUpBinding implements 
         androidx.lifecycle.MutableLiveData<java.lang.String> viewmodelLastNameEditTextContent = null;
         androidx.lifecycle.MutableLiveData<java.lang.String> viewmodelPasswordEditTextContent = null;
         java.lang.Boolean viewmodelValidLastNameGetValue = null;
-        androidx.lifecycle.MutableLiveData<java.lang.Boolean> viewmodelValidLastName = null;
+        androidx.lifecycle.LiveData<java.lang.Boolean> viewmodelValidLastName = null;
         java.lang.Boolean viewmodelValidFirstNameGetValue = null;
         boolean androidxDatabindingViewDataBindingSafeUnboxViewmodelValidPasswordGetValue = false;
         android.text.TextWatcher viewmodelPasswordTextWatcher = null;
@@ -584,7 +584,7 @@ public class ActivitySignUpBindingImpl extends ActivitySignUpBinding implements 
             androidx.databinding.adapters.TextViewBindingAdapter.setTextWatcher(this.firstNameEditTextRegistration, (androidx.databinding.adapters.TextViewBindingAdapter.BeforeTextChanged)null, (androidx.databinding.adapters.TextViewBindingAdapter.OnTextChanged)null, (androidx.databinding.adapters.TextViewBindingAdapter.AfterTextChanged)null, firstNameEditTextRegistrationandroidTextAttrChanged);
             androidx.databinding.adapters.TextViewBindingAdapter.setTextWatcher(this.lastNameEditTextRegistration, (androidx.databinding.adapters.TextViewBindingAdapter.BeforeTextChanged)null, (androidx.databinding.adapters.TextViewBindingAdapter.OnTextChanged)null, (androidx.databinding.adapters.TextViewBindingAdapter.AfterTextChanged)null, lastNameEditTextRegistrationandroidTextAttrChanged);
             androidx.databinding.adapters.TextViewBindingAdapter.setTextWatcher(this.passwordEditTextRegistration, (androidx.databinding.adapters.TextViewBindingAdapter.BeforeTextChanged)null, (androidx.databinding.adapters.TextViewBindingAdapter.OnTextChanged)null, (androidx.databinding.adapters.TextViewBindingAdapter.AfterTextChanged)null, passwordEditTextRegistrationandroidTextAttrChanged);
-            this.signUpButton.setOnClickListener(mCallback2);
+            this.signUpButton.setOnClickListener(mCallback5);
         }
         if ((dirtyFlags & 0x604L) != 0) {
             // api target 1

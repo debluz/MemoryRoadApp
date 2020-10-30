@@ -14,67 +14,87 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="8dp"
-            app:cardElevation="30dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+
+            <LinearLayout
+                android:id="@+id/item_linear_layout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:background="@color/colorOnSurface">
 
-                <ImageView
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/checkBox"
+                    android:layout_width="35dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    app:useMaterialThemeColors="true"/>
+
+                <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/location_image_view"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:layout_margin="8dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:src="@drawable/ic_baseline_photo_size_select_actual_40" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/location_name_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{item.name}"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
-                    android:textStyle="bold"
+                    android:padding="8dp"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/ic_baseline_photo_size_select_actual_40"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toEndOf="@+id/location_image_view"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0"
-                    tools:text="TitleName" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/location_description_text_view"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginBottom="8dp"
-                    android:text="@{item.description}"
-                    android:maxWidth="250dp"
-                    android:ellipsize="end"
-                    android:maxLines="2"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="@+id/location_name_text_view"
-                    app:layout_constraintTop_toBottomOf="@id/location_name_text_view"
-                    app:layout_constraintVertical_bias="0.0"
-                    tools:text="Description blab bla nla asd asd asd asdasdasdadaaaaaaaaaaaaaaa aaaaaaaaaaaaaaa" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/location_name_text_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{item.name}"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="12dp"
+                        android:textColor="@color/colorPrimary"
+                        style="@style/TextAppearance.MaterialComponents.Subtitle1"
+                        android:textStyle="bold"
+                        tools:text="TitleName"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintBottom_toTopOf="@id/location_description_text_view"/>
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/location_description_text_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginBottom="12dp"
+                        android:textColor="@color/colorPrimary"
+                        style="@style/TextAppearance.MaterialComponents.Body2"
+                        android:ellipsize="end"
+                        android:maxLines="3"
+                        android:text="@{item.description}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="@id/location_name_text_view"
+                        app:layout_constraintTop_toBottomOf="@id/location_name_text_view"
+                        tools:text="Description" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
 
 
-        </androidx.cardview.widget.CardView>
+
+
+        </com.google.android.material.card.MaterialCardView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
