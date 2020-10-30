@@ -22,6 +22,7 @@ open class Constants{
         const val EC_EMPTY_FIELDS = 5
         const val EC_SIGN_IN_WITH_EMAIL = 6
         const val EC_SIGN_IN_FAIL = 17
+        const val EC_AUTH_FAIL = 18
         const val EC_SIGN_IN_GOOGLE = 7
         const val EC_REGISTRATION_COMPLETED = 8
         const val EC_REGISTRATION_FAILURE = 9

@@ -1,5 +1,6 @@
 package com.example.memoryroadapp.data
 
+import android.widget.Toast
 import androidx.lifecycle.*
 import com.example.memoryroadapp.Constants
 import com.example.memoryroadapp.HelperClass
@@ -50,14 +51,21 @@ class AuthViewModel: ViewModel() {
                 val data = authRepository.firebaseSignInWithGoogle(googleAuthCredential)
                 emit(data)
             } catch (e: FirebaseFirestoreException){
-                _eventCode.value = Constants.EC_SIGN_IN_FAIL
+                _eventCode.value = Constants.EC_AUTH_FAIL
             }
 
         }
     }
 
     fun createUser(authenticatedUser: User){
-        createdUserLiveData = authRepository.createUserInFirestoreIfNotExists(authenticatedUser)
+        createdUserLiveData = liveData {
+            try {
+                val data = authRepository.createUserInFirestoreIfNotExists(authenticatedUser)
+                emit(data)
+            } catch (e: FirebaseFirestoreException){
+                _eventCode.value = Constants.EC_AUTH_FAIL
+            }
+        }
     }
 
     fun checkIfAnyoneIsAuthenticated(){

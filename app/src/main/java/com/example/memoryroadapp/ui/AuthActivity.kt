@@ -8,6 +8,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.memoryroadapp.Constants
+import com.example.memoryroadapp.Constants.Companion.EC_AUTH_FAIL
+import com.example.memoryroadapp.Constants.Companion.EC_EMPTY_FIELDS
+import com.example.memoryroadapp.Constants.Companion.EC_SIGN_IN_FAIL
+import com.example.memoryroadapp.Constants.Companion.EC_SIGN_IN_WITH_EMAIL
 import com.example.memoryroadapp.HelperClass
 import com.example.memoryroadapp.R
 import com.example.memoryroadapp.User
@@ -45,8 +49,8 @@ class AuthActivity : AppCompatActivity() {
     private fun initSignInWithEmailButton(){
         authViewModel.eventCode.observe(this, Observer { eventCode ->
             when(eventCode){
-                Constants.EC_EMPTY_FIELDS -> Toast.makeText(this, "All fields must be filled", Toast.LENGTH_LONG).show()
-                Constants.EC_SIGN_IN_WITH_EMAIL -> {
+                EC_EMPTY_FIELDS -> Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show()
+                EC_SIGN_IN_WITH_EMAIL -> {
                     authViewModel.authenticatedUserLiveData.observe(this, Observer { user ->
                         HelperClass.logErrorMessage("AuthActivity: authenticatedUserLiveData - $user")
                         if(user.isAuthenticated!!){
@@ -54,7 +58,8 @@ class AuthActivity : AppCompatActivity() {
                         }
                     })
                 }
-                Constants.EC_SIGN_IN_FAIL -> Toast.makeText(this, "Email or password is invalid", Toast.LENGTH_LONG).show()
+                EC_SIGN_IN_FAIL -> Toast.makeText(this, "Email or password is invalid", Toast.LENGTH_SHORT).show()
+                EC_AUTH_FAIL -> Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show()
             }
         })
 

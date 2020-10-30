@@ -42,8 +42,18 @@ class AuthRepository {
         return user
     }
 
-    fun createUserInFirestoreIfNotExists(authenticatedUser: User): MutableLiveData<User>{
-        val newUserMutableLiveData = MutableLiveData<User>()
+    suspend fun createUserInFirestoreIfNotExists(authenticatedUser: User): User{
+        val userRef = usersRef.document(authenticatedUser.uid)
+        val snapshot = userRef.get().await()
+        if(!snapshot.exists()){
+            userRef.set(authenticatedUser).await()
+            authenticatedUser.isCreated = true
+        }
+
+        return authenticatedUser
+
+
+        /*val newUserMutableLiveData = MutableLiveData<User>()
         val uidRef = usersRef.document(authenticatedUser.uid)
         uidRef.get()
             .addOnCompleteListener {uidTask ->
@@ -66,7 +76,7 @@ class AuthRepository {
                     HelperClass.logErrorMessage(uidTask.exception?.message)
                 }
             }
-        return newUserMutableLiveData
+        return newUserMutableLiveData*/
     }
 
     fun createUserWithEmail(email: String, password: String, name: String): MutableLiveData<User> {
