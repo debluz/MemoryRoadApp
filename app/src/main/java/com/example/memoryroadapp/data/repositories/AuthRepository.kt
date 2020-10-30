@@ -14,6 +14,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
 
 class AuthRepository {
@@ -22,8 +23,8 @@ class AuthRepository {
     private val usersRef: CollectionReference = rootRef.collection(Constants.USERS)
 
     suspend fun firebaseSignInWithEmail(email: String, password: String): User{
-        val snapshot = firebaseAuth.signInWithEmailAndPassword(email, password).await()
-        val uid = snapshot.user?.uid
+        val authResult = firebaseAuth.signInWithEmailAndPassword(email, password).await()
+        val uid = authResult.user?.uid
 
         val userSnapshot = uid?.let { usersRef.document(it).get().await() }
         val user = userSnapshot?.toObject<User>()!!
@@ -32,26 +33,13 @@ class AuthRepository {
         return user
     }
 
-    fun firebaseSignInWithGoogle(googleAuthCredential: AuthCredential): MutableLiveData<User> {
-        val authenticatedUserMutableLiveData = MutableLiveData<User>()
-        firebaseAuth.signInWithCredential(googleAuthCredential)
-            .addOnCompleteListener{authTask ->
-                if(authTask.isSuccessful){
-                    val isNewUser: Boolean? = authTask.result?.additionalUserInfo?.isNewUser
-                    val firebaseUser = firebaseAuth.currentUser
-                    firebaseUser?.let {
-                        var uid = firebaseUser.uid
-                        var name = firebaseUser.displayName
-                        var email = firebaseUser.email
-                        val user = User(uid, email, name)
-                        user.isNew = isNewUser
-                        authenticatedUserMutableLiveData.value = user
-                    }
-                } else {
-                    HelperClass.logErrorMessage(authTask.exception?.message)
-                }
-            }
-        return authenticatedUserMutableLiveData
+    suspend fun firebaseSignInWithGoogle(googleAuthCredential: AuthCredential): User {
+        val authResult = firebaseAuth.signInWithCredential(googleAuthCredential).await()
+        val isNewUser = authResult.additionalUserInfo?.isNewUser
+        val user = User()
+        user.isNew = isNewUser
+
+        return user
     }
 
     fun createUserInFirestoreIfNotExists(authenticatedUser: User): MutableLiveData<User>{
@@ -117,4 +105,6 @@ class AuthRepository {
     fun signOut(){
         firebaseAuth.signOut()
     }
+
+
 }

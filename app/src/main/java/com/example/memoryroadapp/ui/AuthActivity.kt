@@ -54,7 +54,7 @@ class AuthActivity : AppCompatActivity() {
                         }
                     })
                 }
-                Constants.EC_SIGN_IN_WITH_EMAIL_FAIL -> Toast.makeText(this, "Email or password is invalid", Toast.LENGTH_LONG).show()
+                Constants.EC_SIGN_IN_FAIL -> Toast.makeText(this, "Email or password is invalid", Toast.LENGTH_LONG).show()
             }
         })
 

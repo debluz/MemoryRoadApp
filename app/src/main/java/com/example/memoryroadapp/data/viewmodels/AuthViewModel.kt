@@ -7,11 +7,7 @@ import com.example.memoryroadapp.User
 import com.example.memoryroadapp.data.repositories.AuthRepository
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseUser
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import java.lang.Exception
-import javax.xml.transform.Result
+import com.google.firebase.firestore.FirebaseFirestoreException
 
 class AuthViewModel: ViewModel() {
     private val authRepository = AuthRepository()
@@ -34,20 +30,30 @@ class AuthViewModel: ViewModel() {
     }
 
 
+
     private fun signInWithEmail(email: String, password: String){
         authenticatedUserLiveData = liveData {
             try{
                 val data = authRepository.firebaseSignInWithEmail(email, password)
+                HelperClass.logTestMessage(Thread.currentThread().toString())
                 emit(data)
-            }catch (e: Exception){
-                _eventCode.value = Constants.EC_SIGN_IN_WITH_EMAIL_FAIL
+            }catch (e: FirebaseFirestoreException){
+                _eventCode.value = Constants.EC_SIGN_IN_FAIL
             }
 
         }
     }
 
     fun signInWithGoogle(googleAuthCredential: AuthCredential){
-        //authenticatedUserLiveData = authRepository.firebaseSignInWithGoogle(googleAuthCredential)
+        authenticatedUserLiveData =  liveData {
+            try {
+                val data = authRepository.firebaseSignInWithGoogle(googleAuthCredential)
+                emit(data)
+            } catch (e: FirebaseFirestoreException){
+                _eventCode.value = Constants.EC_SIGN_IN_FAIL
+            }
+
+        }
     }
 
     fun createUser(authenticatedUser: User){
