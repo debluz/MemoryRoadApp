@@ -25,7 +25,7 @@ class AuthViewModel: ViewModel() {
     val clickableContent: String = "Register here"
 
     fun onSignInButtonClick(){
-        if(emailEditTextContent.value == null || passwordEditTextContent.value == null){
+        if(emailEditTextContent.value.toString().trim().isNullOrEmpty() || passwordEditTextContent.value.toString().trim().isNullOrEmpty()){
             _eventCode.value = Constants.EC_EMPTY_FIELDS
         } else {
             signInWithEmail(emailEditTextContent.value.toString(), passwordEditTextContent.value.toString())
@@ -34,23 +34,16 @@ class AuthViewModel: ViewModel() {
     }
 
 
-    private fun signUserWithEmail(email: String, password: String){
-
-
-    }
-
     private fun signInWithEmail(email: String, password: String){
         authenticatedUserLiveData = liveData {
             try{
-                val data = authRepository.signUser(emailEditTextContent.value.toString(), passwordEditTextContent.value.toString())
+                val data = authRepository.firebaseSignInWithEmail(email, password)
                 emit(data)
             }catch (e: Exception){
                 _eventCode.value = Constants.EC_SIGN_IN_WITH_EMAIL_FAIL
-                HelperClass.logTestMessage(e.message)
             }
 
         }
-        //authenticatedUserLiveData = authRepository.firebaseSignInWithEmail(email, password)
     }
 
     fun signInWithGoogle(googleAuthCredential: AuthCredential){

@@ -21,7 +21,7 @@ class AuthRepository {
     private val rootRef: FirebaseFirestore = Firebase.firestore
     private val usersRef: CollectionReference = rootRef.collection(Constants.USERS)
 
-    suspend fun signUser(email: String, password: String): User{
+    suspend fun firebaseSignInWithEmail(email: String, password: String): User{
         val snapshot = firebaseAuth.signInWithEmailAndPassword(email, password).await()
         val uid = snapshot.user?.uid
 
@@ -30,34 +30,6 @@ class AuthRepository {
         user.isAuthenticated = true
 
         return user
-    }
-
-    fun firebaseSignInWithEmail(email: String, password: String): MutableLiveData<User>{
-        val authenticatedUserMutableLiveData = MutableLiveData<User>()
-        var user: User? = User()
-        firebaseAuth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener {authTask ->
-                if(authTask.isSuccessful){
-                    var uid = firebaseAuth.currentUser!!.uid
-                    val uidRef = usersRef.document(uid)
-                    uidRef.get()
-                        .addOnSuccessListener {foundUser ->
-                            if(foundUser != null){
-                                user = foundUser.toObject<User>()
-                                user?.let {
-                                    it.isAuthenticated = true
-                                }
-                                authenticatedUserMutableLiveData.value = user
-                            } else {
-                                HelperClass.logErrorMessage("foundUser: $foundUser")
-                            }
-                        }
-                } else {
-                    HelperClass.logErrorMessage("${authenticatedUserMutableLiveData.value} :" + authTask.exception?.message)
-                    authenticatedUserMutableLiveData.value = user
-                }
-            }
-        return authenticatedUserMutableLiveData
     }
 
     fun firebaseSignInWithGoogle(googleAuthCredential: AuthCredential): MutableLiveData<User> {
