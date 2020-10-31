@@ -21,8 +21,14 @@ import com.google.firebase.storage.UploadTask
 import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.tasks.await
 import java.io.ByteArrayOutputStream
+import java.lang.Exception
 import java.util.*
 import kotlin.collections.ArrayList
+
+sealed class Result<out  R>{
+    data class Success<out T>(val data: T) : Result<T>()
+    data class Error(val exception: Exception): Result<Nothing>()
+}
 
 class LocationsRepository {
     private val firebaseAuth = FirebaseAuth.getInstance()
@@ -83,10 +89,21 @@ class LocationsRepository {
     }
 
     suspend fun addLocation(name: String, description: String, latitude: Float, longitude: Float, diameter: Double, imageBitmap: Bitmap?): MyLocation{
-        val imageName: String = uploadImage("null", imageBitmap, firebaseAuth.currentUser?.uid!!).toString()
-        val locationId = UUID.randomUUID().toString()
-        val location = MyLocation(firebaseAuth.currentUser?.uid, name, longitude, latitude, diameter, description, locationId, imageName)
-        locationsRef.document(locationId).set(location).await()
+        val location = MyLocation(firebaseAuth.currentUser?.uid, name, longitude, latitude, diameter, description)
+        val newImageName = if(imageBitmap != null){
+            UUID.randomUUID().toString()
+        } else {
+            "null"
+        }
+        val imageUrl = uploadImage(location, newImageName, imageBitmap, firebaseAuth.currentUser?.uid!!)
+        val locationRef = locationsRef.add(location).await()
+        location.apply {
+            uid = locationRef.id
+            this.imageUrl = imageUrl.toString()
+            imageName = newImageName
+        }
+        locationsRef.document(locationRef.id).set(location).await()
+
         location.isCreated = true
         return location
     }
@@ -94,10 +111,15 @@ class LocationsRepository {
     suspend fun updateLocation(location: MyLocation, imageBitmap: Bitmap?){
         val snapshot = locationsRef.document(location.uid!!).get().await()
         val temp = snapshot?.toObject<MyLocation>()
-        val imageName: String = uploadImage(temp?.imageName!!, imageBitmap, firebaseAuth.currentUser?.uid!!).toString()
-        location.imageName = imageName
+        val newImageName = if(imageBitmap != null){
+            UUID.randomUUID().toString()
+        } else {
+            "null"
+        }
+        val imageUrl = uploadImage(temp!!, newImageName, imageBitmap, firebaseAuth.currentUser?.uid!!).toString()
+        location.imageUrl = imageUrl
+        location.imageName = newImageName
         locationsRef.document(location.uid.toString()).set(location, SetOptions.merge()).await()
-
     }
 
     suspend fun deleteLocation(location: MyLocation){
@@ -111,25 +133,32 @@ class LocationsRepository {
 
 
 
-    private suspend fun uploadImage(currentImage: String, imageBitmap: Bitmap?, userId: String): String? {
-        if(currentImage != "null"){
-            val currentImageRef = imagesRef.child(userId).child(currentImage)
+    private suspend fun uploadImage(location: MyLocation, newImageName: String, imageBitmap: Bitmap?, userId: String): Uri? {
+        val currentImageName = location.imageName.toString()
+        if(currentImageName != "null"){
+            val currentImageRef = imagesRef.child(userId).child(currentImageName)
             currentImageRef.delete().await()
         }
 
         return if(imageBitmap == null){
             null
         } else {
-            val imageName = "${UUID.randomUUID()}.jpg"
-            val imageRef = imagesRef.child(userId).child(imageName)
+            val imageRef = imagesRef.child(userId).child(newImageName)
             val baos = ByteArrayOutputStream()
             imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
             val data = baos.toByteArray()
-            val uploadTask = imageRef.putBytes(data).await()
-            if(uploadTask.error != null){
-                HelperClass.logTestMessage(uploadTask.error!!.message)
-            }
-            imageName
+            val uploadTask = imageRef.putBytes(data)
+            val imageUrl = uploadTask.continueWithTask{task->
+                if(task.isSuccessful) {
+                    task.exception?.let {
+                        throw it
+                    }
+                }
+                imageRef.downloadUrl
+            }.await()
+
+
+            imageUrl
         }
     }
 }

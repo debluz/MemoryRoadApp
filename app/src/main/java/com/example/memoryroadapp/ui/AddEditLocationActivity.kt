@@ -151,6 +151,7 @@ class AddEditLocationActivity : AppCompatActivity() {
             if(data?.extras != null){
                 val imageBitmap = data.extras!!.get("data") as Bitmap
                 imageView.setImageBitmap(imageBitmap)
+                addEditLocationViewModel.uploadImage(imageBitmap)
             } else {
                 val imageUri = data?.data
                 if (imageUri != null) {

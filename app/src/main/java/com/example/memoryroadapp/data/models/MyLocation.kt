@@ -13,6 +13,7 @@ data class MyLocation(
     var description: String? = null,
     var uid: String? = null,
     var imageName: String? = null,
+    var imageUrl: String? = null,
     @get:Exclude var isCreated: Boolean = false
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
@@ -21,6 +22,7 @@ data class MyLocation(
         parcel.readValue(Float::class.java.classLoader) as? Float,
         parcel.readValue(Float::class.java.classLoader) as? Float,
         parcel.readValue(Double::class.java.classLoader) as? Double,
+        parcel.readString(),
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
@@ -37,6 +39,7 @@ data class MyLocation(
         parcel.writeString(description)
         parcel.writeString(uid)
         parcel.writeString(imageName)
+        parcel.writeString(imageUrl)
         parcel.writeByte(if (isCreated) 1 else 0)
     }
 
@@ -53,5 +56,4 @@ data class MyLocation(
             return arrayOfNulls(size)
         }
     }
-
 }

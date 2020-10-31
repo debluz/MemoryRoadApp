@@ -56,7 +56,6 @@ class AddEditLocationViewModel : ViewModel(){
             val diameter = diameterEditTextContent.value.toString().toDouble()
             if(isNewLocation) {
                 createdLocation = liveData(Dispatchers.IO) {
-                    HelperClass.logTestMessage(Thread.currentThread().name+" adding location")
                     val location = locRepository.addLocation(name, description, latitude, longitude, diameter, _imageBitmap.value)
                     emit(location)
                 }
