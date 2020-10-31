@@ -19,6 +19,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
 import com.google.firebase.storage.ktx.storage
+import kotlinx.coroutines.tasks.await
 import java.io.ByteArrayOutputStream
 import java.util.*
 import kotlin.collections.ArrayList
@@ -84,9 +85,9 @@ class LocationsRepository {
         return locationMutableLiveData
     }
 
-    fun addLocation(name: String, description: String, latitude: Float, longitude: Float, diameter: Double, imageBitmap: Bitmap?): MutableLiveData<MyLocation>{
+    suspend fun addLocation(name: String, description: String, latitude: Float, longitude: Float, diameter: Double, imageBitmap: Bitmap?): MutableLiveData<MyLocation>{
         val newLocationMutableLiveData = MutableLiveData<MyLocation>()
-        val imageName: String = uploadImage(imageBitmap, firebaseAuth.currentUser?.uid!!).toString()
+        val imageName: String = uploadImage("", imageBitmap, firebaseAuth.currentUser?.uid!!).toString()
         val locationId = UUID.randomUUID().toString()
         val location = if(imageName != null){
             MyLocation(firebaseAuth.currentUser?.uid, name, longitude, latitude, diameter, description, locationId, imageName)
@@ -95,6 +96,7 @@ class LocationsRepository {
         }
         locationsRef.document(locationId).set(location)
             .addOnCompleteListener {creationTask ->
+                HelperClass.logTestMessage("add location:"+Thread.currentThread().name)
                 if(creationTask.isSuccessful){
                     location.isCreated = true
                     newLocationMutableLiveData.value = location
@@ -106,39 +108,32 @@ class LocationsRepository {
         return newLocationMutableLiveData
     }
 
-    fun updateLocation(location: MyLocation){
-        locationsRef.document(location.uid.toString()).set(location, SetOptions.merge())
-            .addOnCompleteListener { updateTask ->
-                if(updateTask.isSuccessful){
-                    HelperClass.logTestMessage("Updating location: ${location.uid} was successful")
-                } else {
-                    HelperClass.logTestMessage(updateTask.exception?.message)
-                }
-            }
+    suspend fun updateLocation(location: MyLocation, imageBitmap: Bitmap?){
+        val snapshot = locationsRef.document(location.uid!!).get().await()
+        val temp = snapshot?.toObject<MyLocation>()
+        val imageName: String = uploadImage(temp?.imageName, imageBitmap, firebaseAuth.currentUser?.uid!!).toString()
+        location.imageName = imageName
+        locationsRef.document(location.uid.toString()).set(location, SetOptions.merge()).await()
+
     }
 
-    fun deleteLocation(location: MyLocation){
-        locationsRef.document(location.uid.toString()).delete()
-            .addOnCompleteListener { deleteTask ->
-                if(deleteTask.isSuccessful){
-                    HelperClass.logTestMessage("Location: ${location.uid} has been deleted.")
-                } else {
-                    HelperClass.logTestMessage(deleteTask.exception?.message)
-                }
-            }
+    suspend fun deleteLocation(location: MyLocation){
+        locationsRef.document(location.uid.toString()).delete().await()
+
     }
 
-    fun undoDeletion(location: MyLocation){
-        locationsRef.document(location.uid.toString()).set(location)
-            .addOnSuccessListener {
-                HelperClass.logTestMessage("Undo deletion: success")
-            }
-            .addOnFailureListener {
-                HelperClass.logTestMessage("Undo deletion: ${it.message}")
-            }
+    suspend fun undoDeletion(location: MyLocation) {
+        locationsRef.document(location.uid.toString()).set(location).await()
     }
 
-    private fun uploadImage(imageBitmap: Bitmap?, userId: String): String? {
+
+
+    private suspend fun uploadImage(currentImage: String?, imageBitmap: Bitmap?, userId: String): String? {
+        if(currentImage != null){
+            val currentImageRef = imagesRef.child(userId).child(currentImage)
+            currentImageRef.delete().await()
+        }
+
         if(imageBitmap == null){
             return null
         } else {
@@ -147,16 +142,10 @@ class LocationsRepository {
             val baos = ByteArrayOutputStream()
             imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
             val data = baos.toByteArray()
-            val uploadTask: UploadTask = imageRef.putBytes(data)
-
-            uploadTask
-                .addOnSuccessListener {
-
-                    HelperClass.logTestMessage("Uploading $imageName: success")
-                }
-                .addOnFailureListener {
-                    HelperClass.logTestMessage("Uploading $imageName: failed")
-                }
+            val uploadTask = imageRef.putBytes(data).await()
+            if(uploadTask.error != null){
+                HelperClass.logTestMessage(uploadTask.error!!.message)
+            }
             return imageName
         }
     }

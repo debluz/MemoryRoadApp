@@ -8,6 +8,8 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.example.memoryroadapp.Constants.Companion.EC_REGISTRATION_COMPLETED
+import com.example.memoryroadapp.Constants.Companion.EC_REGISTRATION_FAILURE
 import com.example.memoryroadapp.data.SignUpViewModel
 import com.example.memoryroadapp.databinding.ActivityLoginBinding
 import com.example.memoryroadapp.databinding.ActivitySignUpBinding
@@ -37,7 +39,7 @@ class SignUpActivity : AppCompatActivity() {
     private fun initSignUpProcess(){
         signUpViewModel.eventCode.observe(this, Observer { eventCode ->
             when(eventCode){
-                Constants.EC_REGISTRATION_COMPLETED -> {
+                EC_REGISTRATION_COMPLETED -> {
                     signUpViewModel.createdUserLiveData.observe(this, Observer {createdUser ->
                         if(createdUser.isCreated!!){
                             Toast.makeText(this, resources.getString(R.string.registration_completed), Toast.LENGTH_SHORT).show()
@@ -47,7 +49,7 @@ class SignUpActivity : AppCompatActivity() {
                         }
                     })
                 }
-                Constants.EC_REGISTRATION_FAILURE -> Toast.makeText(this, resources.getString(R.string.registration_failure), Toast.LENGTH_SHORT).show()
+                EC_REGISTRATION_FAILURE -> Toast.makeText(this, resources.getString(R.string.registration_failure), Toast.LENGTH_SHORT).show()
             }
         })
     }

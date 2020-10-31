@@ -1,6 +1,5 @@
 package com.example.memoryroadapp.data.repositories
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.memoryroadapp.Constants
 import com.example.memoryroadapp.HelperClass
@@ -14,13 +13,17 @@ import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 
 class AuthRepository {
     private val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
     private val rootRef: FirebaseFirestore = Firebase.firestore
     private val usersRef: CollectionReference = rootRef.collection(Constants.USERS)
+
+
 
     suspend fun firebaseSignInWithEmail(email: String, password: String): User{
         val authResult = firebaseAuth.signInWithEmailAndPassword(email, password).await()
@@ -51,59 +54,22 @@ class AuthRepository {
         }
 
         return authenticatedUser
-
-
-        /*val newUserMutableLiveData = MutableLiveData<User>()
-        val uidRef = usersRef.document(authenticatedUser.uid)
-        uidRef.get()
-            .addOnCompleteListener {uidTask ->
-                if(uidTask.isSuccessful){
-                    val document = uidTask.result
-                    if(!document?.exists()!!){
-                        uidRef.set(authenticatedUser)
-                            .addOnCompleteListener { userCreationTask ->
-                                if(userCreationTask.isSuccessful){
-                                    authenticatedUser.isCreated = true
-                                    newUserMutableLiveData.value = authenticatedUser
-                                } else {
-                                    HelperClass.logErrorMessage(userCreationTask.exception?.message)
-                                }
-                            }
-                    } else {
-                        newUserMutableLiveData.value = authenticatedUser
-                    }
-                } else {
-                    HelperClass.logErrorMessage(uidTask.exception?.message)
-                }
-            }
-        return newUserMutableLiveData*/
     }
 
-    fun createUserWithEmail(email: String, password: String, name: String): MutableLiveData<User> {
-        val newUserMutableLiveData = MutableLiveData<User>()
-        firebaseAuth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener { authTask ->
-                if (authTask.isSuccessful) {
-                    val currentUser = firebaseAuth.currentUser
-                    if (currentUser != null) {
-                        val user = User(currentUser.uid, email, name)
-                        usersRef.document(currentUser.uid).set(user)
-                            .addOnCompleteListener { userCreationTask ->
-                                if(userCreationTask.isSuccessful){
-                                    user.isCreated = true
-                                    newUserMutableLiveData.value = user
-                                    signOut()
-                                } else {
-                                    HelperClass.logErrorMessage(userCreationTask.exception?.message)
-                                }
-                            }
-                    }
-                } else {
-                    HelperClass.logErrorMessage(authTask.exception?.message)
-                    newUserMutableLiveData.value = User()
-                }
-            }
-        return newUserMutableLiveData
+    suspend fun createUserWithEmail(email: String, password: String, name: String): User{
+        try {
+            val authResult = firebaseAuth.createUserWithEmailAndPassword(email, password).await()
+        } catch (e: FirebaseFirestoreException){
+            HelperClass.logTestMessage(e.message)
+        }
+
+        val currentUser = firebaseAuth.currentUser
+        val user = User(currentUser?.uid!!, email, name)
+        usersRef.document(currentUser.uid).set(user)
+        user.isCreated = true
+        signOut()
+
+        return user
     }
 
     fun getCurrentUser(): MutableLiveData<FirebaseUser> {

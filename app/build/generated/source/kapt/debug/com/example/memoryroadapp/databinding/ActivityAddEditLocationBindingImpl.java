@@ -562,6 +562,8 @@ public class ActivityAddEditLocationBindingImpl extends ActivityAddEditLocationB
                 // localize variables for thread safety
                 // viewmodel != null
                 boolean viewmodelJavaLangObjectNull = false;
+                // viewmodel.onSaveClick()
+                kotlinx.coroutines.Job viewmodelOnSaveClick = null;
                 // viewmodel
                 com.example.memoryroadapp.data.viewmodels.AddEditLocationViewModel viewmodel = mViewmodel;
 
@@ -571,7 +573,7 @@ public class ActivityAddEditLocationBindingImpl extends ActivityAddEditLocationB
                 if (viewmodelJavaLangObjectNull) {
 
 
-                    viewmodel.onSaveClick();
+                    viewmodelOnSaveClick = viewmodel.onSaveClick();
                 }
                 break;
             }

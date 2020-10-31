@@ -24,6 +24,7 @@ import com.example.memoryroadapp.R
 import com.example.memoryroadapp.data.viewmodels.AddEditLocationViewModel
 import com.example.memoryroadapp.databinding.ActivityAddEditLocationBinding
 import kotlinx.android.synthetic.main.activity_add_edit_location.*
+import kotlinx.coroutines.job
 
 
 class AddEditLocationActivity : AppCompatActivity() {
@@ -54,7 +55,7 @@ class AddEditLocationActivity : AppCompatActivity() {
     private fun checkIntent() {
         title = if (intent.hasExtra(Constants.EXTRA_ID)) {
             informViewModelAboutIntent(false)
-            updateFields(intent.getStringExtra(Constants.EXTRA_ID))
+            initFields(intent.getStringExtra(Constants.EXTRA_ID))
             String()
             resources.getString(R.string.title_edit_location)
         } else {
@@ -67,12 +68,13 @@ class AddEditLocationActivity : AppCompatActivity() {
         addEditLocationViewModel.setIsNewLocation(flag)
     }
 
-    private fun updateFields(locationId: String) {
+    private fun initFields(locationId: String) {
         addEditLocationViewModel.getLocationById(locationId)
         addEditLocationViewModel.editedLocation.observe(this, Observer { location ->
-            addEditLocationViewModel.updateFields()
+            addEditLocationViewModel.initFields()
         })
     }
+
 
     private fun observeEventCode() {
         addEditLocationViewModel.eventCode.observe(this, Observer { eventCode ->

@@ -143,6 +143,8 @@ class MainActivity : AppCompatActivity(), OnItemListener {
                 HelperClass.logTestMessage("googleSignInClient has been signed out")
             }
         mainViewModel.signOut()
+        val intent = Intent(this, AuthActivity::class.java)
+        startActivity(intent)
         finish()
     }
 

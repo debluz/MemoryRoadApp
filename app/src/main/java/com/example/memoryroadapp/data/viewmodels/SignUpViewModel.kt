@@ -8,6 +8,10 @@ import com.example.memoryroadapp.Constants
 import com.example.memoryroadapp.HelperClass
 import com.example.memoryroadapp.User
 import com.example.memoryroadapp.data.repositories.AuthRepository
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthException
+import com.google.firebase.firestore.FirebaseFirestoreException
+import java.lang.Exception
 
 class SignUpViewModel(application: Application): AndroidViewModel(application) {
     private val authRepository = AuthRepository()
@@ -32,7 +36,7 @@ class SignUpViewModel(application: Application): AndroidViewModel(application) {
     val validLastName : LiveData<Boolean> = _validLastName
 
 
-    private val emailRegex: Regex = Regex("^[a-zA-Z]+[@][a-zA-Z]+[.][a-zA-Z]{2,}$")
+    private val emailRegex: Regex = Regex("^[a-zA-Z\\d]+[@][a-zA-Z\\d]+[.][a-zA-Z]{2,}$")
     val errorEmail: String = "E.g. example@email.com, exa.mple@email.uk"
     private val passwordRegex: Regex = Regex("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*()])[a-zA-Z\\d!@#\$%^&*()]{8,}$")
     val errorPassword: String = "Min. 8 characters, at least one digit, one special character, one uppercase letter"
@@ -126,7 +130,15 @@ class SignUpViewModel(application: Application): AndroidViewModel(application) {
 
 
     private fun createUserWithEmail(email: String, password: String, name: String){
-        createdUserLiveData = authRepository.createUserWithEmail(email, password, name)
+        createdUserLiveData = liveData {
+            try {
+                val data = authRepository.createUserWithEmail(email, password, name)
+                emit(data)
+            } catch (e: FirebaseAuthException){
+                HelperClass.logTestMessage(e.message)
+                _eventCode.value = Constants.EC_REGISTRATION_FAILURE
+            }
+        }
     }
 
 }

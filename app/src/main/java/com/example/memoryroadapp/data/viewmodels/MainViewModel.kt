@@ -1,21 +1,23 @@
 package com.example.memoryroadapp.data.viewmodels
 
-import android.net.Uri
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+
+
+import androidx.lifecycle.*
+import com.example.memoryroadapp.HelperClass
 import com.example.memoryroadapp.data.models.MyLocation
 import com.example.memoryroadapp.data.repositories.LocationsRepository
 import com.example.memoryroadapp.data.repositories.AuthRepository
+import com.google.firebase.firestore.FirebaseFirestoreException
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
-class MainViewModel: ViewModel(){
+class MainViewModel : ViewModel() {
     private val authRepository = AuthRepository()
     private val locRepository = LocationsRepository()
     private var _eventCode = MutableLiveData<Int>()
     val eventCode = _eventCode
-    lateinit var allLocations : LiveData<ArrayList<MyLocation>>
-
+    lateinit var allLocations: LiveData<ArrayList<MyLocation>>
 
 
     fun getAllLocations() {
@@ -23,15 +25,26 @@ class MainViewModel: ViewModel(){
     }
 
 
-    fun deleteLocation(location: MyLocation){
-        locRepository.deleteLocation(location)
+    fun deleteLocation(location: MyLocation) = viewModelScope.launch(Dispatchers.IO){
+        try {
+            locRepository.deleteLocation(location)
+        } catch (e: FirebaseFirestoreException){
+            HelperClass.logTestMessage("$e ${e.message}")
+        }
     }
 
-    fun undoDeletion(location: MyLocation){
-        locRepository.undoDeletion(location)
+
+
+    fun undoDeletion(location: MyLocation) = viewModelScope.launch(Dispatchers.IO){
+        try {
+            locRepository.undoDeletion(location)
+        } catch (e: FirebaseFirestoreException){
+            HelperClass.logTestMessage("$e ${e.message}")
+        }
+
     }
 
-    fun signOut(){
+    fun signOut() {
         authRepository.signOut()
     }
 

@@ -4,10 +4,15 @@ import android.graphics.Bitmap
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.memoryroadapp.Constants
 import com.example.memoryroadapp.HelperClass
 import com.example.memoryroadapp.data.models.MyLocation
 import com.example.memoryroadapp.data.repositories.LocationsRepository
+import com.google.firebase.firestore.FirebaseFirestoreException
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 
 class AddEditLocationViewModel : ViewModel(){
     private val locRepository = LocationsRepository()
@@ -42,7 +47,7 @@ class AddEditLocationViewModel : ViewModel(){
         isNewLocation = isNew
     }
 
-    fun onSaveClick(){
+    fun onSaveClick() = viewModelScope.launch(Dispatchers.IO){
         if(!nameEditTextContent.value.isNullOrEmpty()
             && !descriptionEditTextContent.value.isNullOrEmpty() && !latitudeEditTextContent.value.isNullOrEmpty()
             && !longitudeEditTextContent.value.isNullOrEmpty() && !diameterEditTextContent.value.isNullOrEmpty()) {
@@ -54,7 +59,7 @@ class AddEditLocationViewModel : ViewModel(){
             val diameter = diameterEditTextContent.value.toString().toDouble()
             if(isNewLocation) {
                 createdLocation = locRepository.addLocation(name, description, latitude, longitude, diameter, _imageBitmap.value)
-                _eventCode.value = Constants.EC_ADDED_LOCATION
+                _eventCode.postValue(Constants.EC_ADDED_LOCATION)
             } else {
                 val location = MyLocation().apply {
                     this.userId = editedLocation.value?.userId
@@ -65,12 +70,16 @@ class AddEditLocationViewModel : ViewModel(){
                     this.uid = editedLocation.value?.uid
                     this.diameter = diameter
                 }
-                locRepository.updateLocation(location)
-                _eventCode.value = Constants.EC_UPDATED_LOCATION
+                try {
+                    locRepository.updateLocation(location, _imageBitmap.value)
+                    _eventCode.postValue(Constants.EC_UPDATED_LOCATION)
+                } catch (e: FirebaseFirestoreException){
+                    HelperClass.logTestMessage("$e ${e.message}")
+                }
             }
 
         } else {
-            _eventCode.value = Constants.EC_FAIL_ADD_EDIT_LOCATION
+            _eventCode.postValue(Constants.EC_FAIL_ADD_EDIT_LOCATION)
         }
 
     }
@@ -79,7 +88,7 @@ class AddEditLocationViewModel : ViewModel(){
         editedLocation = locRepository.getLocationById(locationId)
     }
 
-    fun updateFields(){
+    fun initFields(){
         editedLocation.value?.apply {
             nameEditTextContent.value = this.name
             descriptionEditTextContent.value = this.description
