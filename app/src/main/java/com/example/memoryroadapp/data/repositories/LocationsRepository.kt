@@ -43,9 +43,6 @@ class LocationsRepository {
                 return@addSnapshotListener
             }
 
-
-            val uid = UUID.randomUUID()
-
             if (value != null) {
                 /*//Checking changes
                 for(change in value.documentChanges){
@@ -85,33 +82,19 @@ class LocationsRepository {
         return locationMutableLiveData
     }
 
-    suspend fun addLocation(name: String, description: String, latitude: Float, longitude: Float, diameter: Double, imageBitmap: Bitmap?): MutableLiveData<MyLocation>{
-        val newLocationMutableLiveData = MutableLiveData<MyLocation>()
-        val imageName: String = uploadImage("", imageBitmap, firebaseAuth.currentUser?.uid!!).toString()
+    suspend fun addLocation(name: String, description: String, latitude: Float, longitude: Float, diameter: Double, imageBitmap: Bitmap?): MyLocation{
+        val imageName: String = uploadImage("null", imageBitmap, firebaseAuth.currentUser?.uid!!).toString()
         val locationId = UUID.randomUUID().toString()
-        val location = if(imageName != null){
-            MyLocation(firebaseAuth.currentUser?.uid, name, longitude, latitude, diameter, description, locationId, imageName)
-        } else {
-            MyLocation(firebaseAuth.currentUser?.uid, name, longitude, latitude, diameter, description, locationId)
-        }
-        locationsRef.document(locationId).set(location)
-            .addOnCompleteListener {creationTask ->
-                HelperClass.logTestMessage("add location:"+Thread.currentThread().name)
-                if(creationTask.isSuccessful){
-                    location.isCreated = true
-                    newLocationMutableLiveData.value = location
-                } else {
-                    HelperClass.logTestMessage("CreationTask (Location): ${creationTask.exception?.message}")
-                    newLocationMutableLiveData.value = location
-                }
-            }
-        return newLocationMutableLiveData
+        val location = MyLocation(firebaseAuth.currentUser?.uid, name, longitude, latitude, diameter, description, locationId, imageName)
+        locationsRef.document(locationId).set(location).await()
+        location.isCreated = true
+        return location
     }
 
     suspend fun updateLocation(location: MyLocation, imageBitmap: Bitmap?){
         val snapshot = locationsRef.document(location.uid!!).get().await()
         val temp = snapshot?.toObject<MyLocation>()
-        val imageName: String = uploadImage(temp?.imageName, imageBitmap, firebaseAuth.currentUser?.uid!!).toString()
+        val imageName: String = uploadImage(temp?.imageName!!, imageBitmap, firebaseAuth.currentUser?.uid!!).toString()
         location.imageName = imageName
         locationsRef.document(location.uid.toString()).set(location, SetOptions.merge()).await()
 
@@ -128,14 +111,14 @@ class LocationsRepository {
 
 
 
-    private suspend fun uploadImage(currentImage: String?, imageBitmap: Bitmap?, userId: String): String? {
-        if(currentImage != null){
+    private suspend fun uploadImage(currentImage: String, imageBitmap: Bitmap?, userId: String): String? {
+        if(currentImage != "null"){
             val currentImageRef = imagesRef.child(userId).child(currentImage)
             currentImageRef.delete().await()
         }
 
-        if(imageBitmap == null){
-            return null
+        return if(imageBitmap == null){
+            null
         } else {
             val imageName = "${UUID.randomUUID()}.jpg"
             val imageRef = imagesRef.child(userId).child(imageName)
@@ -146,7 +129,7 @@ class LocationsRepository {
             if(uploadTask.error != null){
                 HelperClass.logTestMessage(uploadTask.error!!.message)
             }
-            return imageName
+            imageName
         }
     }
 }

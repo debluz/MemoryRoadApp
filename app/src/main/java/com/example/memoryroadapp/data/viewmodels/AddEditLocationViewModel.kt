@@ -1,10 +1,7 @@
 package com.example.memoryroadapp.data.viewmodels
 
 import android.graphics.Bitmap
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.memoryroadapp.Constants
 import com.example.memoryroadapp.HelperClass
 import com.example.memoryroadapp.data.models.MyLocation
@@ -58,7 +55,11 @@ class AddEditLocationViewModel : ViewModel(){
             val longitude = longitudeEditTextContent.value.toString().toFloat()
             val diameter = diameterEditTextContent.value.toString().toDouble()
             if(isNewLocation) {
-                createdLocation = locRepository.addLocation(name, description, latitude, longitude, diameter, _imageBitmap.value)
+                createdLocation = liveData(Dispatchers.IO) {
+                    HelperClass.logTestMessage(Thread.currentThread().name+" adding location")
+                    val location = locRepository.addLocation(name, description, latitude, longitude, diameter, _imageBitmap.value)
+                    emit(location)
+                }
                 _eventCode.postValue(Constants.EC_ADDED_LOCATION)
             } else {
                 val location = MyLocation().apply {
