@@ -14,9 +14,6 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.example.memoryroadapp.Constants.Companion.EC_ADDED_LOCATION
-import com.example.memoryroadapp.Constants.Companion.EC_FAIL_ADD_EDIT_LOCATION
-import com.example.memoryroadapp.Constants.Companion.EC_UPDATED_LOCATION
 import com.example.memoryroadapp.Constants.Companion.EXTRA_ID
 import com.example.memoryroadapp.Constants.Companion.REQUEST_IMAGE_GET
 import com.example.memoryroadapp.Constants.Companion.REQUEST_EXTERNAL_STORAGE_AND_CAMERA
@@ -24,6 +21,7 @@ import com.example.memoryroadapp.HelperClass
 import com.example.memoryroadapp.R
 import com.example.memoryroadapp.data.viewmodels.AddEditLocationViewModel
 import com.example.memoryroadapp.databinding.ActivityAddEditLocationBinding
+import com.example.memoryroadapp.util.LocationResult
 import kotlinx.android.synthetic.main.activity_add_edit_location.*
 
 
@@ -49,7 +47,7 @@ class AddEditLocationActivity : AppCompatActivity() {
 
 
         checkIntent()
-        observeEventCode()
+        observeActionResult()
         initAddImageButton()
     }
 
@@ -81,29 +79,20 @@ class AddEditLocationActivity : AppCompatActivity() {
     }
 
 
-    private fun observeEventCode() {
-        addEditLocationViewModel.eventCode.observe(this, Observer { eventCode ->
-            when (eventCode) {
-                EC_ADDED_LOCATION -> {
-                    addEditLocationViewModel.createdLocation.observe(
-                        this,
-                        Observer { createdLocation ->
-                            if (createdLocation.isCreated) {
-                                finish()
-                            }
-                        })
+    private fun observeActionResult() {
+        addEditLocationViewModel.result.observe(this, Observer {result ->
+            when(result){
+                is LocationResult.Success.Added -> {
+                    addEditLocationViewModel.createdLocation.observe(this,Observer {
+                        Toast.makeText(this, result.toString(), Toast.LENGTH_SHORT).show()
+                        finish()
+                    })
                 }
-                EC_UPDATED_LOCATION -> {
-                    Toast.makeText(this, "Location updated", Toast.LENGTH_SHORT).show()
+                is LocationResult.Success.Updated -> {
+                    Toast.makeText(this, result.toString(), Toast.LENGTH_SHORT).show()
                     finish()
                 }
-                EC_FAIL_ADD_EDIT_LOCATION -> {
-                    Toast.makeText(
-                        this,
-                        R.string.empty_fields_error,
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
+                else -> Toast.makeText(this, result.toString(), Toast.LENGTH_SHORT).show()
             }
         })
     }
@@ -116,11 +105,6 @@ class AddEditLocationActivity : AppCompatActivity() {
             ) {
                 selectImage()
             } else {
-                /*if(shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE)){
-                    Snackbar.make(addImageFAB, R.string.media_rationale_message, Snackbar.LENGTH_INDEFINITE)
-                        .setAction("OK") {}
-                        .show()
-                }*/
                 requestPermissions(
                     arrayOf(
                         Manifest.permission.READ_EXTERNAL_STORAGE,

@@ -6,8 +6,8 @@ import android.widget.Toast
 
 class HelperClass {
     companion object{
-        const val AUTH_TAG: String = "FirebaseAuthAppTag"
-        const val TEST_TAG: String = "TestMemoryRoadAppTag"
+        private const val AUTH_TAG: String = "FirebaseAuthAppTag"
+        private const val TEST_TAG: String = "TestMemoryRoadAppTag"
 
         fun logErrorMessage(errorMessage: String?){
             Log.d(AUTH_TAG, errorMessage)

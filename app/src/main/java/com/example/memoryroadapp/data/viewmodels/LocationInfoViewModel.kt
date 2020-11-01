@@ -19,8 +19,6 @@ class LocationInfoViewModel : ViewModel(){
         }
     }
 
-
-
     fun showOnMapButtonClick(){
 
     }

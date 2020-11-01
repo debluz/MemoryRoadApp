@@ -2,10 +2,7 @@ package com.example.memoryroadapp.data.repositories
 
 import android.graphics.Bitmap
 import android.net.Uri
-import android.provider.MediaStore
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.memoryroadapp.Constants
 import com.example.memoryroadapp.HelperClass
 import com.example.memoryroadapp.data.models.MyLocation
 import com.google.firebase.auth.FirebaseAuth
@@ -13,15 +10,10 @@ import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
-import com.google.firebase.firestore.ktx.toObjects
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
-import com.google.firebase.storage.UploadTask
 import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.tasks.await
 import java.io.ByteArrayOutputStream
-import java.lang.Exception
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -127,14 +119,14 @@ class LocationsRepository {
 
     suspend fun updateLocation(location: MyLocation, imageBitmap: Bitmap?) {
         val snapshot = locationsRef.document(location.uid!!).get().await()
-        val temp = snapshot?.toObject<MyLocation>()
+        val tempLocation = snapshot?.toObject<MyLocation>()
         val newImageName = if (imageBitmap != null) {
             UUID.randomUUID().toString()
         } else {
             "null"
         }
         val imageUrl = uploadImage(
-            temp!!,
+            tempLocation!!,
             newImageName,
             imageBitmap,
             firebaseAuth.currentUser?.uid!!
@@ -181,7 +173,6 @@ class LocationsRepository {
                 }
                 imageRef.downloadUrl
             }.await()
-
 
             imageUrl
         }

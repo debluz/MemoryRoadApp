@@ -2,13 +2,13 @@ package com.example.memoryroadapp.data.viewmodels
 
 import android.graphics.Bitmap
 import androidx.lifecycle.*
-import com.example.memoryroadapp.Constants
-import com.example.memoryroadapp.HelperClass
 import com.example.memoryroadapp.data.models.MyLocation
 import com.example.memoryroadapp.data.repositories.LocationsRepository
+import com.example.memoryroadapp.util.LocationResult
 import com.google.firebase.firestore.FirebaseFirestoreException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.lang.Exception
 
 class AddEditLocationViewModel : ViewModel(){
     private val locRepository = LocationsRepository()
@@ -18,8 +18,8 @@ class AddEditLocationViewModel : ViewModel(){
     val latitudeEditTextContent = MutableLiveData<String>()
     val longitudeEditTextContent = MutableLiveData<String>()
     val diameterEditTextContent = MutableLiveData<String>()
-    private var _eventCode = MutableLiveData<Int>()
-    val eventCode : LiveData<Int> = _eventCode
+    private var _result = MutableLiveData<LocationResult>()
+    val result: LiveData<LocationResult> = _result
     lateinit var editedLocation: LiveData<MyLocation>
     private var isNewLocation: Boolean = false
     private val _imageBitmap = MutableLiveData<Bitmap>()
@@ -46,8 +46,8 @@ class AddEditLocationViewModel : ViewModel(){
     fun onSaveClick() = viewModelScope.launch(Dispatchers.IO){
         if(!nameEditTextContent.value.isNullOrEmpty()
             && !descriptionEditTextContent.value.isNullOrEmpty() && !latitudeEditTextContent.value.isNullOrEmpty()
-            && !longitudeEditTextContent.value.isNullOrEmpty() && !diameterEditTextContent.value.isNullOrEmpty()) {
-
+            && !longitudeEditTextContent.value.isNullOrEmpty() && !diameterEditTextContent.value.isNullOrEmpty())
+        {
             val name = nameEditTextContent.value.toString()
             val description = descriptionEditTextContent.value.toString()
             val latitude = latitudeEditTextContent.value.toString().toFloat()
@@ -55,10 +55,10 @@ class AddEditLocationViewModel : ViewModel(){
             val diameter = diameterEditTextContent.value.toString().toDouble()
             if(isNewLocation) {
                 createdLocation = liveData(Dispatchers.IO) {
-                    val location = locRepository.addLocation(name, description, latitude, longitude, diameter, _imageBitmap.value)
+                    val location = locRepository.addLocation(name.trim(), description.trim(), latitude, longitude, diameter, _imageBitmap.value)
                     emit(location)
                 }
-                _eventCode.postValue(Constants.EC_ADDED_LOCATION)
+                _result.postValue(LocationResult.Success.Added(name.trim()))
             } else {
                 val location = MyLocation().apply {
                     this.userId = editedLocation.value?.userId
@@ -71,14 +71,14 @@ class AddEditLocationViewModel : ViewModel(){
                 }
                 try {
                     locRepository.updateLocation(location, _imageBitmap.value)
-                    _eventCode.postValue(Constants.EC_UPDATED_LOCATION)
+                    _result.postValue(LocationResult.Success.Updated(name.trim()))
                 } catch (e: FirebaseFirestoreException){
-                    HelperClass.logTestMessage("$e ${e.message}")
+                    _result.postValue(LocationResult.Error.FirestoreError(e))
                 }
             }
 
         } else {
-            _eventCode.postValue(Constants.EC_FAIL_ADD_EDIT_LOCATION)
+            _result.postValue(LocationResult.Error.EmptyRequiredFields(Exception()))
         }
 
     }
@@ -99,10 +99,6 @@ class AddEditLocationViewModel : ViewModel(){
 
     fun uploadImage(image: Bitmap){
         _imageBitmap.value = image
-    }
-
-    fun loadImage(){
-
     }
 
 }

@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.example.memoryroadapp.Constants
 import com.example.memoryroadapp.HelperClass
 import com.example.memoryroadapp.User
+import com.example.memoryroadapp.data.models.MyLocation
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -13,10 +14,8 @@ import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
-import kotlinx.coroutines.withContext
 
 class AuthRepository {
     companion object{
@@ -32,8 +31,8 @@ class AuthRepository {
     suspend fun firebaseSignInWithEmail(email: String, password: String): User{
         val authResult = firebaseAuth.signInWithEmailAndPassword(email, password).await()
         val uid = authResult.user?.uid
-
-        val userSnapshot = uid?.let { usersRef.document(it).get().await() }
+        HelperClass.logTestMessage(Thread.currentThread().name)
+        val userSnapshot = usersRef.document(uid!!).get().await()
         val user = userSnapshot?.toObject<User>()!!
         user.isAuthenticated = true
 
@@ -61,7 +60,7 @@ class AuthRepository {
     }
 
     suspend fun createUserWithEmail(email: String, password: String, name: String): User{
-        val authResult = firebaseAuth.createUserWithEmailAndPassword(email, password).await()
+        firebaseAuth.createUserWithEmailAndPassword(email, password).await()
         val currentUser = firebaseAuth.currentUser
         val user = User(currentUser?.uid!!, email, name)
         usersRef.document(currentUser.uid).set(user)
