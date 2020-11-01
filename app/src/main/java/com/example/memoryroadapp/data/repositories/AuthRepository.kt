@@ -19,9 +19,13 @@ import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 
 class AuthRepository {
+    companion object{
+        const val USER: String = "user"
+        const val USERS: String = "users"
+    }
     private val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
     private val rootRef: FirebaseFirestore = Firebase.firestore
-    private val usersRef: CollectionReference = rootRef.collection(Constants.USERS)
+    private val usersRef: CollectionReference = rootRef.collection(USERS)
 
 
 
@@ -57,12 +61,7 @@ class AuthRepository {
     }
 
     suspend fun createUserWithEmail(email: String, password: String, name: String): User{
-        try {
-            val authResult = firebaseAuth.createUserWithEmailAndPassword(email, password).await()
-        } catch (e: FirebaseFirestoreException){
-            HelperClass.logTestMessage(e.message)
-        }
-
+        val authResult = firebaseAuth.createUserWithEmailAndPassword(email, password).await()
         val currentUser = firebaseAuth.currentUser
         val user = User(currentUser?.uid!!, email, name)
         usersRef.document(currentUser.uid).set(user)

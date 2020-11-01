@@ -25,26 +25,28 @@ import java.lang.Exception
 import java.util.*
 import kotlin.collections.ArrayList
 
-sealed class Result<out  R>{
-    data class Success<out T>(val data: T) : Result<T>()
-    data class Error(val exception: Exception): Result<Nothing>()
-}
 
 class LocationsRepository {
+    companion object {
+        const val LOCATIONS: String = "locations"
+        const val IMAGES: String = "images"
+    }
+
     private val firebaseAuth = FirebaseAuth.getInstance()
     private val rootRef = Firebase.firestore
-    private val locationsRef = rootRef.collection(Constants.LOCATIONS)
+    private val locationsRef = rootRef.collection(LOCATIONS)
     private val storage = Firebase.storage
     private val storageRef = storage.reference
-    private val imagesRef = storageRef.child("images")
+    private val imagesRef = storageRef.child(IMAGES)
 
-    fun getAllLocations(): MutableLiveData<ArrayList<MyLocation>>{
+    fun getAllLocations(): MutableLiveData<ArrayList<MyLocation>> {
         val newMutableLiveDataList = MutableLiveData<ArrayList<MyLocation>>()
 
         val currentUser = firebaseAuth.currentUser
-        val query = locationsRef.whereEqualTo("userId", currentUser?.uid).orderBy("name", Query.Direction.ASCENDING)
+        val query = locationsRef.whereEqualTo("userId", currentUser?.uid)
+            .orderBy("name", Query.Direction.ASCENDING)
         query.addSnapshotListener { value, error ->
-            if(error != null){
+            if (error != null) {
                 HelperClass.logTestMessage("SnapshotListener failed: ${error.message}")
                 return@addSnapshotListener
             }
@@ -60,7 +62,7 @@ class LocationsRepository {
                 }*/
 
                 val locations = ArrayList<MyLocation>()
-                for (doc in value){
+                for (doc in value) {
                     val location = doc.toObject(MyLocation::class.java)
                     locations.add(location)
                 }
@@ -70,16 +72,16 @@ class LocationsRepository {
         return newMutableLiveDataList
     }
 
-    fun getLocationById(id: String): MutableLiveData<MyLocation>{
+    fun getLocationById(id: String): MutableLiveData<MyLocation> {
         val locationMutableLiveData = MutableLiveData<MyLocation>()
         val docRef = locationsRef.document(id)
         docRef.addSnapshotListener { snapshot, error ->
-            if(error != null){
+            if (error != null) {
                 HelperClass.logTestMessage(error.message)
                 return@addSnapshotListener
             }
 
-            if(snapshot != null && snapshot.exists()){
+            if (snapshot != null && snapshot.exists()) {
                 locationMutableLiveData.value = snapshot.toObject(MyLocation::class.java)
             } else {
                 HelperClass.logTestMessage("getLocationById: Current data is null")
@@ -88,14 +90,29 @@ class LocationsRepository {
         return locationMutableLiveData
     }
 
-    suspend fun addLocation(name: String, description: String, latitude: Float, longitude: Float, diameter: Double, imageBitmap: Bitmap?): MyLocation{
-        val location = MyLocation(firebaseAuth.currentUser?.uid, name, longitude, latitude, diameter, description)
-        val newImageName = if(imageBitmap != null){
+    suspend fun addLocation(
+        name: String,
+        description: String,
+        latitude: Float,
+        longitude: Float,
+        diameter: Double,
+        imageBitmap: Bitmap?
+    ): MyLocation {
+        val location = MyLocation(
+            firebaseAuth.currentUser?.uid,
+            name,
+            longitude,
+            latitude,
+            diameter,
+            description
+        )
+        val newImageName = if (imageBitmap != null) {
             UUID.randomUUID().toString()
         } else {
             "null"
         }
-        val imageUrl = uploadImage(location, newImageName, imageBitmap, firebaseAuth.currentUser?.uid!!)
+        val imageUrl =
+            uploadImage(location, newImageName, imageBitmap, firebaseAuth.currentUser?.uid!!)
         val locationRef = locationsRef.add(location).await()
         location.apply {
             uid = locationRef.id
@@ -108,21 +125,26 @@ class LocationsRepository {
         return location
     }
 
-    suspend fun updateLocation(location: MyLocation, imageBitmap: Bitmap?){
+    suspend fun updateLocation(location: MyLocation, imageBitmap: Bitmap?) {
         val snapshot = locationsRef.document(location.uid!!).get().await()
         val temp = snapshot?.toObject<MyLocation>()
-        val newImageName = if(imageBitmap != null){
+        val newImageName = if (imageBitmap != null) {
             UUID.randomUUID().toString()
         } else {
             "null"
         }
-        val imageUrl = uploadImage(temp!!, newImageName, imageBitmap, firebaseAuth.currentUser?.uid!!).toString()
+        val imageUrl = uploadImage(
+            temp!!,
+            newImageName,
+            imageBitmap,
+            firebaseAuth.currentUser?.uid!!
+        ).toString()
         location.imageUrl = imageUrl
         location.imageName = newImageName
         locationsRef.document(location.uid.toString()).set(location, SetOptions.merge()).await()
     }
 
-    suspend fun deleteLocation(location: MyLocation){
+    suspend fun deleteLocation(location: MyLocation) {
         locationsRef.document(location.uid.toString()).delete().await()
     }
 
@@ -131,15 +153,19 @@ class LocationsRepository {
     }
 
 
-
-    private suspend fun uploadImage(location: MyLocation, newImageName: String, imageBitmap: Bitmap?, userId: String): Uri? {
+    private suspend fun uploadImage(
+        location: MyLocation,
+        newImageName: String,
+        imageBitmap: Bitmap?,
+        userId: String
+    ): Uri? {
         val currentImageName = location.imageName.toString()
-        if(currentImageName != "null"){
+        if (currentImageName != "null") {
             val currentImageRef = imagesRef.child(userId).child(currentImageName)
             currentImageRef.delete().await()
         }
 
-        return if(imageBitmap == null){
+        return if (imageBitmap == null) {
             null
         } else {
             val imageRef = imagesRef.child(userId).child(newImageName)
@@ -147,8 +173,8 @@ class LocationsRepository {
             imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
             val data = baos.toByteArray()
             val uploadTask = imageRef.putBytes(data)
-            val imageUrl = uploadTask.continueWithTask{task->
-                if(task.isSuccessful) {
+            val imageUrl = uploadTask.continueWithTask { task ->
+                if (task.isSuccessful) {
                     task.exception?.let {
                         throw it
                     }

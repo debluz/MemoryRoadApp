@@ -4,9 +4,7 @@ open class Constants{
     companion object{
 
 
-        //TAGS
-        const val AUTH_TAG: String = "FirebaseAuthAppTag"
-        const val TEST_TAG: String = "TestMemoryRoadAppTag"
+
 
 
         //REQUEST CODES
@@ -15,20 +13,8 @@ open class Constants{
         const val REQ_C_ADD_LOCATION: Int = 3
         const val REQ_C_EDIT_LOCATION: Int = 4
 
-        //RESULTS CODES
-        const val USER: String = "user"
-        const val USERS: String = "users"
-        const val LOCATIONS: String = "locations"
 
         //EVENT CODES
-        const val EC_EMPTY_FIELDS = 5
-        const val EC_SIGN_IN_WITH_EMAIL = 6
-        const val EC_SIGN_IN_FAIL = 17
-        const val EC_AUTH_FAIL = 18
-        const val EC_SIGN_IN_GOOGLE = 7
-        const val EC_REGISTRATION_COMPLETED = 8
-        const val EC_REGISTRATION_FAILURE = 9
-        const val EC_CREATE_LOCATION = 10
         const val EC_ADDED_LOCATION = 11
         const val EC_UPDATED_LOCATION = 12
         const val EC_FAIL_ADD_EDIT_LOCATION = 13

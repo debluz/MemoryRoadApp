@@ -8,9 +8,11 @@ import com.example.memoryroadapp.Constants
 import com.example.memoryroadapp.HelperClass
 import com.example.memoryroadapp.User
 import com.example.memoryroadapp.data.repositories.AuthRepository
+import com.example.memoryroadapp.util.RegistrationResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.firestore.FirebaseFirestoreException
+import kotlinx.coroutines.Dispatchers
 import java.lang.Exception
 
 class SignUpViewModel(application: Application): AndroidViewModel(application) {
@@ -20,8 +22,8 @@ class SignUpViewModel(application: Application): AndroidViewModel(application) {
     val passwordEditTextContent = MutableLiveData<String>()
     val firstNameEditTextContent = MutableLiveData<String>()
     val lastNameEditTextContent = MutableLiveData<String>()
-    private var _eventCode = MutableLiveData<Int>()
-    val eventCode: LiveData<Int> = _eventCode
+    private var _result = MutableLiveData<RegistrationResult>()
+    val result : LiveData<RegistrationResult> = _result
     private var _enabled = MutableLiveData<Boolean>(false)
     val enabled: LiveData<Boolean> = _enabled
 
@@ -49,9 +51,9 @@ class SignUpViewModel(application: Application): AndroidViewModel(application) {
                 emailEditTextContent.value.toString().trim(),
                 passwordEditTextContent.value.toString().trim(),
                 "${firstNameEditTextContent.value.toString().trim()} ${lastNameEditTextContent.value.toString().trim()}")
-            _eventCode.value = Constants.EC_REGISTRATION_COMPLETED
+            _result.value = RegistrationResult.Success
         } else {
-            _eventCode.value = Constants.EC_REGISTRATION_FAILURE
+            _result.value = RegistrationResult.Error.SomethingWentWrong(Exception())
         }
 
     }
@@ -126,17 +128,13 @@ class SignUpViewModel(application: Application): AndroidViewModel(application) {
         }
     }
 
-
-
-
     private fun createUserWithEmail(email: String, password: String, name: String){
-        createdUserLiveData = liveData {
+        createdUserLiveData = liveData(Dispatchers.IO) {
             try {
                 val data = authRepository.createUserWithEmail(email, password, name)
                 emit(data)
             } catch (e: FirebaseAuthException){
-                HelperClass.logTestMessage(e.message)
-                _eventCode.value = Constants.EC_REGISTRATION_FAILURE
+                _result.postValue(RegistrationResult.Error.EmailAlreadyInUse(e))
             }
         }
     }

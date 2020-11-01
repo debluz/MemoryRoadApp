@@ -96,9 +96,9 @@
 60        <activity android:name="com.example.memoryroadapp.ui.AddEditLocationActivity" />
 60-->C:\Users\DucTamNguyen\Desktop\MemoryRoadApp\app\src\main\AndroidManifest.xml:42:9-64
 60-->C:\Users\DucTamNguyen\Desktop\MemoryRoadApp\app\src\main\AndroidManifest.xml:42:19-61
-61        <activity android:name="com.example.memoryroadapp.SignUpActivity" />
-61-->C:\Users\DucTamNguyen\Desktop\MemoryRoadApp\app\src\main\AndroidManifest.xml:43:9-52
-61-->C:\Users\DucTamNguyen\Desktop\MemoryRoadApp\app\src\main\AndroidManifest.xml:43:19-49
+61        <activity android:name="com.example.memoryroadapp.ui.SignUpActivity" />
+61-->C:\Users\DucTamNguyen\Desktop\MemoryRoadApp\app\src\main\AndroidManifest.xml:43:9-55
+61-->C:\Users\DucTamNguyen\Desktop\MemoryRoadApp\app\src\main\AndroidManifest.xml:43:19-52
 62        <activity android:name="com.example.memoryroadapp.ui.AuthActivity" >
 62-->C:\Users\DucTamNguyen\Desktop\MemoryRoadApp\app\src\main\AndroidManifest.xml:44:9-50:20
 62-->C:\Users\DucTamNguyen\Desktop\MemoryRoadApp\app\src\main\AndroidManifest.xml:44:19-50

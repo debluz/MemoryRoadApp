@@ -1,6 +1,5 @@
 package com.example.memoryroadapp.util
 
-import java.lang.Error
 import java.lang.Exception
 
 sealed class AuthenticationResult {

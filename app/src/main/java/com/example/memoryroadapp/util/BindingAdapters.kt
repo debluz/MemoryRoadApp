@@ -11,13 +11,11 @@ import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.view.View
 import android.widget.Button
-import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
-import com.example.memoryroadapp.SignUpActivity
+import com.example.memoryroadapp.ui.SignUpActivity
 import com.google.android.gms.common.SignInButton
-import com.google.android.gms.common.internal.ConnectionErrorMessages
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 

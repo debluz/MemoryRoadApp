@@ -8,10 +8,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.memoryroadapp.*
-import com.example.memoryroadapp.Constants.Companion.EC_AUTH_FAIL
-import com.example.memoryroadapp.Constants.Companion.EC_EMPTY_FIELDS
-import com.example.memoryroadapp.Constants.Companion.EC_SIGN_IN_FAIL
-import com.example.memoryroadapp.Constants.Companion.EC_SIGN_IN_WITH_EMAIL
 import com.example.memoryroadapp.data.viewmodels.AuthViewModel
 import com.example.memoryroadapp.databinding.ActivityLoginBinding
 import com.example.memoryroadapp.util.AuthenticationResult

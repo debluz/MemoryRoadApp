@@ -201,10 +201,10 @@ activity#com.example.memoryroadapp.ui.AddEditLocationActivity
 ADDED from C:\Users\DucTamNguyen\Desktop\MemoryRoadApp\app\src\main\AndroidManifest.xml:42:9-64
 	android:name
 		ADDED from C:\Users\DucTamNguyen\Desktop\MemoryRoadApp\app\src\main\AndroidManifest.xml:42:19-61
-activity#com.example.memoryroadapp.SignUpActivity
-ADDED from C:\Users\DucTamNguyen\Desktop\MemoryRoadApp\app\src\main\AndroidManifest.xml:43:9-52
+activity#com.example.memoryroadapp.ui.SignUpActivity
+ADDED from C:\Users\DucTamNguyen\Desktop\MemoryRoadApp\app\src\main\AndroidManifest.xml:43:9-55
 	android:name
-		ADDED from C:\Users\DucTamNguyen\Desktop\MemoryRoadApp\app\src\main\AndroidManifest.xml:43:19-49
+		ADDED from C:\Users\DucTamNguyen\Desktop\MemoryRoadApp\app\src\main\AndroidManifest.xml:43:19-52
 activity#com.example.memoryroadapp.ui.AuthActivity
 ADDED from C:\Users\DucTamNguyen\Desktop\MemoryRoadApp\app\src\main\AndroidManifest.xml:44:9-50:20
 	android:name

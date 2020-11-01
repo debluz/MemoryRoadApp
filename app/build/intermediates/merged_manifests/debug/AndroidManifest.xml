@@ -58,7 +58,7 @@
             android:label="@string/title_activity_maps" />
         <activity android:name="com.example.memoryroadapp.ui.LocationInfoActivity" />
         <activity android:name="com.example.memoryroadapp.ui.AddEditLocationActivity" />
-        <activity android:name="com.example.memoryroadapp.SignUpActivity" />
+        <activity android:name="com.example.memoryroadapp.ui.SignUpActivity" />
         <activity android:name="com.example.memoryroadapp.ui.AuthActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

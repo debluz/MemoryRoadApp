@@ -2,8 +2,6 @@ package com.example.memoryroadapp.data.viewmodels
 
 
 import androidx.lifecycle.*
-import com.example.memoryroadapp.Constants
-import com.example.memoryroadapp.HelperClass
 import com.example.memoryroadapp.User
 import com.example.memoryroadapp.data.repositories.AuthRepository
 import com.example.memoryroadapp.util.AuthenticationResult
@@ -42,10 +40,8 @@ class AuthViewModel: ViewModel() {
                 val data = authRepository.firebaseSignInWithEmail(email, password)
                 emit(data)
             } catch (e: FirebaseAuthException){
-                HelperClass.logTestMessage("$e ${e.message}")
                 _result.postValue(AuthenticationResult.Error.InvalidCredentials(e))
             } catch (e: FirebaseFirestoreException){
-                HelperClass.logTestMessage("$e ${e.message}")
                 _result.postValue(AuthenticationResult.Error.FirestoreError(e))
             }
 
