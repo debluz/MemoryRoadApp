@@ -1596,6 +1596,7 @@ id action_text
 id actions
 id activity_chooser_view_content
 id add
+id addEditLocation_image_view
 id addImageFAB
 id addLocationFAB
 id adjust_height
@@ -1699,7 +1700,6 @@ id icon_group
 id icon_only
 id ifRoom
 id image
-id imageView
 id info
 id invisible
 id italic
@@ -1716,6 +1716,7 @@ id line1
 id line3
 id listMode
 id list_item
+id locationInfo_image_view
 id location_description_text_view
 id location_image_view
 id location_name_edit_text

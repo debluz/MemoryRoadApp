@@ -1,10 +1,8 @@
 package com.example.memoryroadapp.data.viewmodels
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import com.example.memoryroadapp.HelperClass
 import com.example.memoryroadapp.data.models.MyLocation
 import com.example.memoryroadapp.data.repositories.LocationsRepository
 

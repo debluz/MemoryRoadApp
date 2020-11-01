@@ -22,6 +22,7 @@ MERGED from [androidx.viewpager2:viewpager2:1.0.0] C:\Users\DucTamNguyen\.gradle
 MERGED from [androidx.recyclerview:recyclerview:1.1.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\86dde89d5782e66c5a2234833cea2ff7\recyclerview-1.1.0\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.cardview:cardview:1.0.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\2a408b931039b0aac444a4d5c691adb3\cardview-1.0.0\AndroidManifest.xml:17:1-22:12
 MERGED from [com.firebaseui:firebase-ui-storage:6.2.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\5ba6eb2385a203b9c59f75ae290a2358\jetified-firebase-ui-storage-6.2.0\AndroidManifest.xml:2:1-11:12
+MERGED from [com.github.bumptech.glide:glide:4.11.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\de2f939461d621a053661a675cc63d1b\jetified-glide-4.11.0\AndroidManifest.xml:2:1-12:12
 MERGED from [com.google.android.gms:play-services-auth:18.1.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\dd3b940f1e392f4a9a42ceb29020d19c\jetified-play-services-auth-18.1.0\AndroidManifest.xml:17:1-40:12
 MERGED from [com.google.android.gms:play-services-maps:17.0.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\1f9ecd28160da4f177994df3ecc755d7\jetified-play-services-maps-17.0.0\AndroidManifest.xml:17:1-38:12
 MERGED from [androidx.lifecycle:lifecycle-extensions:2.2.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\6fc0d59cceca911d4e116b6fb4cc684e\lifecycle-extensions-2.2.0\AndroidManifest.xml:17:1-27:12
@@ -39,7 +40,6 @@ MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.1.0] C:\Users\DucTam
 MERGED from [androidx.transition:transition:1.2.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\aabe4558788cc3c37fcd063c39545786\transition-1.2.0\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\ef9f67b79038a8f892fc67cbfe86e5b5\vectordrawable-animated-1.1.0\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\386b7e2f061292db889fd27eb7e61cfe\vectordrawable-1.1.0\AndroidManifest.xml:17:1-24:12
-MERGED from [com.github.bumptech.glide:glide:4.8.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\a42a82246f58e34212590b8017baf808\jetified-glide-4.8.0\AndroidManifest.xml:2:1-12:12
 MERGED from [com.google.android.gms:play-services-auth-base:17.0.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\435618b89f604cdffc9403ee0cf61618\jetified-play-services-auth-base-17.0.0\AndroidManifest.xml:2:1-7:12
 MERGED from [com.google.firebase:firebase-database-collection:17.0.1] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\68071416994849a9b957fc293cd13b12\jetified-firebase-database-collection-17.0.1\AndroidManifest.xml:2:1-9:12
 MERGED from [com.google.android.gms:play-services-auth-api-phone:17.4.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\1eb9894ae2d340e49d31fd30e33a4bf0\jetified-play-services-auth-api-phone-17.4.0\AndroidManifest.xml:2:1-7:12
@@ -64,6 +64,8 @@ MERGED from [androidx.lifecycle:lifecycle-service:2.2.0] C:\Users\DucTamNguyen\.
 MERGED from [androidx.lifecycle:lifecycle-runtime:2.2.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\3400fce55281a64ad387d7b37f02b2ba\lifecycle-runtime-2.2.0\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\bc4525a87c66daf706174cf393769978\versionedparcelable-1.1.0\AndroidManifest.xml:17:1-27:12
 MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\98fc1cefb482ac8144752aa5063f55c2\cursoradapter-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [com.github.bumptech.glide:gifdecoder:4.11.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\9cf6fab01ec671c68db8217aff0bbfdb\jetified-gifdecoder-4.11.0\AndroidManifest.xml:2:1-11:12
+MERGED from [androidx.exifinterface:exifinterface:1.0.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\60545df4f2e625e7316486bd795971aa\exifinterface-1.0.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:1.0.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\09f991c2d0635dffc0129bab55aede1d\jetified-lifecycle-viewmodel-savedstate-1.0.0\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.2.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\ee22d7809359147f1a1311fc44772b58\lifecycle-viewmodel-2.2.0\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.lifecycle:lifecycle-livedata:2.2.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\c0d00741371fca852a9755c090f04bd2\lifecycle-livedata-2.2.0\AndroidManifest.xml:17:1-24:12
@@ -71,7 +73,6 @@ MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.2.0] C:\Users\DucTamNg
 MERGED from [androidx.arch.core:core-runtime:2.1.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\9b1d18137c57d059c0d791c0bd1650d3\core-runtime-2.1.0\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.savedstate:savedstate:1.0.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\52ae2ffb8bf45f433e8d1154cb011b44\jetified-savedstate-1.0.0\AndroidManifest.xml:17:1-24:12
 MERGED from [com.google.firebase:firebase-components:16.0.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\08b9db1bd66f39beed2e5b35d7c14acc\jetified-firebase-components-16.0.0\AndroidManifest.xml:15:1-23:12
-MERGED from [com.github.bumptech.glide:gifdecoder:4.8.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\3b9440adbfe48b10a2b79b1ed62115ef\jetified-gifdecoder-4.8.0\AndroidManifest.xml:2:1-11:12
 MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\62e3aefb30641ab9809778f3810adc52\localbroadcastmanager-1.0.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\5d3b4b73f1a577039dec24de9cf3a139\interpolator-1.0.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.documentfile:documentfile:1.0.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\8b43881ff3dc38c60b4f4afffd260fda\documentfile-1.0.0\AndroidManifest.xml:17:1-22:12
@@ -132,6 +133,8 @@ MERGED from [com.google.android.material:material:1.2.1] C:\Users\DucTamNguyen\.
 MERGED from [com.google.android.material:material:1.2.1] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\69492cde9bedd6ccd90dc69752b28d13\material-1.2.1\AndroidManifest.xml:22:5-20
 MERGED from [androidx.constraintlayout:constraintlayout:1.1.3] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\d9b86575625c04d92941ba91fa8f1a59\constraintlayout-1.1.3\AndroidManifest.xml:9:5-20
 MERGED from [androidx.constraintlayout:constraintlayout:1.1.3] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\d9b86575625c04d92941ba91fa8f1a59\constraintlayout-1.1.3\AndroidManifest.xml:9:5-20
+MERGED from [com.github.bumptech.glide:glide:4.11.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\de2f939461d621a053661a675cc63d1b\jetified-glide-4.11.0\AndroidManifest.xml:10:5-20
+MERGED from [com.github.bumptech.glide:glide:4.11.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\de2f939461d621a053661a675cc63d1b\jetified-glide-4.11.0\AndroidManifest.xml:10:5-20
 MERGED from [com.google.android.gms:play-services-auth:18.1.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\dd3b940f1e392f4a9a42ceb29020d19c\jetified-play-services-auth-18.1.0\AndroidManifest.xml:22:5-38:19
 MERGED from [com.google.android.gms:play-services-auth:18.1.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\dd3b940f1e392f4a9a42ceb29020d19c\jetified-play-services-auth-18.1.0\AndroidManifest.xml:22:5-38:19
 MERGED from [com.google.android.gms:play-services-maps:17.0.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\1f9ecd28160da4f177994df3ecc755d7\jetified-play-services-maps-17.0.0\AndroidManifest.xml:30:5-36:19
@@ -148,8 +151,6 @@ MERGED from [com.google.firebase:firebase-auth-interop:19.0.0] C:\Users\DucTamNg
 MERGED from [com.google.firebase:firebase-auth-interop:19.0.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\74bfff80f9ed7bc36c66cb32842e75a3\jetified-firebase-auth-interop-19.0.0\AndroidManifest.xml:7:5-8:19
 MERGED from [com.google.firebase:firebase-common:19.3.1] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\adba79d61438f532ccbe3457e8101284\jetified-firebase-common-19.3.1\AndroidManifest.xml:25:5-38:19
 MERGED from [com.google.firebase:firebase-common:19.3.1] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\adba79d61438f532ccbe3457e8101284\jetified-firebase-common-19.3.1\AndroidManifest.xml:25:5-38:19
-MERGED from [com.github.bumptech.glide:glide:4.8.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\a42a82246f58e34212590b8017baf808\jetified-glide-4.8.0\AndroidManifest.xml:10:5-20
-MERGED from [com.github.bumptech.glide:glide:4.8.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\a42a82246f58e34212590b8017baf808\jetified-glide-4.8.0\AndroidManifest.xml:10:5-20
 MERGED from [com.google.android.gms:play-services-safetynet:17.0.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\9491a3f686c12dfc50fc7adf0ae3ccb7\jetified-play-services-safetynet-17.0.0\AndroidManifest.xml:22:5-20
 MERGED from [com.google.android.gms:play-services-safetynet:17.0.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\9491a3f686c12dfc50fc7adf0ae3ccb7\jetified-play-services-safetynet-17.0.0\AndroidManifest.xml:22:5-20
 MERGED from [com.google.android.gms:play-services-base:17.1.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\348333612a3285a49563bbe40335760c\jetified-play-services-base-17.1.0\AndroidManifest.xml:22:5-27:19
@@ -164,8 +165,8 @@ MERGED from [androidx.lifecycle:lifecycle-process:2.2.0] C:\Users\DucTamNguyen\.
 MERGED from [androidx.lifecycle:lifecycle-process:2.2.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\30b154a9064a207563a4f110e952e232\jetified-lifecycle-process-2.2.0\AndroidManifest.xml:24:5-30:19
 MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\bc4525a87c66daf706174cf393769978\versionedparcelable-1.1.0\AndroidManifest.xml:24:5-25:19
 MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\bc4525a87c66daf706174cf393769978\versionedparcelable-1.1.0\AndroidManifest.xml:24:5-25:19
-MERGED from [com.github.bumptech.glide:gifdecoder:4.8.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\3b9440adbfe48b10a2b79b1ed62115ef\jetified-gifdecoder-4.8.0\AndroidManifest.xml:9:5-20
-MERGED from [com.github.bumptech.glide:gifdecoder:4.8.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\3b9440adbfe48b10a2b79b1ed62115ef\jetified-gifdecoder-4.8.0\AndroidManifest.xml:9:5-20
+MERGED from [com.github.bumptech.glide:gifdecoder:4.11.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\9cf6fab01ec671c68db8217aff0bbfdb\jetified-gifdecoder-4.11.0\AndroidManifest.xml:9:5-20
+MERGED from [com.github.bumptech.glide:gifdecoder:4.11.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\9cf6fab01ec671c68db8217aff0bbfdb\jetified-gifdecoder-4.11.0\AndroidManifest.xml:9:5-20
 	android:appComponentFactory
 		ADDED from [androidx.core:core:1.3.1] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\8011bb10f0ab5bac373c2ec2ad828eb8\core-1.3.1\AndroidManifest.xml:24:18-86
 	android:supportsRtl
@@ -262,6 +263,8 @@ MERGED from [androidx.cardview:cardview:1.0.0] C:\Users\DucTamNguyen\.gradle\cac
 MERGED from [androidx.cardview:cardview:1.0.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\2a408b931039b0aac444a4d5c691adb3\cardview-1.0.0\AndroidManifest.xml:20:5-44
 MERGED from [com.firebaseui:firebase-ui-storage:6.2.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\5ba6eb2385a203b9c59f75ae290a2358\jetified-firebase-ui-storage-6.2.0\AndroidManifest.xml:7:5-9:41
 MERGED from [com.firebaseui:firebase-ui-storage:6.2.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\5ba6eb2385a203b9c59f75ae290a2358\jetified-firebase-ui-storage-6.2.0\AndroidManifest.xml:7:5-9:41
+MERGED from [com.github.bumptech.glide:glide:4.11.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\de2f939461d621a053661a675cc63d1b\jetified-glide-4.11.0\AndroidManifest.xml:6:5-8:41
+MERGED from [com.github.bumptech.glide:glide:4.11.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\de2f939461d621a053661a675cc63d1b\jetified-glide-4.11.0\AndroidManifest.xml:6:5-8:41
 MERGED from [com.google.android.gms:play-services-auth:18.1.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\dd3b940f1e392f4a9a42ceb29020d19c\jetified-play-services-auth-18.1.0\AndroidManifest.xml:20:5-44
 MERGED from [com.google.android.gms:play-services-auth:18.1.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\dd3b940f1e392f4a9a42ceb29020d19c\jetified-play-services-auth-18.1.0\AndroidManifest.xml:20:5-44
 MERGED from [com.google.android.gms:play-services-maps:17.0.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\1f9ecd28160da4f177994df3ecc755d7\jetified-play-services-maps-17.0.0\AndroidManifest.xml:20:5-44
@@ -296,8 +299,6 @@ MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] C:\Users\Duc
 MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\ef9f67b79038a8f892fc67cbfe86e5b5\vectordrawable-animated-1.1.0\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\386b7e2f061292db889fd27eb7e61cfe\vectordrawable-1.1.0\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\386b7e2f061292db889fd27eb7e61cfe\vectordrawable-1.1.0\AndroidManifest.xml:20:5-22:41
-MERGED from [com.github.bumptech.glide:glide:4.8.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\a42a82246f58e34212590b8017baf808\jetified-glide-4.8.0\AndroidManifest.xml:6:5-8:41
-MERGED from [com.github.bumptech.glide:glide:4.8.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\a42a82246f58e34212590b8017baf808\jetified-glide-4.8.0\AndroidManifest.xml:6:5-8:41
 MERGED from [com.google.android.gms:play-services-auth-base:17.0.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\435618b89f604cdffc9403ee0cf61618\jetified-play-services-auth-base-17.0.0\AndroidManifest.xml:5:5-44
 MERGED from [com.google.android.gms:play-services-auth-base:17.0.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\435618b89f604cdffc9403ee0cf61618\jetified-play-services-auth-base-17.0.0\AndroidManifest.xml:5:5-44
 MERGED from [com.google.firebase:firebase-database-collection:17.0.1] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\68071416994849a9b957fc293cd13b12\jetified-firebase-database-collection-17.0.1\AndroidManifest.xml:5:5-7:41
@@ -346,6 +347,10 @@ MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] C:\Users\Du
 MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\bc4525a87c66daf706174cf393769978\versionedparcelable-1.1.0\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\98fc1cefb482ac8144752aa5063f55c2\cursoradapter-1.0.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\98fc1cefb482ac8144752aa5063f55c2\cursoradapter-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [com.github.bumptech.glide:gifdecoder:4.11.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\9cf6fab01ec671c68db8217aff0bbfdb\jetified-gifdecoder-4.11.0\AndroidManifest.xml:5:5-7:41
+MERGED from [com.github.bumptech.glide:gifdecoder:4.11.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\9cf6fab01ec671c68db8217aff0bbfdb\jetified-gifdecoder-4.11.0\AndroidManifest.xml:5:5-7:41
+MERGED from [androidx.exifinterface:exifinterface:1.0.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\60545df4f2e625e7316486bd795971aa\exifinterface-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.exifinterface:exifinterface:1.0.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\60545df4f2e625e7316486bd795971aa\exifinterface-1.0.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:1.0.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\09f991c2d0635dffc0129bab55aede1d\jetified-lifecycle-viewmodel-savedstate-1.0.0\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:1.0.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\09f991c2d0635dffc0129bab55aede1d\jetified-lifecycle-viewmodel-savedstate-1.0.0\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.2.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\ee22d7809359147f1a1311fc44772b58\lifecycle-viewmodel-2.2.0\AndroidManifest.xml:20:5-22:41
@@ -360,8 +365,6 @@ MERGED from [androidx.savedstate:savedstate:1.0.0] C:\Users\DucTamNguyen\.gradle
 MERGED from [androidx.savedstate:savedstate:1.0.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\52ae2ffb8bf45f433e8d1154cb011b44\jetified-savedstate-1.0.0\AndroidManifest.xml:20:5-22:41
 MERGED from [com.google.firebase:firebase-components:16.0.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\08b9db1bd66f39beed2e5b35d7c14acc\jetified-firebase-components-16.0.0\AndroidManifest.xml:19:5-21:41
 MERGED from [com.google.firebase:firebase-components:16.0.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\08b9db1bd66f39beed2e5b35d7c14acc\jetified-firebase-components-16.0.0\AndroidManifest.xml:19:5-21:41
-MERGED from [com.github.bumptech.glide:gifdecoder:4.8.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\3b9440adbfe48b10a2b79b1ed62115ef\jetified-gifdecoder-4.8.0\AndroidManifest.xml:5:5-7:41
-MERGED from [com.github.bumptech.glide:gifdecoder:4.8.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\3b9440adbfe48b10a2b79b1ed62115ef\jetified-gifdecoder-4.8.0\AndroidManifest.xml:5:5-7:41
 MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\62e3aefb30641ab9809778f3810adc52\localbroadcastmanager-1.0.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\62e3aefb30641ab9809778f3810adc52\localbroadcastmanager-1.0.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\DucTamNguyen\.gradle\caches\transforms-2\files-2.1\5d3b4b73f1a577039dec24de9cf3a139\interpolator-1.0.0\AndroidManifest.xml:20:5-44

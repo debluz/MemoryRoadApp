@@ -235,10 +235,10 @@ public class ActivityAddEditLocationBindingImpl extends ActivityAddEditLocationB
     }
     private ActivityAddEditLocationBindingImpl(androidx.databinding.DataBindingComponent bindingComponent, View root, Object[] bindings) {
         super(bindingComponent, root, 6
+            , (android.widget.ImageView) bindings[1]
             , (com.google.android.material.floatingactionbutton.FloatingActionButton) bindings[11]
             , (com.google.android.material.textfield.TextInputLayout) bindings[13]
             , (com.google.android.material.textfield.TextInputLayout) bindings[16]
-            , (android.widget.ImageView) bindings[1]
             , (com.google.android.material.textfield.TextInputLayout) bindings[14]
             , (com.google.android.material.textfield.TextInputEditText) bindings[2]
             , (android.widget.ImageButton) bindings[6]
@@ -249,7 +249,7 @@ public class ActivityAddEditLocationBindingImpl extends ActivityAddEditLocationB
             , (android.widget.TextView) bindings[9]
             , (androidx.core.widget.NestedScrollView) bindings[10]
             );
-        this.imageView.setTag(null);
+        this.addEditLocationImageView.setTag(null);
         this.locationNameEditText.setTag(null);
         this.locationSelectButton.setTag(null);
         this.mboundView0 = (androidx.constraintlayout.widget.ConstraintLayout) bindings[0];
@@ -497,7 +497,7 @@ public class ActivityAddEditLocationBindingImpl extends ActivityAddEditLocationB
         if ((dirtyFlags & 0xc4L) != 0) {
             // api target 1
 
-            com.example.memoryroadapp.util.BindingAdaptersKt.loadImage(this.imageView, viewmodelImageBitmapGetValue);
+            com.example.memoryroadapp.util.BindingAdaptersKt.loadImage(this.addEditLocationImageView, viewmodelImageBitmapGetValue);
         }
         if ((dirtyFlags & 0xd0L) != 0) {
             // api target 1

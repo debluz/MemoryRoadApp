@@ -1,15 +1,8 @@
 package com.example.memoryroadapp.ui
 
 import android.content.Intent
-import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Spannable
-import android.text.SpannableString
-import android.text.TextPaint
-import android.text.method.LinkMovementMethod
-import android.text.style.ClickableSpan
-import android.view.View
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -19,17 +12,15 @@ import com.example.memoryroadapp.Constants.Companion.EC_AUTH_FAIL
 import com.example.memoryroadapp.Constants.Companion.EC_EMPTY_FIELDS
 import com.example.memoryroadapp.Constants.Companion.EC_SIGN_IN_FAIL
 import com.example.memoryroadapp.Constants.Companion.EC_SIGN_IN_WITH_EMAIL
-import com.example.memoryroadapp.data.AuthViewModel
+import com.example.memoryroadapp.data.viewmodels.AuthViewModel
 import com.example.memoryroadapp.databinding.ActivityLoginBinding
+import com.example.memoryroadapp.util.AuthenticationResult
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlin.coroutines.CoroutineContext
 
 class AuthActivity : AppCompatActivity() {
     private lateinit var googleSignInClient: GoogleSignInClient
@@ -48,16 +39,15 @@ class AuthActivity : AppCompatActivity() {
 
         initGoogleSignInClient()
         initSignInWithGoogleButton()
-        initSignInWithEmailButton()
+        observeAuthResult()
     }
 
 
 
-    private fun initSignInWithEmailButton(){
-        authViewModel.eventCode.observe(this, Observer { eventCode ->
-            when(eventCode){
-                EC_EMPTY_FIELDS -> Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show()
-                EC_SIGN_IN_WITH_EMAIL -> {
+    private fun observeAuthResult(){
+        authViewModel.result.observe(this, Observer {authResult ->
+            when(authResult){
+                AuthenticationResult.Success -> {
                     authViewModel.authenticatedUserLiveData.observe(this, Observer { user ->
                         HelperClass.logErrorMessage("AuthActivity: authenticatedUserLiveData - $user")
                         if(user.isAuthenticated!!){
@@ -66,11 +56,9 @@ class AuthActivity : AppCompatActivity() {
                         }
                     })
                 }
-                EC_SIGN_IN_FAIL -> Toast.makeText(this, "Email or password is invalid", Toast.LENGTH_SHORT).show()
-                EC_AUTH_FAIL -> Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show()
+                else -> Toast.makeText(this, authResult.toString(), Toast.LENGTH_SHORT).show()
             }
         })
-
     }
 
 

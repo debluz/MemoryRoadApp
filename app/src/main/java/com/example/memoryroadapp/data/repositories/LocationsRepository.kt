@@ -124,7 +124,6 @@ class LocationsRepository {
 
     suspend fun deleteLocation(location: MyLocation){
         locationsRef.document(location.uid.toString()).delete().await()
-
     }
 
     suspend fun undoDeletion(location: MyLocation) {

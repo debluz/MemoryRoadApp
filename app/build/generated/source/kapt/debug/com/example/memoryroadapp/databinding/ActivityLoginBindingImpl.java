@@ -45,7 +45,7 @@ public class ActivityLoginBindingImpl extends ActivityLoginBinding implements co
             // viewmodel.emailEditTextContent.getValue()
             java.lang.String viewmodelEmailEditTextContentGetValue = null;
             // viewmodel
-            com.example.memoryroadapp.data.AuthViewModel viewmodel = mViewmodel;
+            com.example.memoryroadapp.data.viewmodels.AuthViewModel viewmodel = mViewmodel;
 
 
 
@@ -78,7 +78,7 @@ public class ActivityLoginBindingImpl extends ActivityLoginBinding implements co
             // viewmodel.passwordEditTextContent
             androidx.lifecycle.MutableLiveData<java.lang.String> viewmodelPasswordEditTextContent = null;
             // viewmodel
-            com.example.memoryroadapp.data.AuthViewModel viewmodel = mViewmodel;
+            com.example.memoryroadapp.data.viewmodels.AuthViewModel viewmodel = mViewmodel;
             // viewmodel.passwordEditTextContent.getValue()
             java.lang.String viewmodelPasswordEditTextContentGetValue = null;
             // viewmodel.passwordEditTextContent != null
@@ -151,7 +151,7 @@ public class ActivityLoginBindingImpl extends ActivityLoginBinding implements co
     public boolean setVariable(int variableId, @Nullable Object variable)  {
         boolean variableSet = true;
         if (BR.viewmodel == variableId) {
-            setViewmodel((com.example.memoryroadapp.data.AuthViewModel) variable);
+            setViewmodel((com.example.memoryroadapp.data.viewmodels.AuthViewModel) variable);
         }
         else {
             variableSet = false;
@@ -159,7 +159,7 @@ public class ActivityLoginBindingImpl extends ActivityLoginBinding implements co
             return variableSet;
     }
 
-    public void setViewmodel(@Nullable com.example.memoryroadapp.data.AuthViewModel Viewmodel) {
+    public void setViewmodel(@Nullable com.example.memoryroadapp.data.viewmodels.AuthViewModel Viewmodel) {
         this.mViewmodel = Viewmodel;
         synchronized(this) {
             mDirtyFlags |= 0x4L;
@@ -209,7 +209,7 @@ public class ActivityLoginBindingImpl extends ActivityLoginBinding implements co
         java.lang.String viewmodelPasswordEditTextContentGetValue = null;
         java.lang.String viewmodelEmailEditTextContentGetValue = null;
         androidx.lifecycle.MutableLiveData<java.lang.String> viewmodelPasswordEditTextContent = null;
-        com.example.memoryroadapp.data.AuthViewModel viewmodel = mViewmodel;
+        com.example.memoryroadapp.data.viewmodels.AuthViewModel viewmodel = mViewmodel;
 
         if ((dirtyFlags & 0xfL) != 0) {
 
@@ -281,7 +281,7 @@ public class ActivityLoginBindingImpl extends ActivityLoginBinding implements co
         // viewmodel != null
         boolean viewmodelJavaLangObjectNull = false;
         // viewmodel
-        com.example.memoryroadapp.data.AuthViewModel viewmodel = mViewmodel;
+        com.example.memoryroadapp.data.viewmodels.AuthViewModel viewmodel = mViewmodel;
 
 
 

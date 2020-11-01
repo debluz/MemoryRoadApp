@@ -1,6 +1,7 @@
  package com.example.memoryroadapp.ui
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -10,7 +11,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.memoryroadapp.Constants
-import com.example.memoryroadapp.HelperClass
 import com.example.memoryroadapp.R
 import com.example.memoryroadapp.data.models.MyLocation
 import com.example.memoryroadapp.data.viewmodels.LocationInfoViewModel
@@ -37,7 +37,12 @@ import com.example.memoryroadapp.databinding.ActivityLocationInfoBinding
             locationInfoViewModel.locationLiveData.observe(this, Observer {location ->
                 binding.location = location
                 this.location = location
+                val uri = Uri.parse(location.imageUrl)
+                /*Glide.with(this)
+                    .load(uri)
+                    .into(locationInfo_image_view)*/
             })
+
         }
 
 

@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
@@ -13,10 +14,10 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.example.memoryroadapp.Constants
 import com.example.memoryroadapp.Constants.Companion.EC_ADDED_LOCATION
 import com.example.memoryroadapp.Constants.Companion.EC_FAIL_ADD_EDIT_LOCATION
 import com.example.memoryroadapp.Constants.Companion.EC_UPDATED_LOCATION
+import com.example.memoryroadapp.Constants.Companion.EXTRA_ID
 import com.example.memoryroadapp.Constants.Companion.REQUEST_IMAGE_GET
 import com.example.memoryroadapp.Constants.Companion.REQUEST_EXTERNAL_STORAGE_AND_CAMERA
 import com.example.memoryroadapp.HelperClass
@@ -24,7 +25,6 @@ import com.example.memoryroadapp.R
 import com.example.memoryroadapp.data.viewmodels.AddEditLocationViewModel
 import com.example.memoryroadapp.databinding.ActivityAddEditLocationBinding
 import kotlinx.android.synthetic.main.activity_add_edit_location.*
-import kotlinx.coroutines.job
 
 
 class AddEditLocationActivity : AppCompatActivity() {
@@ -47,21 +47,22 @@ class AddEditLocationActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
         binding.viewmodel = addEditLocationViewModel
 
+
         checkIntent()
         observeEventCode()
         initAddImageButton()
     }
 
     private fun checkIntent() {
-        title = if (intent.hasExtra(Constants.EXTRA_ID)) {
+        title = if (intent.hasExtra(EXTRA_ID)) {
             informViewModelAboutIntent(false)
-            initFields(intent.getStringExtra(Constants.EXTRA_ID))
-            String()
+            initFields(intent.getStringExtra(EXTRA_ID))
             resources.getString(R.string.title_edit_location)
         } else {
             informViewModelAboutIntent(true)
-            resources.getString(R.string.title_edit_location)
+            resources.getString(R.string.title_add_location)
         }
+
     }
 
     private fun informViewModelAboutIntent(flag: Boolean) {
@@ -72,6 +73,10 @@ class AddEditLocationActivity : AppCompatActivity() {
         addEditLocationViewModel.getLocationById(locationId)
         addEditLocationViewModel.editedLocation.observe(this, Observer { location ->
             addEditLocationViewModel.initFields()
+            val uri = Uri.parse(location.imageUrl)
+            /*Glide.with(this)
+                .load(uri)
+                .into(addEditLocation_image_view)*/
         })
     }
 
@@ -150,7 +155,7 @@ class AddEditLocationActivity : AppCompatActivity() {
         if (requestCode == REQUEST_IMAGE_GET && resultCode == RESULT_OK) {
             if(data?.extras != null){
                 val imageBitmap = data.extras!!.get("data") as Bitmap
-                imageView.setImageBitmap(imageBitmap)
+                addEditLocation_image_view.setImageBitmap(imageBitmap)
                 addEditLocationViewModel.uploadImage(imageBitmap)
             } else {
                 val imageUri = data?.data

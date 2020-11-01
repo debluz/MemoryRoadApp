@@ -35,7 +35,6 @@ class MyAdapter(private val onItemListener: OnItemListener)
     private var locations: ArrayList<MyLocation> = ArrayList()
     private var selectedLocations: ArrayList<MyLocation> = ArrayList()
     private var checkBoxFlag : Boolean = false
-    private var listOfImages : ArrayList<Uri> = ArrayList()
 
 
     // Provide a reference to the views for each data item
@@ -97,12 +96,21 @@ class MyAdapter(private val onItemListener: OnItemListener)
             this.executePendingBindings()
         }
 
-        if(listOfImages.size > 0){
-            Glide.with(holder.itemView)
-                .asBitmap()
-                .load(listOfImages[position])
-                .into(holder.itemView.location_image_view)
-        }
+        val imageView = holder.itemView.location_image_view
+        val uri = Uri.parse(location.imageUrl)
+
+        /*if(location.imageUrl != null && location.imageUrl != "null"){
+            Glide.with(holder.itemView.context)
+                .load(uri)
+                .into(imageView)
+        } else {
+            Glide.with(holder.itemView.context)
+                .clear(imageView)
+            imageView.setImageResource(R.drawable.ic_baseline_photo_size_select_actual_40)
+        }*/
+
+
+
 
     }
 
@@ -125,10 +133,7 @@ class MyAdapter(private val onItemListener: OnItemListener)
         notifyDataSetChanged()
     }
 
-    internal fun setImages(images: ArrayList<Uri>){
-        listOfImages = images
-        notifyDataSetChanged()
-    }
+
 
 }
 

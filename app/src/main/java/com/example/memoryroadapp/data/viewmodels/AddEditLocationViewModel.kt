@@ -8,7 +8,6 @@ import com.example.memoryroadapp.data.models.MyLocation
 import com.example.memoryroadapp.data.repositories.LocationsRepository
 import com.google.firebase.firestore.FirebaseFirestoreException
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 class AddEditLocationViewModel : ViewModel(){

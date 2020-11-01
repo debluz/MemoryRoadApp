@@ -1,10 +1,7 @@
 package com.example.memoryroadapp.ui
 
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.Color
-import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -17,8 +14,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.memoryroadapp.Constants
+import com.example.memoryroadapp.Constants.Companion.EXTRA_ID
+import com.example.memoryroadapp.Constants.Companion.EXTRA_NAME
 import com.example.memoryroadapp.HelperClass
 import com.example.memoryroadapp.R
 import com.example.memoryroadapp.data.models.MyLocation
@@ -29,10 +27,6 @@ import com.example.memoryroadapp.util.OnItemListener
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.StorageReference
-import com.google.firebase.storage.ktx.storage
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), OnItemListener {
@@ -63,10 +57,6 @@ class MainActivity : AppCompatActivity(), OnItemListener {
             this.adapter = viewAdapter
             this.layoutManager = LinearLayoutManager(this@MainActivity)
         }
-
-
-        val storageRef = Firebase.storage.reference
-        val imagesRef = storageRef.child("images").child(FirebaseAuth.getInstance().currentUser?.uid!!)
 
         mainViewModel.getAllLocations()
         mainViewModel.allLocations.observe(this, Observer {locations ->
@@ -151,15 +141,14 @@ class MainActivity : AppCompatActivity(), OnItemListener {
     override fun onItemClickListener(location: MyLocation) {
         val intent = Intent(this, LocationInfoActivity::class.java)
         intent.apply {
-            putExtra(Constants.EXTRA_ID, location.uid)
-            putExtra(Constants.EXTRA_NAME, location.name)
+            putExtra(EXTRA_ID, location.uid)
+            putExtra(EXTRA_NAME, location.name)
         }
         startActivity(intent)
     }
 
     override fun onBackPressed() {
         if(viewAdapter.getCheckBoxFlag()){
-            viewAdapter.setCheckBoxFlag(false)
             switchButtons()
         } else {
             super.onBackPressed()

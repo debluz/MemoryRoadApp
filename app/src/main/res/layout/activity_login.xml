@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewmodel"
-            type="com.example.memoryroadapp.data.AuthViewModel" />
+            type="com.example.memoryroadapp.data.viewmodels.AuthViewModel" />
 
     </data>
 
