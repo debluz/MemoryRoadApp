@@ -1,20 +1,16 @@
 package com.example.memoryroadapp.data.repositories
 
 import androidx.lifecycle.MutableLiveData
-import com.example.memoryroadapp.Constants
 import com.example.memoryroadapp.HelperClass
 import com.example.memoryroadapp.User
-import com.example.memoryroadapp.data.models.MyLocation
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
 
 class AuthRepository {

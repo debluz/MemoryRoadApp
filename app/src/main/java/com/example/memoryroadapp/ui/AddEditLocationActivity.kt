@@ -14,18 +14,20 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.example.memoryroadapp.Constants.Companion.EXTRA_ID
-import com.example.memoryroadapp.Constants.Companion.REQUEST_IMAGE_GET
-import com.example.memoryroadapp.Constants.Companion.REQUEST_EXTERNAL_STORAGE_AND_CAMERA
 import com.example.memoryroadapp.HelperClass
 import com.example.memoryroadapp.R
 import com.example.memoryroadapp.data.viewmodels.AddEditLocationViewModel
 import com.example.memoryroadapp.databinding.ActivityAddEditLocationBinding
-import com.example.memoryroadapp.util.LocationResult
+import com.example.memoryroadapp.util.results.LocationResult
 import kotlinx.android.synthetic.main.activity_add_edit_location.*
 
 
 class AddEditLocationActivity : AppCompatActivity() {
+    companion object{
+        const val REQUEST_EXTERNAL_STORAGE_AND_CAMERA = 1234
+        const val REQUEST_IMAGE_GET = 4321
+        const val EXTRA_ID = "com.example.memoryroadapp.ui.EXTRA_ID"
+    }
     private val addEditLocationViewModel by lazy {
         ViewModelProvider(this).get(
             AddEditLocationViewModel::class.java

@@ -1,6 +1,5 @@
-package com.example.memoryroadapp.util
+package com.example.memoryroadapp.util.results
 
-import java.lang.Error
 import java.lang.Exception
 
 sealed class LocationResult {

@@ -4,14 +4,10 @@ import android.app.Application
 import android.text.Editable
 import android.text.TextWatcher
 import androidx.lifecycle.*
-import com.example.memoryroadapp.Constants
-import com.example.memoryroadapp.HelperClass
 import com.example.memoryroadapp.User
 import com.example.memoryroadapp.data.repositories.AuthRepository
-import com.example.memoryroadapp.util.RegistrationResult
-import com.google.firebase.auth.FirebaseAuth
+import com.example.memoryroadapp.util.results.RegistrationResult
 import com.google.firebase.auth.FirebaseAuthException
-import com.google.firebase.firestore.FirebaseFirestoreException
 import kotlinx.coroutines.Dispatchers
 import java.lang.Exception
 

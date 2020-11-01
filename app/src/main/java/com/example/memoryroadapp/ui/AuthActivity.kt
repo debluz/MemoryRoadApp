@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.memoryroadapp.*
 import com.example.memoryroadapp.data.viewmodels.AuthViewModel
 import com.example.memoryroadapp.databinding.ActivityLoginBinding
-import com.example.memoryroadapp.util.AuthenticationResult
+import com.example.memoryroadapp.util.results.AuthenticationResult
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -19,6 +19,9 @@ import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.android.synthetic.main.activity_login.*
 
 class AuthActivity : AppCompatActivity() {
+    companion object{
+        const val REQUEST_CODE_SING_IN: Int = 1234
+    }
     private lateinit var googleSignInClient: GoogleSignInClient
     private val authViewModel: AuthViewModel by lazy { ViewModelProvider(this).get(AuthViewModel::class.java) }
 
@@ -70,14 +73,14 @@ class AuthActivity : AppCompatActivity() {
     private fun initSignInWithGoogleButton(){
         google_sign_in_button.setOnClickListener {
             val signInIntent = googleSignInClient.signInIntent
-            startActivityForResult(signInIntent, Constants.REQUEST_CODE_SING_IN)
+            startActivityForResult(signInIntent, REQUEST_CODE_SING_IN)
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if(requestCode == Constants.REQUEST_CODE_SING_IN){
+        if(requestCode == REQUEST_CODE_SING_IN){
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
                 val googleAccount = task.getResult(ApiException::class.java)

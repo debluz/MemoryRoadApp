@@ -1,4 +1,4 @@
-package com.example.memoryroadapp.util
+package com.example.memoryroadapp.util.results
 
 import java.lang.Exception
 

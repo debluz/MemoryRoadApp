@@ -14,9 +14,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.memoryroadapp.Constants
-import com.example.memoryroadapp.Constants.Companion.EXTRA_ID
-import com.example.memoryroadapp.Constants.Companion.EXTRA_NAME
 import com.example.memoryroadapp.HelperClass
 import com.example.memoryroadapp.R
 import com.example.memoryroadapp.data.models.MyLocation
@@ -30,10 +27,15 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), OnItemListener {
+    companion object{
+        const val EXTRA_ID = "com.example.memoryroadapp.ui.EXTRA_ID"
+        const val EXTRA_NAME = "com.example.memoryroadapp.ui.EXTRA_NAME"
+        const val SELECTED_LOCATIONS = "com.example.memoryroadapp.ui.SELECTED_LOCATIONS"
+    }
     private val mainViewModel by lazy { ViewModelProvider(this).get(MainViewModel::class.java) }
     private lateinit var viewAdapter: MyAdapter
     private lateinit var binding: ActivityMainBinding
-    private var isUsed : Boolean = false
+    private var isOnMapCheckBoxActive : Boolean = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,7 +79,7 @@ class MainActivity : AppCompatActivity(), OnItemListener {
     private fun initShowOnMapButton(){
         showOnMapFAB.setOnClickListener {
             val intent = Intent(this, MapsActivity::class.java)
-            intent.putParcelableArrayListExtra(Constants.SELECTED_LOCATIONS, viewAdapter.getSelectedLocations())
+            intent.putParcelableArrayListExtra(SELECTED_LOCATIONS, viewAdapter.getSelectedLocations())
             startActivity(intent)
         }
     }
@@ -107,7 +109,7 @@ class MainActivity : AppCompatActivity(), OnItemListener {
                 return true
             }
             R.id.show_selected_on_map_option -> {
-                isUsed = if(!isUsed){
+                isOnMapCheckBoxActive = if(!isOnMapCheckBoxActive){
                     viewAdapter.setCheckBoxFlag(true)
                     switchButtons()
                     true
@@ -149,6 +151,8 @@ class MainActivity : AppCompatActivity(), OnItemListener {
 
     override fun onBackPressed() {
         if(viewAdapter.getCheckBoxFlag()){
+            viewAdapter.setCheckBoxFlag(false)
+            isOnMapCheckBoxActive = false
             switchButtons()
         } else {
             super.onBackPressed()

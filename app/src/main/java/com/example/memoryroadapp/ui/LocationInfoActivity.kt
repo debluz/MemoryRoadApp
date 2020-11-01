@@ -10,13 +10,16 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.example.memoryroadapp.Constants
 import com.example.memoryroadapp.R
 import com.example.memoryroadapp.data.models.MyLocation
 import com.example.memoryroadapp.data.viewmodels.LocationInfoViewModel
 import com.example.memoryroadapp.databinding.ActivityLocationInfoBinding
 
  class LocationInfoActivity : AppCompatActivity() {
+     companion object{
+         const val EXTRA_ID = "com.example.memoryroadapp.ui.EXTRA_ID"
+         const val EXTRA_NAME = "com.example.memoryroadapp.ui.EXTRA_NAME"
+     }
      private val locationInfoViewModel
              by lazy { ViewModelProvider(this).get(LocationInfoViewModel::class.java) }
      private val binding
@@ -30,9 +33,9 @@ import com.example.memoryroadapp.databinding.ActivityLocationInfoBinding
         binding.lifecycleOwner = this
         binding.viewmodel = locationInfoViewModel
 
-        if(intent.hasExtra(Constants.EXTRA_ID)){
-            val locationId = intent.getStringExtra(Constants.EXTRA_ID)
-            title = intent.getStringExtra(Constants.EXTRA_NAME)
+        if(intent.hasExtra(EXTRA_ID)){
+            val locationId = intent.getStringExtra(EXTRA_ID)
+            title = intent.getStringExtra(EXTRA_NAME)
             locationInfoViewModel.getLocation(locationId)
             locationInfoViewModel.locationLiveData.observe(this, Observer {location ->
                 binding.location = location
@@ -58,7 +61,7 @@ import com.example.memoryroadapp.databinding.ActivityLocationInfoBinding
              if(this::location.isInitialized){
                  val intent = Intent(this, AddEditLocationActivity::class.java)
                  intent.apply {
-                     putExtra(Constants.EXTRA_ID, location.uid)
+                     putExtra(EXTRA_ID, location.uid)
                  }
                  startActivity(intent)
              } else {
