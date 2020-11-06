@@ -14,38 +14,43 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.example.memoryroadapp.HelperClass
 import com.example.memoryroadapp.R
 import com.example.memoryroadapp.data.viewmodels.AddEditLocationViewModel
 import com.example.memoryroadapp.databinding.ActivityAddEditLocationBinding
 import com.example.memoryroadapp.util.results.LocationResult
 import kotlinx.android.synthetic.main.activity_add_edit_location.*
+import kotlinx.android.synthetic.main.activity_location_info.*
 
 
 class AddEditLocationActivity : AppCompatActivity() {
     companion object{
-        const val REQUEST_EXTERNAL_STORAGE_AND_CAMERA = 1234
-        const val REQUEST_IMAGE_GET = 4321
-        const val EXTRA_ID = "com.example.memoryroadapp.ui.EXTRA_ID"
+        private const val REQUEST_EXTERNAL_STORAGE_AND_CAMERA = 1234
+        private const val REQUEST_IMAGE_GET = 4321
+        private const val EXTRA_ID = "com.example.memoryroadapp.ui.EXTRA_ID"
     }
     private val addEditLocationViewModel by lazy {
         ViewModelProvider(this).get(
             AddEditLocationViewModel::class.java
         )
     }
+    private lateinit var binding: ActivityAddEditLocationBinding
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_edit_location)
 
-        val binding = DataBindingUtil
+        binding = DataBindingUtil
             .setContentView<ActivityAddEditLocationBinding>(
                 this,
                 R.layout.activity_add_edit_location
             )
         binding.lifecycleOwner = this
         binding.viewmodel = addEditLocationViewModel
+
+
 
 
         checkIntent()
@@ -73,11 +78,20 @@ class AddEditLocationActivity : AppCompatActivity() {
         addEditLocationViewModel.getLocationById(locationId)
         addEditLocationViewModel.editedLocation.observe(this, Observer { location ->
             addEditLocationViewModel.initFields()
-            val uri = Uri.parse(location.imageUrl)
-            /*Glide.with(this)
-                .load(uri)
-                .into(addEditLocation_image_view)*/
+            loadImage(location.imageUrl)
         })
+    }
+
+    private fun loadImage(imageUrl: String?){
+        if(!imageUrl.isNullOrEmpty()){
+            Glide.with(this)
+                .load(imageUrl)
+                .into(binding.addEditLocationImageView)
+        } else {
+            Glide.with(this)
+                .clear(binding.addEditLocationImageView)
+            addEditLocation_image_view.setImageResource(R.drawable.ic_baseline_photo_size_select_actual_40)
+        }
     }
 
 
@@ -100,7 +114,7 @@ class AddEditLocationActivity : AppCompatActivity() {
     }
 
     private fun initAddImageButton() {
-        addImageFAB.setOnClickListener {
+        binding.addImageFAB.setOnClickListener {
             if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
                 && checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
                 && checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED

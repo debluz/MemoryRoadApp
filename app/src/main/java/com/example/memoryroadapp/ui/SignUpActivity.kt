@@ -13,13 +13,14 @@ import com.example.memoryroadapp.util.results.RegistrationResult
 
 class SignUpActivity : AppCompatActivity() {
     private val signUpViewModel: SignUpViewModel by lazy { ViewModelProvider(this).get(SignUpViewModel::class.java) }
+    private lateinit var binding: ActivitySignUpBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
 
 
-        val binding = DataBindingUtil.setContentView<ActivitySignUpBinding>(this,
+        binding = DataBindingUtil.setContentView(this,
             R.layout.activity_sign_up
         )
         binding.lifecycleOwner = this
@@ -43,10 +44,4 @@ class SignUpActivity : AppCompatActivity() {
             }
         })
     }
-
-
-
-
-
-
 }

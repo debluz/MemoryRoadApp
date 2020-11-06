@@ -25,7 +25,7 @@ public class ActivityLoginBindingImpl extends ActivityLoginBinding implements co
     private final com.google.android.material.textfield.TextInputEditText mboundView2;
     // variables
     @Nullable
-    private final android.view.View.OnClickListener mCallback6;
+    private final android.view.View.OnClickListener mCallback5;
     // values
     // listeners
     // Inverse Binding Event Handlers
@@ -125,7 +125,7 @@ public class ActivityLoginBindingImpl extends ActivityLoginBinding implements co
         this.signUpTextView.setTag(null);
         setRootTag(root);
         // listeners
-        mCallback6 = new com.example.memoryroadapp.generated.callback.OnClickListener(this, 1);
+        mCallback5 = new com.example.memoryroadapp.generated.callback.OnClickListener(this, 1);
         invalidateAll();
     }
 
@@ -261,7 +261,7 @@ public class ActivityLoginBindingImpl extends ActivityLoginBinding implements co
 
             androidx.databinding.adapters.TextViewBindingAdapter.setTextWatcher(this.emailEditTextLogin, (androidx.databinding.adapters.TextViewBindingAdapter.BeforeTextChanged)null, (androidx.databinding.adapters.TextViewBindingAdapter.OnTextChanged)null, (androidx.databinding.adapters.TextViewBindingAdapter.AfterTextChanged)null, emailEditTextLoginandroidTextAttrChanged);
             androidx.databinding.adapters.TextViewBindingAdapter.setTextWatcher(this.mboundView2, (androidx.databinding.adapters.TextViewBindingAdapter.BeforeTextChanged)null, (androidx.databinding.adapters.TextViewBindingAdapter.OnTextChanged)null, (androidx.databinding.adapters.TextViewBindingAdapter.AfterTextChanged)null, mboundView2androidTextAttrChanged);
-            this.signInButton.setOnClickListener(mCallback6);
+            this.signInButton.setOnClickListener(mCallback5);
         }
         if ((dirtyFlags & 0xeL) != 0) {
             // api target 1

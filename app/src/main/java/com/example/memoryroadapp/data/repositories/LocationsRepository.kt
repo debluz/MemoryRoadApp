@@ -90,25 +90,17 @@ class LocationsRepository {
         diameter: Double,
         imageBitmap: Bitmap?
     ): MyLocation {
-        val location = MyLocation(
-            firebaseAuth.currentUser?.uid,
-            name,
-            longitude,
-            latitude,
-            diameter,
-            description
-        )
+        val location = MyLocation(firebaseAuth.currentUser?.uid, name, longitude, latitude, diameter, description)
         val newImageName = if (imageBitmap != null) {
             UUID.randomUUID().toString()
         } else {
-            "null"
+            ""
         }
-        val imageUrl =
-            uploadImage(location, newImageName, imageBitmap, firebaseAuth.currentUser?.uid!!)
+        val imageUrl = uploadImage(location, newImageName, imageBitmap, firebaseAuth.currentUser?.uid!!)
         val locationRef = locationsRef.add(location).await()
         location.apply {
             uid = locationRef.id
-            this.imageUrl = imageUrl.toString()
+            this.imageUrl = imageUrl ?: ""
             imageName = newImageName
         }
         locationsRef.document(locationRef.id).set(location).await()
@@ -123,25 +115,25 @@ class LocationsRepository {
         val newImageName = if (imageBitmap != null) {
             UUID.randomUUID().toString()
         } else {
-            "null"
+            location.imageName!!
         }
         val imageUrl = uploadImage(
             tempLocation!!,
             newImageName,
             imageBitmap,
             firebaseAuth.currentUser?.uid!!
-        ).toString()
-        location.imageUrl = imageUrl
+        )
+        location.imageUrl = imageUrl ?: ""
         location.imageName = newImageName
-        locationsRef.document(location.uid.toString()).set(location, SetOptions.merge()).await()
+        locationsRef.document(location.uid!!).set(location, SetOptions.merge()).await()
     }
 
     suspend fun deleteLocation(location: MyLocation) {
-        locationsRef.document(location.uid.toString()).delete().await()
+        locationsRef.document(location.uid!!).delete().await()
     }
 
     suspend fun undoDeletion(location: MyLocation) {
-        locationsRef.document(location.uid.toString()).set(location).await()
+        locationsRef.document(location.uid!!).set(location).await()
     }
 
 
@@ -150,19 +142,15 @@ class LocationsRepository {
         newImageName: String,
         imageBitmap: Bitmap?,
         userId: String
-    ): Uri? {
-        val currentImageName = location.imageName.toString()
-        if (currentImageName != "null") {
-            val currentImageRef = imagesRef.child(userId).child(currentImageName)
-            currentImageRef.delete().await()
-        }
-
-        return if (imageBitmap == null) {
+    ): String? {
+        return if (imageBitmap == null && location.imageUrl.isNullOrEmpty()) {
             null
+        }else if (imageBitmap == null && !location.imageUrl.isNullOrEmpty()){
+            location.imageUrl
         } else {
             val imageRef = imagesRef.child(userId).child(newImageName)
             val baos = ByteArrayOutputStream()
-            imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+            imageBitmap?.compress(Bitmap.CompressFormat.JPEG, 100, baos)
             val data = baos.toByteArray()
             val uploadTask = imageRef.putBytes(data)
             val imageUrl = uploadTask.continueWithTask { task ->
@@ -174,7 +162,13 @@ class LocationsRepository {
                 imageRef.downloadUrl
             }.await()
 
-            imageUrl
+            val currentImageName = location.imageName
+            if (!currentImageName.isNullOrEmpty()) {
+                val currentImageRef = imagesRef.child(userId).child(currentImageName)
+                currentImageRef.delete().await()
+            }
+
+            imageUrl.toString()
         }
     }
 }

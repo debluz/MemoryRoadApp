@@ -1,6 +1,8 @@
 package com.example.memoryroadapp.ui
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -19,30 +21,36 @@ import com.example.memoryroadapp.R
 import com.example.memoryroadapp.data.models.MyLocation
 import com.example.memoryroadapp.data.viewmodels.MainViewModel
 import com.example.memoryroadapp.databinding.ActivityMainBinding
+import com.example.memoryroadapp.util.GeofenceUtil
 import com.example.memoryroadapp.util.MyAdapter
 import com.example.memoryroadapp.util.OnItemListener
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.location.*
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), OnItemListener {
     companion object{
-        const val EXTRA_ID = "com.example.memoryroadapp.ui.EXTRA_ID"
-        const val EXTRA_NAME = "com.example.memoryroadapp.ui.EXTRA_NAME"
-        const val SELECTED_LOCATIONS = "com.example.memoryroadapp.ui.SELECTED_LOCATIONS"
+        private const val EXTRA_ID = "com.example.memoryroadapp.ui.EXTRA_ID"
+        private const val EXTRA_NAME = "com.example.memoryroadapp.ui.EXTRA_NAME"
+        private const val SELECTED_LOCATIONS = "com.example.memoryroadapp.ui.SELECTED_LOCATIONS"
+        private const val LOCATION_PERMISSIONS_REQUEST = 111
     }
     private val mainViewModel by lazy { ViewModelProvider(this).get(MainViewModel::class.java) }
     private lateinit var viewAdapter: MyAdapter
     private lateinit var binding: ActivityMainBinding
     private var isOnMapCheckBoxActive : Boolean = false
+    private lateinit var optionsMenu: Menu
+    lateinit var geofencingClient: GeofencingClient
+    lateinit var geofenceUtil: GeofenceUtil
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         title = "My Locations"
-        binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.lifecycleOwner = this
         binding.viewmodel = mainViewModel
 
@@ -50,12 +58,17 @@ class MainActivity : AppCompatActivity(), OnItemListener {
         initRecyclerView()
         initSwipeToDelete()
         initShowOnMapButton()
+        geofencingClient = LocationServices.getGeofencingClient(this)
+
+
+
+
     }
 
 
     private fun initRecyclerView(){
         viewAdapter = MyAdapter(this@MainActivity)
-        recyclerView.apply {
+        binding.recyclerView.apply {
             this.adapter = viewAdapter
             this.layoutManager = LinearLayoutManager(this@MainActivity)
         }
@@ -64,20 +77,44 @@ class MainActivity : AppCompatActivity(), OnItemListener {
         mainViewModel.allLocations.observe(this, Observer {locations ->
             viewAdapter.setLocations(locations)
         })
+    }
 
+    private fun getGeofencingRequest(): GeofencingRequest{
+        return GeofencingRequest.Builder().apply {
+            setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER)
+            addGeofences(geofenceUtil.geofenceList)
+        }.build()
+    }
 
+    private fun getCurrentLocationRequest(){
+        val locationRequest = LocationRequest.create().apply {
+            interval= 10000
+            fastestInterval = 5000
+            priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        }
+
+        val builder = LocationSettingsRequest.Builder()
+            .addLocationRequest(locationRequest)
+        val client = LocationServices.getSettingsClient(this)
+        val task = client.checkLocationSettings(builder.build())
+            .addOnSuccessListener {
+                
+            }
+            .addOnFailureListener {
+
+            }
     }
 
 
     private fun initAddLocationButton() {
-        addLocationFAB.setOnClickListener {
+        binding.addLocationFAB.setOnClickListener {
             val intent = Intent(this, AddEditLocationActivity::class.java)
             startActivity(intent)
         }
     }
 
     private fun initShowOnMapButton(){
-        showOnMapFAB.setOnClickListener {
+        binding.showOnMapFAB.setOnClickListener {
             val intent = Intent(this, MapsActivity::class.java)
             intent.putParcelableArrayListExtra(SELECTED_LOCATIONS, viewAdapter.getSelectedLocations())
             startActivity(intent)
@@ -86,17 +123,25 @@ class MainActivity : AppCompatActivity(), OnItemListener {
 
     private fun switchButtons() {
         if(viewAdapter.getCheckBoxFlag()){
-            addLocationFAB.visibility = View.GONE
-            showOnMapFAB.visibility = View.VISIBLE
+            binding.addLocationFAB.visibility = View.GONE
+            binding.showOnMapFAB.visibility = View.VISIBLE
         } else {
-            addLocationFAB.visibility = View.VISIBLE
-            showOnMapFAB.visibility = View.GONE
+            binding.addLocationFAB.visibility = View.VISIBLE
+            binding.showOnMapFAB.visibility = View.GONE
         }
     }
 
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
+        if (menu != null) {
+            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
+                checkSelfPermission(Manifest.permission.ACCESS_BACKGROUND_LOCATION) == PackageManager.PERMISSION_GRANTED
+            ) {
+                menu.findItem(R.id.geofence_option).isChecked = true
+            }
+            optionsMenu = menu
+        }
         return true
     }
 
@@ -118,7 +163,10 @@ class MainActivity : AppCompatActivity(), OnItemListener {
                     switchButtons()
                     false
                 }
-
+                return true
+            }
+            R.id.geofence_option -> {
+                checkLocationPermissions(item)
                 return true
             }
         }
@@ -183,7 +231,44 @@ class MainActivity : AppCompatActivity(), OnItemListener {
         }).attachToRecyclerView(recyclerView)
     }
 
+    private fun checkLocationPermissions(item: MenuItem){
+        if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
+            checkSelfPermission(Manifest.permission.ACCESS_BACKGROUND_LOCATION) == PackageManager.PERMISSION_GRANTED
+        ) {
+            if(item.isChecked){
+                Toast.makeText(this, "To turn off Geofence, change location permission in your system settings.", Toast.LENGTH_SHORT).show()
+            }
+            item.isChecked = true
+        } else {
+            item.isChecked = false
+            requestPermissions(
+                arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                ),
+                LOCATION_PERMISSIONS_REQUEST
+            )
+        }
+    }
 
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        if (requestCode == LOCATION_PERMISSIONS_REQUEST
+            && grantResults[0] == PackageManager.PERMISSION_GRANTED
+            && grantResults[1] == PackageManager.PERMISSION_GRANTED
+        ) {
+            optionsMenu.findItem(R.id.geofence_option).apply {
+                this.isChecked = true
+            }
+        } else {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        }
+
+
+    }
 
 
 }

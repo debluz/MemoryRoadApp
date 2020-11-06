@@ -20,4 +20,5 @@
     <string name="title_edit_location">Edit location</string>
     <string name="title_add_location">Add location</string>
     <string name="media_rationale_message">Access to photos and media on your device is need to load image from gallery</string>
+    <string name="geofence_option">Geofence</string>
 </resources>

@@ -99,7 +99,6 @@
             android:id="@+id/showOnMapButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="@{() -> viewmodel.showOnMapButtonClick()}"
             android:text="@string/show_on_map_button"
             android:layout_marginBottom="16dp"
             android:layout_marginRight="16dp"

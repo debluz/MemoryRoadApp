@@ -68,6 +68,8 @@ class AddEditLocationViewModel : ViewModel(){
                     this.longitude = longitude
                     this.uid = editedLocation.value?.uid
                     this.diameter = diameter
+                    this.imageName = editedLocation.value?.imageName
+                    this.imageUrl = editedLocation.value?.imageUrl
                 }
                 try {
                     locRepository.updateLocation(location, _imageBitmap.value)

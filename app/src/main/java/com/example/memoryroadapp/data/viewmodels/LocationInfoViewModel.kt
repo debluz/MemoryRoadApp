@@ -18,10 +18,4 @@ class LocationInfoViewModel : ViewModel(){
             "Lat: ${location.latitude} Lng: ${location.longitude}"
         }
     }
-
-    fun showOnMapButtonClick(){
-
-    }
-
-
 }

@@ -11,4 +11,12 @@
         android:contentDescription="logout"
         android:icon="@drawable/ic_logout__3_"
         app:showAsAction="ifRoom"/>
+    <group android:id="@+id/group_geofence"
+        android:menuCategory="container"
+        android:checkableBehavior="all">
+        <item android:id="@+id/geofence_option"
+            android:title="@string/geofence_option"
+            android:contentDescription="geofence"/>
+    </group>
+
 </menu>

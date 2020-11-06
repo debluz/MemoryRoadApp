@@ -14,7 +14,6 @@ sealed class AuthenticationResult {
             }
         }
         class InvalidCredentials(exception: Exception) : Error(exception)
-        class EmailAlreadyInUse(exception: Exception) : Error(exception)
         class FirestoreError(exception: Exception) : Error(exception)
         class FirebaseAuthError(exception: Exception) : Error(exception)
     }

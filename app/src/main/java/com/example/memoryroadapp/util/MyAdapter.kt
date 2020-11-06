@@ -99,7 +99,7 @@ class MyAdapter(private val onItemListener: OnItemListener)
         val imageView = holder.itemView.location_image_view
         val uri = Uri.parse(location.imageUrl)
 
-        /*if(location.imageUrl != null && location.imageUrl != "null"){
+        if(!location.imageUrl.isNullOrEmpty()){
             Glide.with(holder.itemView.context)
                 .load(uri)
                 .into(imageView)
@@ -107,11 +107,7 @@ class MyAdapter(private val onItemListener: OnItemListener)
             Glide.with(holder.itemView.context)
                 .clear(imageView)
             imageView.setImageResource(R.drawable.ic_baseline_photo_size_select_actual_40)
-        }*/
-
-
-
-
+        }
     }
 
     fun setCheckBoxFlag(flag: Boolean){
@@ -125,7 +121,6 @@ class MyAdapter(private val onItemListener: OnItemListener)
 
     fun getSelectedLocations(): ArrayList<MyLocation> = selectedLocations
 
-    // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount(): Int = locations.size
 
     internal fun setLocations(locations: ArrayList<MyLocation>){

@@ -24,12 +24,13 @@ class AuthActivity : AppCompatActivity() {
     }
     private lateinit var googleSignInClient: GoogleSignInClient
     private val authViewModel: AuthViewModel by lazy { ViewModelProvider(this).get(AuthViewModel::class.java) }
+    private lateinit var binding: ActivityLoginBinding
 
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = DataBindingUtil.setContentView<ActivityLoginBinding>(this,
+        binding = DataBindingUtil.setContentView(this,
             R.layout.activity_login
         )
         binding.lifecycleOwner = this
@@ -71,7 +72,7 @@ class AuthActivity : AppCompatActivity() {
     }
 
     private fun initSignInWithGoogleButton(){
-        google_sign_in_button.setOnClickListener {
+        binding.googleSignInButton.setOnClickListener {
             val signInIntent = googleSignInClient.signInIntent
             startActivityForResult(signInIntent, REQUEST_CODE_SING_IN)
         }

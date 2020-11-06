@@ -1490,6 +1490,8 @@ drawable ic_baseline_add_location_40
 drawable ic_baseline_check_24
 drawable ic_baseline_check_circle_24
 drawable ic_baseline_edit_24
+drawable ic_baseline_keyboard_arrow_left_24
+drawable ic_baseline_keyboard_arrow_right_24
 drawable ic_baseline_map_24
 drawable ic_baseline_photo_camera_24
 drawable ic_baseline_photo_size_select_actual_40
@@ -1683,12 +1685,14 @@ id fixed
 id floating
 id forever
 id fragment_container_view_tag
+id geofence_option
 id ghost_view
 id ghost_view_holder
 id glide_custom_view_target_tag
 id gone
 id google_sign_in_button
 id group_divider
+id group_geofence
 id groups
 id guideline
 id hideable
@@ -1711,6 +1715,7 @@ id lastNameInputLayout_registration
 id last_name_edit_text_registration
 id latitudeInputLayout
 id left
+id leftFAB
 id light
 id line1
 id line3
@@ -1791,6 +1796,7 @@ id recyclerView
 id relativeLayout
 id reset_text_view
 id right
+id rightFAB
 id right_icon
 id right_side
 id rounded
@@ -2118,6 +2124,7 @@ string fab_transformation_scrim_behavior
 string fab_transformation_sheet_behavior
 string firebase_database_url
 string gcm_defaultSenderId
+string geofence_option
 string google_api_key
 string google_app_id
 string google_crash_reporting_api_key
@@ -2427,6 +2434,7 @@ style MaterialAlertDialog_MaterialComponents_Title_Panel
 style MaterialAlertDialog_MaterialComponents_Title_Panel_CenterStacked
 style MaterialAlertDialog_MaterialComponents_Title_Text
 style MaterialAlertDialog_MaterialComponents_Title_Text_CenterStacked
+style MyOverflowMenu
 style Platform_AppCompat
 style Platform_AppCompat_Light
 style Platform_MaterialComponents
