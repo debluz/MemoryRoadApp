@@ -1,28 +1,16 @@
 package com.example.memoryroadapp.util
 
-import android.annotation.SuppressLint
-import android.graphics.Bitmap
-import android.graphics.Color
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.memoryroadapp.HelperClass
 import com.example.memoryroadapp.R
 import com.example.memoryroadapp.data.models.MyLocation
 import com.example.memoryroadapp.databinding.ItemLocationBinding
-import com.firebase.ui.firestore.FirestoreRecyclerAdapter
-import com.firebase.ui.firestore.FirestoreRecyclerOptions
-import com.google.android.gms.common.util.DataUtils
-import com.google.firebase.database.collection.LLRBNode
-import com.google.rpc.Help
-import com.google.type.ColorOrBuilder
 import kotlinx.android.synthetic.main.item_location.view.*
-import java.lang.reflect.Array
 
 interface OnItemListener {
     fun onItemClickListener(location: MyLocation)
@@ -32,7 +20,15 @@ interface OnItemListener {
 class MyAdapter(private val onItemListener: OnItemListener)
     : RecyclerView.Adapter<MyAdapter.MyViewHolder>()
 {
-    private var locations: ArrayList<MyLocation> = ArrayList()
+    private var _locations: ArrayList<MyLocation> = ArrayList()
+    val locations: ArrayList<MyLocation>
+    get() {
+        return if(_locations != null){
+            _locations
+        } else {
+            ArrayList()
+        }
+    }
     private var selectedLocations: ArrayList<MyLocation> = ArrayList()
     private var checkBoxFlag : Boolean = false
 
@@ -51,7 +47,7 @@ class MyAdapter(private val onItemListener: OnItemListener)
                 if(checkBoxFlag){
                     v?.checkBox?.isChecked = !v?.checkBox?.isChecked!!
                 } else {
-                    onItemListener.onItemClickListener(locations[adapterPosition])
+                    onItemListener.onItemClickListener(_locations[adapterPosition])
                 }
 
             }
@@ -71,7 +67,7 @@ class MyAdapter(private val onItemListener: OnItemListener)
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        val location = locations[position]
+        val location = _locations[position]
 
         if(checkBoxFlag){
             holder.itemView.checkBox.visibility = View.VISIBLE
@@ -117,14 +113,14 @@ class MyAdapter(private val onItemListener: OnItemListener)
 
     fun getCheckBoxFlag(): Boolean = checkBoxFlag
 
-    fun getLocationAt(position: Int): MyLocation = locations[position]
+    fun getLocationAt(position: Int): MyLocation = _locations[position]
 
     fun getSelectedLocations(): ArrayList<MyLocation> = selectedLocations
 
-    override fun getItemCount(): Int = locations.size
+    override fun getItemCount(): Int = _locations.size
 
     internal fun setLocations(locations: ArrayList<MyLocation>){
-        this.locations = locations
+        this._locations = locations
         notifyDataSetChanged()
     }
 
