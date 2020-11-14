@@ -1612,7 +1612,6 @@ id barrier
 id beginning
 id blocking
 id bottom
-id button
 id buttonPanel
 id cancel_action
 id cancel_button
@@ -1853,6 +1852,7 @@ id src_over
 id standard
 id start
 id status_bar_latest_event_content
+id stop
 id stretch
 id submenuarrow
 id submit_area

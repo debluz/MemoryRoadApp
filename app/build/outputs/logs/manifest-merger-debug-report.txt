@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from C:\Users\DucTamNguyen\Desktop\MemoryRoadApp\app\src\main\AndroidManifest.xml:2:1-56:12
-INJECTED from C:\Users\DucTamNguyen\Desktop\MemoryRoadApp\app\src\main\AndroidManifest.xml:2:1-56:12
-INJECTED from C:\Users\DucTamNguyen\Desktop\MemoryRoadApp\app\src\main\AndroidManifest.xml:2:1-56:12
-INJECTED from C:\Users\DucTamNguyen\Desktop\MemoryRoadApp\app\src\main\AndroidManifest.xml:2:1-56:12
+ADDED from C:\Users\DucTamNguyen\Desktop\MemoryRoadApp\app\src\main\AndroidManifest.xml:2:1-57:12
+INJECTED from C:\Users\DucTamNguyen\Desktop\MemoryRoadApp\app\src\main\AndroidManifest.xml:2:1-57:12
+INJECTED from C:\Users\DucTamNguyen\Desktop\MemoryRoadApp\app\src\main\AndroidManifest.xml:2:1-57:12
+INJECTED from C:\Users\DucTamNguyen\Desktop\MemoryRoadApp\app\src\main\AndroidManifest.xml:2:1-57:12
 MERGED from [androidx.databinding:databinding-adapters:4.1.1] E:\Android\Gradle\caches\transforms-2\files-2.1\58d7ebb87305404bef9d70d2b22f6f07\databinding-adapters-4.1.1\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.databinding:databinding-runtime:4.1.1] E:\Android\Gradle\caches\transforms-2\files-2.1\7e5e624359094c4c3cef8b3d2ad6ae5b\databinding-runtime-4.1.1\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.databinding:viewbinding:4.1.1] E:\Android\Gradle\caches\transforms-2\files-2.1\c9c25e7ee30c74aec239c761c35b4280\jetified-viewbinding-4.1.1\AndroidManifest.xml:17:1-22:12
@@ -82,20 +82,20 @@ MERGED from [androidx.print:print:1.0.0] E:\Android\Gradle\caches\transforms-2\f
 MERGED from [androidx.annotation:annotation-experimental:1.0.0] E:\Android\Gradle\caches\transforms-2\files-2.1\40434188e846bcf08447ca67854775f3\jetified-annotation-experimental-1.0.0\AndroidManifest.xml:17:1-24:12
 MERGED from [com.google.firebase:protolite-well-known-types:17.1.0] E:\Android\Gradle\caches\transforms-2\files-2.1\27e38ffc2837f0130d6ec01dc0da506f\jetified-protolite-well-known-types-17.1.0\AndroidManifest.xml:2:1-11:12
 MERGED from [io.grpc:grpc-android:1.28.0] E:\Android\Gradle\caches\transforms-2\files-2.1\0da515dbb90b2033864228369cae4162\jetified-grpc-android-1.28.0\AndroidManifest.xml:2:1-13:12
-INJECTED from C:\Users\DucTamNguyen\Desktop\MemoryRoadApp\app\src\main\AndroidManifest.xml:2:1-56:12
-INJECTED from C:\Users\DucTamNguyen\Desktop\MemoryRoadApp\app\src\main\AndroidManifest.xml:2:1-56:12
-INJECTED from C:\Users\DucTamNguyen\Desktop\MemoryRoadApp\app\src\main\AndroidManifest.xml:2:1-56:12
+INJECTED from C:\Users\DucTamNguyen\Desktop\MemoryRoadApp\app\src\main\AndroidManifest.xml:2:1-57:12
+INJECTED from C:\Users\DucTamNguyen\Desktop\MemoryRoadApp\app\src\main\AndroidManifest.xml:2:1-57:12
+INJECTED from C:\Users\DucTamNguyen\Desktop\MemoryRoadApp\app\src\main\AndroidManifest.xml:2:1-57:12
 	package
 		ADDED from C:\Users\DucTamNguyen\Desktop\MemoryRoadApp\app\src\main\AndroidManifest.xml:3:5-40
 		INJECTED from C:\Users\DucTamNguyen\Desktop\MemoryRoadApp\app\src\main\AndroidManifest.xml
 		INJECTED from C:\Users\DucTamNguyen\Desktop\MemoryRoadApp\app\src\main\AndroidManifest.xml
 	android:versionName
 		INJECTED from C:\Users\DucTamNguyen\Desktop\MemoryRoadApp\app\src\main\AndroidManifest.xml
-		ADDED from C:\Users\DucTamNguyen\Desktop\MemoryRoadApp\app\src\main\AndroidManifest.xml:2:1-56:12
+		ADDED from C:\Users\DucTamNguyen\Desktop\MemoryRoadApp\app\src\main\AndroidManifest.xml:2:1-57:12
 		INJECTED from C:\Users\DucTamNguyen\Desktop\MemoryRoadApp\app\src\main\AndroidManifest.xml
 	android:versionCode
 		INJECTED from C:\Users\DucTamNguyen\Desktop\MemoryRoadApp\app\src\main\AndroidManifest.xml
-		ADDED from C:\Users\DucTamNguyen\Desktop\MemoryRoadApp\app\src\main\AndroidManifest.xml:2:1-56:12
+		ADDED from C:\Users\DucTamNguyen\Desktop\MemoryRoadApp\app\src\main\AndroidManifest.xml:2:1-57:12
 		INJECTED from C:\Users\DucTamNguyen\Desktop\MemoryRoadApp\app\src\main\AndroidManifest.xml
 	xmlns:android
 		ADDED from C:\Users\DucTamNguyen\Desktop\MemoryRoadApp\app\src\main\AndroidManifest.xml:2:11-69
@@ -126,7 +126,7 @@ ADDED from C:\Users\DucTamNguyen\Desktop\MemoryRoadApp\app\src\main\AndroidManif
 	android:name
 		ADDED from C:\Users\DucTamNguyen\Desktop\MemoryRoadApp\app\src\main\AndroidManifest.xml:17:19-57
 application
-ADDED from C:\Users\DucTamNguyen\Desktop\MemoryRoadApp\app\src\main\AndroidManifest.xml:20:5-54:19
+ADDED from C:\Users\DucTamNguyen\Desktop\MemoryRoadApp\app\src\main\AndroidManifest.xml:20:5-55:19
 MERGED from [com.google.firebase:firebase-storage-ktx:19.2.0] E:\Android\Gradle\caches\transforms-2\files-2.1\dd4d1b1ddc3e07e285c02fd41b3873ea\jetified-firebase-storage-ktx-19.2.0\AndroidManifest.xml:11:5-19:19
 MERGED from [com.google.firebase:firebase-storage-ktx:19.2.0] E:\Android\Gradle\caches\transforms-2\files-2.1\dd4d1b1ddc3e07e285c02fd41b3873ea\jetified-firebase-storage-ktx-19.2.0\AndroidManifest.xml:11:5-19:19
 MERGED from [com.google.firebase:firebase-firestore-ktx:22.0.0] E:\Android\Gradle\caches\transforms-2\files-2.1\814ed74861b191ce00d0fd60dc7c27d2\jetified-firebase-firestore-ktx-22.0.0\AndroidManifest.xml:11:5-19:19
@@ -233,6 +233,10 @@ activity#com.example.memoryroadapp.ui.MainActivity
 ADDED from C:\Users\DucTamNguyen\Desktop\MemoryRoadApp\app\src\main\AndroidManifest.xml:53:9-53
 	android:name
 		ADDED from C:\Users\DucTamNguyen\Desktop\MemoryRoadApp\app\src\main\AndroidManifest.xml:53:19-50
+receiver#com.example.memoryroadapp.util.GeofenceBroadcastReceiver
+ADDED from C:\Users\DucTamNguyen\Desktop\MemoryRoadApp\app\src\main\AndroidManifest.xml:54:9-67
+	android:name
+		ADDED from C:\Users\DucTamNguyen\Desktop\MemoryRoadApp\app\src\main\AndroidManifest.xml:54:19-65
 uses-sdk
 INJECTED from C:\Users\DucTamNguyen\Desktop\MemoryRoadApp\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from C:\Users\DucTamNguyen\Desktop\MemoryRoadApp\app\src\main\AndroidManifest.xml

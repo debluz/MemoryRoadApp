@@ -13,13 +13,14 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.memoryroadapp.GeofenceBroadcastReceiver
+import com.example.memoryroadapp.util.GeofenceBroadcastReceiver
 import com.example.memoryroadapp.HelperClass
 import com.example.memoryroadapp.R
 import com.example.memoryroadapp.data.models.MyLocation
@@ -66,31 +67,20 @@ class MainActivity : AppCompatActivity(), OnItemListener {
 
         geofencingClient = LocationServices.getGeofencingClient(this)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-        val geofencingRequest = getGeofencingRequest(viewAdapter.locations)
+
         locationCallback = object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult?) {
                 locationResult ?: return
                 HelperClass.logTestMessage("Lat: ${locationResult.lastLocation.latitude} Lng: ${locationResult.lastLocation.longitude}")
             }
         }
-        checkLocationRequestSettings()
-        binding.button.setOnClickListener {
-            stopLocationUpdates()
+
+        binding.start.setOnClickListener {
+            
         }
-    }
+        binding.stop.setOnClickListener {
 
-
-    private fun initRecyclerView() {
-        viewAdapter = MyAdapter(this@MainActivity)
-        binding.recyclerView.apply {
-            this.adapter = viewAdapter
-            this.layoutManager = LinearLayoutManager(this@MainActivity)
         }
-
-        mainViewModel.getAllLocations()
-        mainViewModel.allLocations.observe(this, Observer { locations ->
-            viewAdapter.setLocations(locations)
-        })
     }
 
     private fun getGeofencingRequest(locations: ArrayList<MyLocation>): GeofencingRequest {
@@ -99,33 +89,67 @@ class MainActivity : AppCompatActivity(), OnItemListener {
                 .setRequestId(location.uid)
                 .setCircularRegion(location.latitude?.toDouble()!!, location.longitude?.toDouble()!!, location.diameter?.toFloat()!!)
                 .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER or Geofence.GEOFENCE_TRANSITION_EXIT)
+                .setExpirationDuration(Geofence.NEVER_EXPIRE)
                 .build()
             geofence
         })
 
+        for(geofence in geofenceList){
+            HelperClass.logTestMessage(geofence.toString())
+        }
         return GeofencingRequest.Builder().apply {
             setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER)
             addGeofences(geofenceList)
         }.build()
     }
 
+    private fun addGeofences(locations: ArrayList<MyLocation>){
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(this,
+            arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+            ACCESS_FINE_LOCATION_REQUEST)
+            return
+        }
+        geofencingClient.addGeofences(getGeofencingRequest(locations), geofencePendingIntent).run {
+            addOnSuccessListener {
+                HelperClass.logTestMessage("Geofences added")
+            }
+            addOnFailureListener {
+                HelperClass.logTestMessage("Failure to add geofences: ${it.message}")
+            }
+        }
+    }
+
+    private fun removeGeofences(){
+        geofencingClient.removeGeofences(geofencePendingIntent).run {
+            addOnSuccessListener {
+                HelperClass.logTestMessage("Geofences removed")
+            }
+            addOnFailureListener {
+                HelperClass.logTestMessage("Failure to remove geofences: ${it.message}")
+            }
+        }
+    }
+
     private fun checkLocationRequestSettings() {
         val locationRequest = LocationRequest.create().apply {
-            interval = 10000
-            fastestInterval = 5000
+            interval = 5000
+            fastestInterval = 2000
             priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         }
 
         val builder = LocationSettingsRequest.Builder()
             .addLocationRequest(locationRequest)
         val client = LocationServices.getSettingsClient(this)
-        HelperClass.logTestMessage("checkLocationRequestSettings: 0")
         val task = client.checkLocationSettings(builder.build())
             .addOnFailureListener {exception ->
                 if(exception is ResolvableApiException){
                     try {
-                        exception.startResolutionForResult(this@MainActivity,
-                            REQUEST_TURN_DEVICE_LOCATION_ON)
+                        exception.startResolutionForResult(this@MainActivity, REQUEST_TURN_DEVICE_LOCATION_ON)
                     } catch (sendEx: IntentSender.SendIntentException){
                         HelperClass.logTestMessage("Error getting location settings resolution: ${sendEx.message}")
                     }
@@ -138,8 +162,59 @@ class MainActivity : AppCompatActivity(), OnItemListener {
                 }
             }
             .addOnSuccessListener {
+                HelperClass.logTestMessage("checkLocationRequestSettings: OK")
                 startLocationsUpdates(locationRequest)
             }
+    }
+
+    private fun checkLocationPermissions() {
+        if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
+            checkSelfPermission(Manifest.permission.ACCESS_BACKGROUND_LOCATION) == PackageManager.PERMISSION_GRANTED
+        ) {
+            setGeofenceOption(optionMenu.findItem(R.id.geofence_option))
+        } else {
+            requestPermissions(
+                arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                ),
+                LOCATION_PERMISSIONS_REQUEST
+            )
+        }
+    }
+
+    private fun setGeofenceOption(item: MenuItem) {
+        if (!item.isChecked) {
+            checkLocationRequestSettings()
+            addGeofences(viewAdapter.locations)
+            Toast.makeText(this, "Geofence starts working...", Toast.LENGTH_SHORT).show()
+        } else {
+            stopLocationUpdates()
+            removeGeofences()
+            Toast.makeText(this, "Geofence has stopped working", Toast.LENGTH_SHORT).show()
+        }
+        item.isChecked = !item.isChecked
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        if (requestCode == LOCATION_PERMISSIONS_REQUEST
+            && grantResults[0] == PackageManager.PERMISSION_GRANTED
+            && grantResults[1] == PackageManager.PERMISSION_GRANTED
+        ) {
+            setGeofenceOption(optionMenu.findItem(R.id.geofence_option))
+
+        } else if(requestCode == ACCESS_FINE_LOCATION_REQUEST && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+            TODO()
+            // updateUI
+        } else {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        }
+
+
     }
 
     private fun startLocationsUpdates(locationRequest: LocationRequest){
@@ -154,27 +229,18 @@ class MainActivity : AppCompatActivity(), OnItemListener {
         fusedLocationClient.removeLocationUpdates(locationCallback)
     }
 
-
-    private fun initRequestCurrentLocation() {
-
-        /*if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), ACCESS_FINE_LOCATION_REQUEST)
-            HelperClass.logTestMessage("initRequestCurrentLocation: 0")
-            return
+    private fun initRecyclerView() {
+        viewAdapter = MyAdapter(this@MainActivity)
+        binding.recyclerView.apply {
+            this.adapter = viewAdapter
+            this.layoutManager = LinearLayoutManager(this@MainActivity)
         }
-        fusedLocationClient.lastLocation
-            .addOnSuccessListener {
-                HelperClass.logTestMessage("initRequestCurrentLocation: 1")
-                it?.let {
-                    HelperClass.logTestMessage("Lat: ${it.latitude} Lng: ${it.longitude}")
-                }
 
-            }
-            .addOnFailureListener {
-                HelperClass.logTestMessage(it.message)
-            }*/
+        mainViewModel.getAllLocations()
+        mainViewModel.allLocations.observe(this, Observer { locations ->
+            viewAdapter.setLocations(locations)
+        })
     }
-
 
     private fun initAddLocationButton() {
         binding.addLocationFAB.setOnClickListener {
@@ -303,51 +369,6 @@ class MainActivity : AppCompatActivity(), OnItemListener {
             }).attachToRecyclerView(recyclerView)
     }
 
-    private fun checkLocationPermissions() {
-        if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
-            checkSelfPermission(Manifest.permission.ACCESS_BACKGROUND_LOCATION) == PackageManager.PERMISSION_GRANTED
-        ) {
-            setGeofenceOption(optionMenu.findItem(R.id.geofence_option))
-        } else {
-            requestPermissions(
-                arrayOf(
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_BACKGROUND_LOCATION
-                ),
-                LOCATION_PERMISSIONS_REQUEST
-            )
-        }
-    }
-
-    private fun setGeofenceOption(item: MenuItem) {
-        if (!item.isChecked) {
-            Toast.makeText(this, "Geofence starts working...", Toast.LENGTH_SHORT).show()
-        } else {
-            Toast.makeText(this, "Geofence has stopped working", Toast.LENGTH_SHORT).show()
-        }
-        item.isChecked = !item.isChecked
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        if (requestCode == LOCATION_PERMISSIONS_REQUEST
-            && grantResults[0] == PackageManager.PERMISSION_GRANTED
-            && grantResults[1] == PackageManager.PERMISSION_GRANTED
-        ) {
-            setGeofenceOption(optionMenu.findItem(R.id.geofence_option))
-
-        } else if(requestCode == ACCESS_FINE_LOCATION_REQUEST && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-            TODO()
-            // updateUI
-        } else {
-            super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        }
-
-
-    }
 
     companion object {
         private const val EXTRA_ID = "com.example.memoryroadapp.ui.EXTRA_ID"
@@ -355,8 +376,6 @@ class MainActivity : AppCompatActivity(), OnItemListener {
         private const val SELECTED_LOCATIONS = "com.example.memoryroadapp.ui.SELECTED_LOCATIONS"
         internal const val ACTION_GEOFENCE_EVENT = "com.example.memoryroadapp.ACTION_GEOFENCE_EVENT"
     }
-
-
 }
 
 private const val LOCATION_PERMISSIONS_REQUEST = 111
