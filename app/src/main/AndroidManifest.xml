@@ -51,7 +51,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.MainActivity" />
-        <receiver android:name=".util.GeofenceBroadcastReceiver"/>
+        <receiver android:name=".utils.GeofenceBroadcastReceiver"/>
     </application>
 
 </manifest>

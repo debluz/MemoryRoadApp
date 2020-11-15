@@ -15,8 +15,6 @@ import kotlinx.coroutines.launch
 class MainViewModel : ViewModel() {
     private val authRepository = AuthRepository()
     private val locRepository = LocationsRepository()
-    private var _eventCode = MutableLiveData<Int>()
-    val eventCode = _eventCode
     lateinit var allLocations: LiveData<ArrayList<MyLocation>>
 
 

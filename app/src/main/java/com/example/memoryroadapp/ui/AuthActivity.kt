@@ -10,13 +10,12 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.memoryroadapp.*
 import com.example.memoryroadapp.data.viewmodels.AuthViewModel
 import com.example.memoryroadapp.databinding.ActivityLoginBinding
-import com.example.memoryroadapp.util.results.AuthenticationResult
+import com.example.memoryroadapp.utils.results.AuthenticationResult
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.GoogleAuthProvider
-import kotlinx.android.synthetic.main.activity_login.*
 
 class AuthActivity : AppCompatActivity() {
     companion object{

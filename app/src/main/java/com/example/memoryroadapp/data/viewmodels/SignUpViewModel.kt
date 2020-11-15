@@ -6,7 +6,7 @@ import android.text.TextWatcher
 import androidx.lifecycle.*
 import com.example.memoryroadapp.User
 import com.example.memoryroadapp.data.repositories.AuthRepository
-import com.example.memoryroadapp.util.results.RegistrationResult
+import com.example.memoryroadapp.utils.results.RegistrationResult
 import com.google.firebase.auth.FirebaseAuthException
 import kotlinx.coroutines.Dispatchers
 import java.lang.Exception

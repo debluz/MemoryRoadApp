@@ -497,7 +497,7 @@ public class ActivityAddEditLocationBindingImpl extends ActivityAddEditLocationB
         if ((dirtyFlags & 0xc4L) != 0) {
             // api target 1
 
-            com.example.memoryroadapp.util.BindingAdaptersKt.loadImage(this.addEditLocationImageView, viewmodelImageBitmapGetValue);
+            com.example.memoryroadapp.utils.BindingAdaptersKt.loadImage(this.addEditLocationImageView, viewmodelImageBitmapGetValue);
         }
         if ((dirtyFlags & 0xd0L) != 0) {
             // api target 1

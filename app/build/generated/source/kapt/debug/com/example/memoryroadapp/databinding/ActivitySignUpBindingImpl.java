@@ -572,10 +572,10 @@ public class ActivitySignUpBindingImpl extends ActivitySignUpBinding implements 
         if ((dirtyFlags & 0x600L) != 0) {
             // api target 1
 
-            com.example.memoryroadapp.util.BindingAdaptersKt.addTextWatcher(this.emailEditTextRegistration, viewmodelEmailTextWatcher);
-            com.example.memoryroadapp.util.BindingAdaptersKt.addTextWatcher(this.firstNameEditTextRegistration, viewmodelFirstNameTextWatcher);
-            com.example.memoryroadapp.util.BindingAdaptersKt.addTextWatcher(this.lastNameEditTextRegistration, viewmodelLastNameTextWatcher);
-            com.example.memoryroadapp.util.BindingAdaptersKt.addTextWatcher(this.passwordEditTextRegistration, viewmodelPasswordTextWatcher);
+            com.example.memoryroadapp.utils.BindingAdaptersKt.addTextWatcher(this.emailEditTextRegistration, viewmodelEmailTextWatcher);
+            com.example.memoryroadapp.utils.BindingAdaptersKt.addTextWatcher(this.firstNameEditTextRegistration, viewmodelFirstNameTextWatcher);
+            com.example.memoryroadapp.utils.BindingAdaptersKt.addTextWatcher(this.lastNameEditTextRegistration, viewmodelLastNameTextWatcher);
+            com.example.memoryroadapp.utils.BindingAdaptersKt.addTextWatcher(this.passwordEditTextRegistration, viewmodelPasswordTextWatcher);
         }
         if ((dirtyFlags & 0x400L) != 0) {
             // api target 1
@@ -589,7 +589,7 @@ public class ActivitySignUpBindingImpl extends ActivitySignUpBinding implements 
         if ((dirtyFlags & 0x604L) != 0) {
             // api target 1
 
-            com.example.memoryroadapp.util.BindingAdaptersKt.checkIfValid(this.emailTextInputLayoutRegistration, androidxDatabindingViewDataBindingSafeUnboxViewmodelValidEmailGetValue, viewmodelErrorEmail);
+            com.example.memoryroadapp.utils.BindingAdaptersKt.checkIfValid(this.emailTextInputLayoutRegistration, androidxDatabindingViewDataBindingSafeUnboxViewmodelValidEmailGetValue, viewmodelErrorEmail);
         }
         if ((dirtyFlags & 0x602L) != 0) {
             // api target 1
@@ -599,7 +599,7 @@ public class ActivitySignUpBindingImpl extends ActivitySignUpBinding implements 
         if ((dirtyFlags & 0x610L) != 0) {
             // api target 1
 
-            com.example.memoryroadapp.util.BindingAdaptersKt.checkIfValid(this.firstNameInputLayoutRegistration, androidxDatabindingViewDataBindingSafeUnboxViewmodelValidFirstNameGetValue, viewmodelErrorName);
+            com.example.memoryroadapp.utils.BindingAdaptersKt.checkIfValid(this.firstNameInputLayoutRegistration, androidxDatabindingViewDataBindingSafeUnboxViewmodelValidFirstNameGetValue, viewmodelErrorName);
         }
         if ((dirtyFlags & 0x640L) != 0) {
             // api target 1
@@ -609,7 +609,7 @@ public class ActivitySignUpBindingImpl extends ActivitySignUpBinding implements 
         if ((dirtyFlags & 0x700L) != 0) {
             // api target 1
 
-            com.example.memoryroadapp.util.BindingAdaptersKt.checkIfValid(this.lastNameInputLayoutRegistration, androidxDatabindingViewDataBindingSafeUnboxViewmodelValidLastNameGetValue, viewmodelErrorName);
+            com.example.memoryroadapp.utils.BindingAdaptersKt.checkIfValid(this.lastNameInputLayoutRegistration, androidxDatabindingViewDataBindingSafeUnboxViewmodelValidLastNameGetValue, viewmodelErrorName);
         }
         if ((dirtyFlags & 0x680L) != 0) {
             // api target 1
@@ -619,12 +619,12 @@ public class ActivitySignUpBindingImpl extends ActivitySignUpBinding implements 
         if ((dirtyFlags & 0x601L) != 0) {
             // api target 1
 
-            com.example.memoryroadapp.util.BindingAdaptersKt.checkIfValid(this.passwordInputLayoutRegistration, androidxDatabindingViewDataBindingSafeUnboxViewmodelValidPasswordGetValue, viewmodelErrorPassword);
+            com.example.memoryroadapp.utils.BindingAdaptersKt.checkIfValid(this.passwordInputLayoutRegistration, androidxDatabindingViewDataBindingSafeUnboxViewmodelValidPasswordGetValue, viewmodelErrorPassword);
         }
         if ((dirtyFlags & 0x620L) != 0) {
             // api target 1
 
-            com.example.memoryroadapp.util.BindingAdaptersKt.checkIfFormValid(this.signUpButton, androidxDatabindingViewDataBindingSafeUnboxViewmodelEnabledGetValue);
+            com.example.memoryroadapp.utils.BindingAdaptersKt.checkIfFormValid(this.signUpButton, androidxDatabindingViewDataBindingSafeUnboxViewmodelEnabledGetValue);
         }
     }
     // Listener Stub Implementations

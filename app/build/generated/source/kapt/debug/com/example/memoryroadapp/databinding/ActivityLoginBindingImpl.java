@@ -271,7 +271,7 @@ public class ActivityLoginBindingImpl extends ActivityLoginBinding implements co
         if ((dirtyFlags & 0xcL) != 0) {
             // api target 1
 
-            com.example.memoryroadapp.util.BindingAdaptersKt.onClickableContentClick(this.signUpTextView, viewmodelClickableContent);
+            com.example.memoryroadapp.utils.BindingAdaptersKt.onClickableContentClick(this.signUpTextView, viewmodelClickableContent);
         }
     }
     // Listener Stub Implementations

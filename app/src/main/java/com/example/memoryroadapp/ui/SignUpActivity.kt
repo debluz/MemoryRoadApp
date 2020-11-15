@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.memoryroadapp.R
 import com.example.memoryroadapp.data.SignUpViewModel
 import com.example.memoryroadapp.databinding.ActivitySignUpBinding
-import com.example.memoryroadapp.util.results.RegistrationResult
+import com.example.memoryroadapp.utils.results.RegistrationResult
 
 class SignUpActivity : AppCompatActivity() {
     private val signUpViewModel: SignUpViewModel by lazy { ViewModelProvider(this).get(SignUpViewModel::class.java) }

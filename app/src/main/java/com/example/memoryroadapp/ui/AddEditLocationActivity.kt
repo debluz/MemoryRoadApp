@@ -6,7 +6,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
@@ -19,9 +18,8 @@ import com.example.memoryroadapp.HelperClass
 import com.example.memoryroadapp.R
 import com.example.memoryroadapp.data.viewmodels.AddEditLocationViewModel
 import com.example.memoryroadapp.databinding.ActivityAddEditLocationBinding
-import com.example.memoryroadapp.util.results.LocationResult
+import com.example.memoryroadapp.utils.results.LocationResult
 import kotlinx.android.synthetic.main.activity_add_edit_location.*
-import kotlinx.android.synthetic.main.activity_location_info.*
 
 
 class AddEditLocationActivity : AppCompatActivity() {

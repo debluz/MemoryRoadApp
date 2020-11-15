@@ -4,7 +4,7 @@ import android.graphics.Bitmap
 import androidx.lifecycle.*
 import com.example.memoryroadapp.data.models.MyLocation
 import com.example.memoryroadapp.data.repositories.LocationsRepository
-import com.example.memoryroadapp.util.results.LocationResult
+import com.example.memoryroadapp.utils.results.LocationResult
 import com.google.firebase.firestore.FirebaseFirestoreException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

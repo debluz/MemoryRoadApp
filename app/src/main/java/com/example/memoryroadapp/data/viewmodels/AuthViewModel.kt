@@ -4,7 +4,7 @@ package com.example.memoryroadapp.data.viewmodels
 import androidx.lifecycle.*
 import com.example.memoryroadapp.User
 import com.example.memoryroadapp.data.repositories.AuthRepository
-import com.example.memoryroadapp.util.results.AuthenticationResult
+import com.example.memoryroadapp.utils.results.AuthenticationResult
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.FirebaseUser

@@ -796,7 +796,11 @@ attr zOrderOnTop
 bool abc_action_bar_embed_tabs
 bool abc_allow_stacked_button_bar
 bool abc_config_actionMenuItemAllCaps
+bool enable_system_alarm_service_default
+bool enable_system_foreground_service_default
+bool enable_system_job_service_default
 bool mtrl_btn_textappearance_all_caps
+bool workmanager_test_configuration
 color abc_background_cache_hint_selector_material_dark
 color abc_background_cache_hint_selector_material_light
 color abc_btn_colored_borderless_text_material
@@ -1852,7 +1856,6 @@ id src_over
 id standard
 id start
 id status_bar_latest_event_content
-id stop
 id stretch
 id submenuarrow
 id submit_area
@@ -2093,6 +2096,8 @@ string add_location_button
 string app_name
 string appbar_scrolling_view_behavior
 string bottom_sheet_behavior
+string channel_description
+string channel_name
 string character_counter_content_description
 string character_counter_overflowed_content_description
 string character_counter_pattern
