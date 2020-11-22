@@ -14,20 +14,19 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
-import com.example.memoryroadapp.HelperClass
+import com.example.memoryroadapp.utils.HelperClass
 import com.example.memoryroadapp.R
-import com.example.memoryroadapp.data.viewmodels.AddEditLocationViewModel
+import com.example.memoryroadapp.viewmodels.AddEditLocationViewModel
 import com.example.memoryroadapp.databinding.ActivityAddEditLocationBinding
-import com.example.memoryroadapp.utils.results.LocationResult
+import com.example.memoryroadapp.ui.MapsActivity.Companion.EXTRA_LATITUDE
+import com.example.memoryroadapp.ui.MapsActivity.Companion.EXTRA_LONGITUDE
+import com.example.memoryroadapp.results.LocationResult
+import com.example.memoryroadapp.ui.MainActivity.Companion.EXTRA_ID
 import kotlinx.android.synthetic.main.activity_add_edit_location.*
 
 
 class AddEditLocationActivity : AppCompatActivity() {
-    companion object{
-        private const val REQUEST_EXTERNAL_STORAGE_AND_CAMERA = 1234
-        private const val REQUEST_IMAGE_GET = 4321
-        private const val EXTRA_ID = "com.example.memoryroadapp.ui.EXTRA_ID"
-    }
+
     private val addEditLocationViewModel by lazy {
         ViewModelProvider(this).get(
             AddEditLocationViewModel::class.java
@@ -54,6 +53,7 @@ class AddEditLocationActivity : AppCompatActivity() {
         checkIntent()
         observeActionResult()
         initAddImageButton()
+        initSelectLocationButton()
     }
 
     private fun checkIntent() {
@@ -148,6 +148,13 @@ class AddEditLocationActivity : AppCompatActivity() {
         }
     }
 
+    private fun initSelectLocationButton(){
+        binding.locationSelectButton.setOnClickListener {
+            val intent = Intent(this, MapsActivity::class.java)
+            startActivityForResult(intent, REQUEST_LOCATION_COORDINATES)
+        }
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_IMAGE_GET && resultCode == RESULT_OK) {
@@ -162,13 +169,19 @@ class AddEditLocationActivity : AppCompatActivity() {
                     val selectedImage = BitmapFactory.decodeStream(imageStream)
                     addEditLocationViewModel.uploadImage(selectedImage)
                 }
-                HelperClass.logTestMessage(data?.data.toString())
             }
-
+        } else if(requestCode == REQUEST_LOCATION_COORDINATES && resultCode == RESULT_OK){
+            if(data?.extras != null){
+                val latitude = data.extras!!.get(EXTRA_LATITUDE) as Double
+                val longitude = data.extras!!.get(EXTRA_LONGITUDE) as Double
+                addEditLocationViewModel.latitudeEditTextContent.value = latitude.toString()
+                addEditLocationViewModel.longitudeEditTextContent.value = longitude.toString()
+            }
         }
-
-
     }
 
-
 }
+
+private const val REQUEST_EXTERNAL_STORAGE_AND_CAMERA = 1234
+private const val REQUEST_IMAGE_GET = 4321
+private const val REQUEST_LOCATION_COORDINATES = 1111

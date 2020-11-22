@@ -25,7 +25,7 @@ public class ActivityLoginBindingImpl extends ActivityLoginBinding implements co
     private final com.google.android.material.textfield.TextInputEditText mboundView2;
     // variables
     @Nullable
-    private final android.view.View.OnClickListener mCallback5;
+    private final android.view.View.OnClickListener mCallback4;
     // values
     // listeners
     // Inverse Binding Event Handlers
@@ -45,7 +45,7 @@ public class ActivityLoginBindingImpl extends ActivityLoginBinding implements co
             // viewmodel.emailEditTextContent.getValue()
             java.lang.String viewmodelEmailEditTextContentGetValue = null;
             // viewmodel
-            com.example.memoryroadapp.data.viewmodels.AuthViewModel viewmodel = mViewmodel;
+            com.example.memoryroadapp.viewmodels.AuthViewModel viewmodel = mViewmodel;
 
 
 
@@ -78,7 +78,7 @@ public class ActivityLoginBindingImpl extends ActivityLoginBinding implements co
             // viewmodel.passwordEditTextContent
             androidx.lifecycle.MutableLiveData<java.lang.String> viewmodelPasswordEditTextContent = null;
             // viewmodel
-            com.example.memoryroadapp.data.viewmodels.AuthViewModel viewmodel = mViewmodel;
+            com.example.memoryroadapp.viewmodels.AuthViewModel viewmodel = mViewmodel;
             // viewmodel.passwordEditTextContent.getValue()
             java.lang.String viewmodelPasswordEditTextContentGetValue = null;
             // viewmodel.passwordEditTextContent != null
@@ -125,7 +125,7 @@ public class ActivityLoginBindingImpl extends ActivityLoginBinding implements co
         this.signUpTextView.setTag(null);
         setRootTag(root);
         // listeners
-        mCallback5 = new com.example.memoryroadapp.generated.callback.OnClickListener(this, 1);
+        mCallback4 = new com.example.memoryroadapp.generated.callback.OnClickListener(this, 1);
         invalidateAll();
     }
 
@@ -151,7 +151,7 @@ public class ActivityLoginBindingImpl extends ActivityLoginBinding implements co
     public boolean setVariable(int variableId, @Nullable Object variable)  {
         boolean variableSet = true;
         if (BR.viewmodel == variableId) {
-            setViewmodel((com.example.memoryroadapp.data.viewmodels.AuthViewModel) variable);
+            setViewmodel((com.example.memoryroadapp.viewmodels.AuthViewModel) variable);
         }
         else {
             variableSet = false;
@@ -159,7 +159,7 @@ public class ActivityLoginBindingImpl extends ActivityLoginBinding implements co
             return variableSet;
     }
 
-    public void setViewmodel(@Nullable com.example.memoryroadapp.data.viewmodels.AuthViewModel Viewmodel) {
+    public void setViewmodel(@Nullable com.example.memoryroadapp.viewmodels.AuthViewModel Viewmodel) {
         this.mViewmodel = Viewmodel;
         synchronized(this) {
             mDirtyFlags |= 0x4L;
@@ -209,7 +209,7 @@ public class ActivityLoginBindingImpl extends ActivityLoginBinding implements co
         java.lang.String viewmodelPasswordEditTextContentGetValue = null;
         java.lang.String viewmodelEmailEditTextContentGetValue = null;
         androidx.lifecycle.MutableLiveData<java.lang.String> viewmodelPasswordEditTextContent = null;
-        com.example.memoryroadapp.data.viewmodels.AuthViewModel viewmodel = mViewmodel;
+        com.example.memoryroadapp.viewmodels.AuthViewModel viewmodel = mViewmodel;
 
         if ((dirtyFlags & 0xfL) != 0) {
 
@@ -261,7 +261,7 @@ public class ActivityLoginBindingImpl extends ActivityLoginBinding implements co
 
             androidx.databinding.adapters.TextViewBindingAdapter.setTextWatcher(this.emailEditTextLogin, (androidx.databinding.adapters.TextViewBindingAdapter.BeforeTextChanged)null, (androidx.databinding.adapters.TextViewBindingAdapter.OnTextChanged)null, (androidx.databinding.adapters.TextViewBindingAdapter.AfterTextChanged)null, emailEditTextLoginandroidTextAttrChanged);
             androidx.databinding.adapters.TextViewBindingAdapter.setTextWatcher(this.mboundView2, (androidx.databinding.adapters.TextViewBindingAdapter.BeforeTextChanged)null, (androidx.databinding.adapters.TextViewBindingAdapter.OnTextChanged)null, (androidx.databinding.adapters.TextViewBindingAdapter.AfterTextChanged)null, mboundView2androidTextAttrChanged);
-            this.signInButton.setOnClickListener(mCallback5);
+            this.signInButton.setOnClickListener(mCallback4);
         }
         if ((dirtyFlags & 0xeL) != 0) {
             // api target 1
@@ -281,7 +281,7 @@ public class ActivityLoginBindingImpl extends ActivityLoginBinding implements co
         // viewmodel != null
         boolean viewmodelJavaLangObjectNull = false;
         // viewmodel
-        com.example.memoryroadapp.data.viewmodels.AuthViewModel viewmodel = mViewmodel;
+        com.example.memoryroadapp.viewmodels.AuthViewModel viewmodel = mViewmodel;
 
 
 

@@ -8,9 +8,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.memoryroadapp.*
-import com.example.memoryroadapp.data.viewmodels.AuthViewModel
 import com.example.memoryroadapp.databinding.ActivityLoginBinding
-import com.example.memoryroadapp.utils.results.AuthenticationResult
+
+import com.example.memoryroadapp.utils.HelperClass
+import com.example.memoryroadapp.results.AuthenticationResult
+import com.example.memoryroadapp.viewmodels.AuthViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -48,7 +50,6 @@ class AuthActivity : AppCompatActivity() {
             when(authResult){
                 AuthenticationResult.Success -> {
                     authViewModel.authenticatedUserLiveData.observe(this, Observer { user ->
-                        HelperClass.logErrorMessage("AuthActivity: authenticatedUserLiveData - $user")
                         if(user.isAuthenticated!!){
                             goToMainActivity()
                             finish()
@@ -118,28 +119,10 @@ class AuthActivity : AppCompatActivity() {
         })
     }
 
-    override fun onStart() {
-        super.onStart()
-        checkIfUserIsAlreadyAuthenticated()
-    }
-
-    private fun checkIfUserIsAlreadyAuthenticated(){
-        authViewModel.checkIfAnyoneIsAuthenticated()
-        authViewModel.currentUser.observe(this, Observer { currentUser ->
-            if(currentUser != null){
-                goToMainActivity()
-                finish()
-            }
-        })
-    }
 
     private fun goToMainActivity() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
     }
 }
 

@@ -21,10 +21,17 @@
     <string name="title_add_location">Add location</string>
     <string name="media_rationale_message">Access to photos and media on your device is need to load image from gallery</string>
     <string name="geofence_option">Geofence</string>
+    <string name="current_location">Current location</string>
+    <string name="selected_location">Selected location</string>
 
 
     <!--Geofences string-->
     <string name="channel_name">GeofenceChannel</string>
     <string name="channel_description">Geofence status notification</string>
+
+    <!--Notification strings-->
+    <string name="arriving_at_text">You have arrived at </string>
+    <string name="leaving_from_text">You have just left </string>
+    <string name="suffix_text"> in your MemoryRoad.</string>
 
 </resources>

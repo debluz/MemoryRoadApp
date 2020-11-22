@@ -3,6 +3,7 @@ package com.example.memoryroadapp.utils
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.net.Uri
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.TextPaint
@@ -14,8 +15,11 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
+import com.bumptech.glide.Glide
+import com.example.memoryroadapp.R
 import com.example.memoryroadapp.ui.SignUpActivity
 import com.google.android.gms.common.SignInButton
+import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
@@ -70,8 +74,22 @@ fun addTextWatcher(view: TextInputEditText, textWatcher: TextWatcher){
 }
 
 @BindingAdapter("app:loadImage")
-fun loadImage(view: ImageView, bitmap: Bitmap?){
+fun loadImage(view: ShapeableImageView, bitmap: Bitmap?){
     if(bitmap != null){
         view.setImageBitmap(bitmap)
+    }
+}
+
+@BindingAdapter("app:loadImageFromUrl")
+fun loadImageFromUrl(view: ShapeableImageView, imageUrl: String?){
+    if(imageUrl != null){
+        val uri = Uri.parse(imageUrl)
+        Glide.with(view.context)
+            .load(uri)
+            .into(view)
+    } else {
+        Glide.with(view.context)
+            .clear(view)
+        view.setImageResource(R.drawable.ic_baseline_photo_size_select_actual_40)
     }
 }

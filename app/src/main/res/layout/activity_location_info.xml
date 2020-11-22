@@ -6,10 +6,10 @@
     <data>
         <variable
             name="location"
-            type="com.example.memoryroadapp.data.models.MyLocation" />
+            type="com.example.memoryroadapp.models.MyLocation" />
         <variable
             name="viewmodel"
-            type="com.example.memoryroadapp.data.viewmodels.LocationInfoViewModel" />
+            type="com.example.memoryroadapp.viewmodels.LocationInfoViewModel" />
     </data>
 
     <RelativeLayout
@@ -31,9 +31,10 @@
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/locationInfo_image_view"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
+                    android:layout_height="280dp"
                     android:scaleType="fitXY"
-                    android:src="@drawable/ic_baseline_photo_size_select_actual_40"
+                    app:loadImageFromUrl="@{location.imageUrl}"
+                    android:padding="20dp"
                     app:layout_constraintBottom_toTopOf="@+id/guideline"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -44,7 +45,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    app:layout_constraintGuide_begin="260dp" />
+                    app:layout_constraintGuide_begin="270dp" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/name"

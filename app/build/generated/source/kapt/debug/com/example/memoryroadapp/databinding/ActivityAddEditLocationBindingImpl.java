@@ -14,12 +14,13 @@ public class ActivityAddEditLocationBindingImpl extends ActivityAddEditLocationB
     static {
         sIncludes = null;
         sViewsWithIds = new android.util.SparseIntArray();
-        sViewsWithIds.put(R.id.scrollView, 10);
-        sViewsWithIds.put(R.id.addImageFAB, 11);
-        sViewsWithIds.put(R.id.nameInputLayout, 12);
-        sViewsWithIds.put(R.id.descriptionInputLayout, 13);
-        sViewsWithIds.put(R.id.latitudeInputLayout, 14);
-        sViewsWithIds.put(R.id.longitudeInputLayout, 15);
+        sViewsWithIds.put(R.id.scrollView, 9);
+        sViewsWithIds.put(R.id.addImageFAB, 10);
+        sViewsWithIds.put(R.id.nameInputLayout, 11);
+        sViewsWithIds.put(R.id.descriptionInputLayout, 12);
+        sViewsWithIds.put(R.id.latitudeInputLayout, 13);
+        sViewsWithIds.put(R.id.longitudeInputLayout, 14);
+        sViewsWithIds.put(R.id.location_select_button, 15);
         sViewsWithIds.put(R.id.diameterInputLayout, 16);
         sViewsWithIds.put(R.id.relativeLayout, 17);
     }
@@ -33,12 +34,10 @@ public class ActivityAddEditLocationBindingImpl extends ActivityAddEditLocationB
     @NonNull
     private final com.google.android.material.textfield.TextInputEditText mboundView5;
     @NonNull
-    private final com.google.android.material.textfield.TextInputEditText mboundView7;
+    private final com.google.android.material.textfield.TextInputEditText mboundView6;
     // variables
     @Nullable
     private final android.view.View.OnClickListener mCallback2;
-    @Nullable
-    private final android.view.View.OnClickListener mCallback3;
     @Nullable
     private final android.view.View.OnClickListener mCallback1;
     // values
@@ -58,7 +57,7 @@ public class ActivityAddEditLocationBindingImpl extends ActivityAddEditLocationB
             // viewmodel.nameEditTextContent
             androidx.lifecycle.MutableLiveData<java.lang.String> viewmodelNameEditTextContent = null;
             // viewmodel
-            com.example.memoryroadapp.data.viewmodels.AddEditLocationViewModel viewmodel = mViewmodel;
+            com.example.memoryroadapp.viewmodels.AddEditLocationViewModel viewmodel = mViewmodel;
             // viewmodel.nameEditTextContent.getValue()
             java.lang.String viewmodelNameEditTextContentGetValue = null;
 
@@ -97,7 +96,7 @@ public class ActivityAddEditLocationBindingImpl extends ActivityAddEditLocationB
             // viewmodel.descriptionEditTextContent != null
             boolean viewmodelDescriptionEditTextContentJavaLangObjectNull = false;
             // viewmodel
-            com.example.memoryroadapp.data.viewmodels.AddEditLocationViewModel viewmodel = mViewmodel;
+            com.example.memoryroadapp.viewmodels.AddEditLocationViewModel viewmodel = mViewmodel;
 
 
 
@@ -134,7 +133,7 @@ public class ActivityAddEditLocationBindingImpl extends ActivityAddEditLocationB
             // viewmodel != null
             boolean viewmodelJavaLangObjectNull = false;
             // viewmodel
-            com.example.memoryroadapp.data.viewmodels.AddEditLocationViewModel viewmodel = mViewmodel;
+            com.example.memoryroadapp.viewmodels.AddEditLocationViewModel viewmodel = mViewmodel;
 
 
 
@@ -171,7 +170,7 @@ public class ActivityAddEditLocationBindingImpl extends ActivityAddEditLocationB
             // viewmodel.longitudeEditTextContent != null
             boolean viewmodelLongitudeEditTextContentJavaLangObjectNull = false;
             // viewmodel
-            com.example.memoryroadapp.data.viewmodels.AddEditLocationViewModel viewmodel = mViewmodel;
+            com.example.memoryroadapp.viewmodels.AddEditLocationViewModel viewmodel = mViewmodel;
 
 
 
@@ -192,12 +191,12 @@ public class ActivityAddEditLocationBindingImpl extends ActivityAddEditLocationB
             }
         }
     };
-    private androidx.databinding.InverseBindingListener mboundView7androidTextAttrChanged = new androidx.databinding.InverseBindingListener() {
+    private androidx.databinding.InverseBindingListener mboundView6androidTextAttrChanged = new androidx.databinding.InverseBindingListener() {
         @Override
         public void onChange() {
             // Inverse of viewmodel.diameterEditTextContent.getValue()
             //         is viewmodel.diameterEditTextContent.setValue((java.lang.String) callbackArg_0)
-            java.lang.String callbackArg_0 = androidx.databinding.adapters.TextViewBindingAdapter.getTextString(mboundView7);
+            java.lang.String callbackArg_0 = androidx.databinding.adapters.TextViewBindingAdapter.getTextString(mboundView6);
             // localize variables for thread safety
             // viewmodel.diameterEditTextContent
             androidx.lifecycle.MutableLiveData<java.lang.String> viewmodelDiameterEditTextContent = null;
@@ -206,7 +205,7 @@ public class ActivityAddEditLocationBindingImpl extends ActivityAddEditLocationB
             // viewmodel.diameterEditTextContent != null
             boolean viewmodelDiameterEditTextContentJavaLangObjectNull = false;
             // viewmodel
-            com.example.memoryroadapp.data.viewmodels.AddEditLocationViewModel viewmodel = mViewmodel;
+            com.example.memoryroadapp.viewmodels.AddEditLocationViewModel viewmodel = mViewmodel;
             // viewmodel.diameterEditTextContent.getValue()
             java.lang.String viewmodelDiameterEditTextContentGetValue = null;
 
@@ -235,23 +234,22 @@ public class ActivityAddEditLocationBindingImpl extends ActivityAddEditLocationB
     }
     private ActivityAddEditLocationBindingImpl(androidx.databinding.DataBindingComponent bindingComponent, View root, Object[] bindings) {
         super(bindingComponent, root, 6
-            , (android.widget.ImageView) bindings[1]
-            , (com.google.android.material.floatingactionbutton.FloatingActionButton) bindings[11]
-            , (com.google.android.material.textfield.TextInputLayout) bindings[13]
-            , (com.google.android.material.textfield.TextInputLayout) bindings[16]
-            , (com.google.android.material.textfield.TextInputLayout) bindings[14]
-            , (com.google.android.material.textfield.TextInputEditText) bindings[2]
-            , (android.widget.ImageButton) bindings[6]
-            , (com.google.android.material.textfield.TextInputLayout) bindings[15]
+            , (com.google.android.material.imageview.ShapeableImageView) bindings[1]
+            , (com.google.android.material.floatingactionbutton.FloatingActionButton) bindings[10]
             , (com.google.android.material.textfield.TextInputLayout) bindings[12]
+            , (com.google.android.material.textfield.TextInputLayout) bindings[16]
+            , (com.google.android.material.textfield.TextInputLayout) bindings[13]
+            , (com.google.android.material.textfield.TextInputEditText) bindings[2]
+            , (android.widget.ImageButton) bindings[15]
+            , (com.google.android.material.textfield.TextInputLayout) bindings[14]
+            , (com.google.android.material.textfield.TextInputLayout) bindings[11]
             , (android.widget.RelativeLayout) bindings[17]
+            , (android.widget.TextView) bindings[7]
             , (android.widget.TextView) bindings[8]
-            , (android.widget.TextView) bindings[9]
-            , (androidx.core.widget.NestedScrollView) bindings[10]
+            , (androidx.core.widget.NestedScrollView) bindings[9]
             );
         this.addEditLocationImageView.setTag(null);
         this.locationNameEditText.setTag(null);
-        this.locationSelectButton.setTag(null);
         this.mboundView0 = (androidx.constraintlayout.widget.ConstraintLayout) bindings[0];
         this.mboundView0.setTag(null);
         this.mboundView3 = (com.google.android.material.textfield.TextInputEditText) bindings[3];
@@ -260,14 +258,13 @@ public class ActivityAddEditLocationBindingImpl extends ActivityAddEditLocationB
         this.mboundView4.setTag(null);
         this.mboundView5 = (com.google.android.material.textfield.TextInputEditText) bindings[5];
         this.mboundView5.setTag(null);
-        this.mboundView7 = (com.google.android.material.textfield.TextInputEditText) bindings[7];
-        this.mboundView7.setTag(null);
+        this.mboundView6 = (com.google.android.material.textfield.TextInputEditText) bindings[6];
+        this.mboundView6.setTag(null);
         this.resetTextView.setTag(null);
         this.saveTextView.setTag(null);
         setRootTag(root);
         // listeners
         mCallback2 = new com.example.memoryroadapp.generated.callback.OnClickListener(this, 2);
-        mCallback3 = new com.example.memoryroadapp.generated.callback.OnClickListener(this, 3);
         mCallback1 = new com.example.memoryroadapp.generated.callback.OnClickListener(this, 1);
         invalidateAll();
     }
@@ -294,7 +291,7 @@ public class ActivityAddEditLocationBindingImpl extends ActivityAddEditLocationB
     public boolean setVariable(int variableId, @Nullable Object variable)  {
         boolean variableSet = true;
         if (BR.viewmodel == variableId) {
-            setViewmodel((com.example.memoryroadapp.data.viewmodels.AddEditLocationViewModel) variable);
+            setViewmodel((com.example.memoryroadapp.viewmodels.AddEditLocationViewModel) variable);
         }
         else {
             variableSet = false;
@@ -302,7 +299,7 @@ public class ActivityAddEditLocationBindingImpl extends ActivityAddEditLocationB
             return variableSet;
     }
 
-    public void setViewmodel(@Nullable com.example.memoryroadapp.data.viewmodels.AddEditLocationViewModel Viewmodel) {
+    public void setViewmodel(@Nullable com.example.memoryroadapp.viewmodels.AddEditLocationViewModel Viewmodel) {
         this.mViewmodel = Viewmodel;
         synchronized(this) {
             mDirtyFlags |= 0x40L;
@@ -403,7 +400,7 @@ public class ActivityAddEditLocationBindingImpl extends ActivityAddEditLocationB
         androidx.lifecycle.MutableLiveData<java.lang.String> viewmodelDescriptionEditTextContent = null;
         java.lang.String viewmodelNameEditTextContentGetValue = null;
         java.lang.String viewmodelDiameterEditTextContentGetValue = null;
-        com.example.memoryroadapp.data.viewmodels.AddEditLocationViewModel viewmodel = mViewmodel;
+        com.example.memoryroadapp.viewmodels.AddEditLocationViewModel viewmodel = mViewmodel;
 
         if ((dirtyFlags & 0xffL) != 0) {
 
@@ -508,13 +505,12 @@ public class ActivityAddEditLocationBindingImpl extends ActivityAddEditLocationB
             // api target 1
 
             androidx.databinding.adapters.TextViewBindingAdapter.setTextWatcher(this.locationNameEditText, (androidx.databinding.adapters.TextViewBindingAdapter.BeforeTextChanged)null, (androidx.databinding.adapters.TextViewBindingAdapter.OnTextChanged)null, (androidx.databinding.adapters.TextViewBindingAdapter.AfterTextChanged)null, locationNameEditTextandroidTextAttrChanged);
-            this.locationSelectButton.setOnClickListener(mCallback1);
             androidx.databinding.adapters.TextViewBindingAdapter.setTextWatcher(this.mboundView3, (androidx.databinding.adapters.TextViewBindingAdapter.BeforeTextChanged)null, (androidx.databinding.adapters.TextViewBindingAdapter.OnTextChanged)null, (androidx.databinding.adapters.TextViewBindingAdapter.AfterTextChanged)null, mboundView3androidTextAttrChanged);
             androidx.databinding.adapters.TextViewBindingAdapter.setTextWatcher(this.mboundView4, (androidx.databinding.adapters.TextViewBindingAdapter.BeforeTextChanged)null, (androidx.databinding.adapters.TextViewBindingAdapter.OnTextChanged)null, (androidx.databinding.adapters.TextViewBindingAdapter.AfterTextChanged)null, mboundView4androidTextAttrChanged);
             androidx.databinding.adapters.TextViewBindingAdapter.setTextWatcher(this.mboundView5, (androidx.databinding.adapters.TextViewBindingAdapter.BeforeTextChanged)null, (androidx.databinding.adapters.TextViewBindingAdapter.OnTextChanged)null, (androidx.databinding.adapters.TextViewBindingAdapter.AfterTextChanged)null, mboundView5androidTextAttrChanged);
-            androidx.databinding.adapters.TextViewBindingAdapter.setTextWatcher(this.mboundView7, (androidx.databinding.adapters.TextViewBindingAdapter.BeforeTextChanged)null, (androidx.databinding.adapters.TextViewBindingAdapter.OnTextChanged)null, (androidx.databinding.adapters.TextViewBindingAdapter.AfterTextChanged)null, mboundView7androidTextAttrChanged);
-            this.resetTextView.setOnClickListener(mCallback2);
-            this.saveTextView.setOnClickListener(mCallback3);
+            androidx.databinding.adapters.TextViewBindingAdapter.setTextWatcher(this.mboundView6, (androidx.databinding.adapters.TextViewBindingAdapter.BeforeTextChanged)null, (androidx.databinding.adapters.TextViewBindingAdapter.OnTextChanged)null, (androidx.databinding.adapters.TextViewBindingAdapter.AfterTextChanged)null, mboundView6androidTextAttrChanged);
+            this.resetTextView.setOnClickListener(mCallback1);
+            this.saveTextView.setOnClickListener(mCallback2);
         }
         if ((dirtyFlags & 0xe0L) != 0) {
             // api target 1
@@ -534,7 +530,7 @@ public class ActivityAddEditLocationBindingImpl extends ActivityAddEditLocationB
         if ((dirtyFlags & 0xc8L) != 0) {
             // api target 1
 
-            androidx.databinding.adapters.TextViewBindingAdapter.setText(this.mboundView7, viewmodelDiameterEditTextContentGetValue);
+            androidx.databinding.adapters.TextViewBindingAdapter.setText(this.mboundView6, viewmodelDiameterEditTextContentGetValue);
         }
     }
     // Listener Stub Implementations
@@ -545,27 +541,10 @@ public class ActivityAddEditLocationBindingImpl extends ActivityAddEditLocationB
                 // localize variables for thread safety
                 // viewmodel != null
                 boolean viewmodelJavaLangObjectNull = false;
-                // viewmodel
-                com.example.memoryroadapp.data.viewmodels.AddEditLocationViewModel viewmodel = mViewmodel;
-
-
-
-                viewmodelJavaLangObjectNull = (viewmodel) != (null);
-                if (viewmodelJavaLangObjectNull) {
-
-
-                    viewmodel.onResetClick();
-                }
-                break;
-            }
-            case 3: {
-                // localize variables for thread safety
-                // viewmodel != null
-                boolean viewmodelJavaLangObjectNull = false;
                 // viewmodel.onSaveClick()
                 kotlinx.coroutines.Job viewmodelOnSaveClick = null;
                 // viewmodel
-                com.example.memoryroadapp.data.viewmodels.AddEditLocationViewModel viewmodel = mViewmodel;
+                com.example.memoryroadapp.viewmodels.AddEditLocationViewModel viewmodel = mViewmodel;
 
 
 
@@ -582,7 +561,7 @@ public class ActivityAddEditLocationBindingImpl extends ActivityAddEditLocationB
                 // viewmodel != null
                 boolean viewmodelJavaLangObjectNull = false;
                 // viewmodel
-                com.example.memoryroadapp.data.viewmodels.AddEditLocationViewModel viewmodel = mViewmodel;
+                com.example.memoryroadapp.viewmodels.AddEditLocationViewModel viewmodel = mViewmodel;
 
 
 
@@ -590,7 +569,7 @@ public class ActivityAddEditLocationBindingImpl extends ActivityAddEditLocationB
                 if (viewmodelJavaLangObjectNull) {
 
 
-                    viewmodel.onSelectLocationButtonClick();
+                    viewmodel.onResetClick();
                 }
                 break;
             }

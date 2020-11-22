@@ -1,35 +1,30 @@
 package com.example.memoryroadapp.ui
 
 import android.content.Intent
-import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.bumptech.glide.Glide
 import com.example.memoryroadapp.R
-import com.example.memoryroadapp.data.models.MyLocation
-import com.example.memoryroadapp.data.viewmodels.LocationInfoViewModel
+import com.example.memoryroadapp.viewmodels.LocationInfoViewModel
 import com.example.memoryroadapp.databinding.ActivityLocationInfoBinding
-import kotlinx.android.synthetic.main.activity_location_info.*
+import com.example.memoryroadapp.ui.MainActivity.Companion.EXTRA_ID
+import com.example.memoryroadapp.ui.MainActivity.Companion.EXTRA_NAME
 
 class LocationInfoActivity : AppCompatActivity() {
     companion object {
-        private const val EXTRA_ID = "com.example.memoryroadapp.ui.EXTRA_ID"
-        private const val EXTRA_NAME = "com.example.memoryroadapp.ui.EXTRA_NAME"
-        private const val EXTRA_LOCATION = "com.example.memoryroadapp.ui.EXTRA_LOCATION"
+        internal const val EXTRA_LOCATION = "com.example.memoryroadapp.EXTRA_LOCATION"
     }
 
     private val locationInfoViewModel
             by lazy { ViewModelProvider(this).get(LocationInfoViewModel::class.java) }
     private val binding
             by lazy { DataBindingUtil.setContentView<ActivityLocationInfoBinding>(this, R.layout.activity_location_info) }
-    private lateinit var location: MyLocation
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,25 +39,13 @@ class LocationInfoActivity : AppCompatActivity() {
             locationInfoViewModel.getLocation(locationId)
             locationInfoViewModel.locationLiveData.observe(this, Observer { location ->
                 binding.location = location
-                this.location = location
-                loadImage(location.imageUrl)
             })
         }
 
         initShowOnMapButton()
+        setAnimationForFAB()
     }
 
-    private fun loadImage(imageUrl: String?) {
-        if (!imageUrl.isNullOrEmpty()) {
-            Glide.with(this)
-                .load(imageUrl)
-                .into(binding.locationInfoImageView)
-        } else {
-            Glide.with(this)
-                .clear(binding.locationInfoImageView)
-            binding.locationInfoImageView.setImageResource(R.drawable.ic_baseline_photo_size_select_actual_40)
-        }
-    }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.location_info_menu, menu)
@@ -71,7 +54,8 @@ class LocationInfoActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.edit_option) {
-            if (this::location.isInitialized) {
+            val location = binding?.location
+            if (location != null) {
                 val intent = Intent(this, AddEditLocationActivity::class.java)
                 intent.apply {
                     putExtra(EXTRA_ID, location.uid)
@@ -88,8 +72,18 @@ class LocationInfoActivity : AppCompatActivity() {
     private fun initShowOnMapButton() {
         binding.showOnMapButton.setOnClickListener {
             val intent = Intent(this, MapsActivity::class.java)
-            intent.putExtra(EXTRA_LOCATION, location)
+            intent.putExtra(EXTRA_LOCATION, binding.location)
             startActivity(intent)
+        }
+    }
+
+    private fun setAnimationForFAB(){
+        binding.nestedScrollView.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+            if (scrollY > oldScrollY){
+                binding.showOnMapButton.hide()
+            } else {
+                binding.showOnMapButton.show()
+            }
         }
     }
 

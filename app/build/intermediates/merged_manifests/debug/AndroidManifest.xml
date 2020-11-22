@@ -7,7 +7,6 @@
     <uses-sdk
         android:minSdkVersion="23"
         android:targetSdkVersion="29" />
-
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -46,7 +45,15 @@
         android:supportsRtl="true"
         android:testOnly="true"
         android:theme="@style/AppTheme" >
+        <activity
+            android:name="com.example.memoryroadapp.splash.SplashActivity"
+            android:theme="@style/SplashActivityStyle" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -65,13 +72,7 @@
         <activity android:name="com.example.memoryroadapp.ui.LocationInfoActivity" />
         <activity android:name="com.example.memoryroadapp.ui.AddEditLocationActivity" />
         <activity android:name="com.example.memoryroadapp.ui.SignUpActivity" />
-        <activity android:name="com.example.memoryroadapp.ui.AuthActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name="com.example.memoryroadapp.ui.AuthActivity" />
         <activity android:name="com.example.memoryroadapp.ui.MainActivity" />
 
         <receiver android:name="com.example.memoryroadapp.utils.GeofenceBroadcastReceiver" />

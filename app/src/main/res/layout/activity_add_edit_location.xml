@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewmodel"
-            type="com.example.memoryroadapp.data.viewmodels.AddEditLocationViewModel" />
+            type="com.example.memoryroadapp.viewmodels.AddEditLocationViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -28,11 +28,11 @@
                 android:layout_height="match_parent"
                 tools:context=".ui.AddEditLocationActivity">
 
-                <ImageView
+                <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/addEditLocation_image_view"
                     android:layout_width="match_parent"
                     android:layout_height="280dp"
-                    android:paddingTop="10dp"
+                    android:padding="20dp"
                     app:loadImage="@{viewmodel.imageBitmap}"
                     android:background="@android:color/transparent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -151,7 +151,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
-                    android:onClick="@{() -> viewmodel.onSelectLocationButtonClick()}"
                     android:src="@drawable/ic_baseline_add_location_40"
                     app:layout_constraintBottom_toBottomOf="@id/longitudeInputLayout"
                     app:layout_constraintEnd_toEndOf="parent"

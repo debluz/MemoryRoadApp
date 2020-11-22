@@ -10,7 +10,7 @@ import androidx.databinding.Bindable;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import com.example.memoryroadapp.R;
-import com.example.memoryroadapp.data.SignUpViewModel;
+import com.example.memoryroadapp.viewmodels.SignUpViewModel;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;

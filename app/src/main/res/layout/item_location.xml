@@ -6,7 +6,7 @@
     <data>
         <variable
             name="item"
-            type="com.example.memoryroadapp.data.models.MyLocation"/>
+            type="com.example.memoryroadapp.models.MyLocation"/>
 
     </data>
 
@@ -20,6 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="8dp"
+            app:shapeAppearanceOverlay="@style/roundedCardView"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -44,8 +45,9 @@
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:padding="8dp"
+                    app:shapeAppearanceOverlay="@style/circleImageView"
+                    app:loadImageFromUrl="@{item.imageUrl}"
                     android:background="@android:color/transparent"
-                    android:src="@drawable/ic_baseline_photo_size_select_actual_40"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />

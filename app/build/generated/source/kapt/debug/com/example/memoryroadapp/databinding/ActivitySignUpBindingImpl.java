@@ -20,7 +20,7 @@ public class ActivitySignUpBindingImpl extends ActivitySignUpBinding implements 
     private final androidx.constraintlayout.widget.ConstraintLayout mboundView0;
     // variables
     @Nullable
-    private final android.view.View.OnClickListener mCallback4;
+    private final android.view.View.OnClickListener mCallback3;
     // values
     // listeners
     // Inverse Binding Event Handlers
@@ -40,7 +40,7 @@ public class ActivitySignUpBindingImpl extends ActivitySignUpBinding implements 
             // viewmodel.emailEditTextContent.getValue()
             java.lang.String viewmodelEmailEditTextContentGetValue = null;
             // viewmodel
-            com.example.memoryroadapp.data.SignUpViewModel viewmodel = mViewmodel;
+            com.example.memoryroadapp.viewmodels.SignUpViewModel viewmodel = mViewmodel;
 
 
 
@@ -77,7 +77,7 @@ public class ActivitySignUpBindingImpl extends ActivitySignUpBinding implements 
             // viewmodel.firstNameEditTextContent
             androidx.lifecycle.MutableLiveData<java.lang.String> viewmodelFirstNameEditTextContent = null;
             // viewmodel
-            com.example.memoryroadapp.data.SignUpViewModel viewmodel = mViewmodel;
+            com.example.memoryroadapp.viewmodels.SignUpViewModel viewmodel = mViewmodel;
 
 
 
@@ -114,7 +114,7 @@ public class ActivitySignUpBindingImpl extends ActivitySignUpBinding implements 
             // viewmodel.lastNameEditTextContent.getValue()
             java.lang.String viewmodelLastNameEditTextContentGetValue = null;
             // viewmodel
-            com.example.memoryroadapp.data.SignUpViewModel viewmodel = mViewmodel;
+            com.example.memoryroadapp.viewmodels.SignUpViewModel viewmodel = mViewmodel;
 
 
 
@@ -147,7 +147,7 @@ public class ActivitySignUpBindingImpl extends ActivitySignUpBinding implements 
             // viewmodel.passwordEditTextContent
             androidx.lifecycle.MutableLiveData<java.lang.String> viewmodelPasswordEditTextContent = null;
             // viewmodel
-            com.example.memoryroadapp.data.SignUpViewModel viewmodel = mViewmodel;
+            com.example.memoryroadapp.viewmodels.SignUpViewModel viewmodel = mViewmodel;
             // viewmodel.passwordEditTextContent.getValue()
             java.lang.String viewmodelPasswordEditTextContentGetValue = null;
             // viewmodel.passwordEditTextContent != null
@@ -201,7 +201,7 @@ public class ActivitySignUpBindingImpl extends ActivitySignUpBinding implements 
         this.signUpButton.setTag(null);
         setRootTag(root);
         // listeners
-        mCallback4 = new com.example.memoryroadapp.generated.callback.OnClickListener(this, 1);
+        mCallback3 = new com.example.memoryroadapp.generated.callback.OnClickListener(this, 1);
         invalidateAll();
     }
 
@@ -227,7 +227,7 @@ public class ActivitySignUpBindingImpl extends ActivitySignUpBinding implements 
     public boolean setVariable(int variableId, @Nullable Object variable)  {
         boolean variableSet = true;
         if (BR.viewmodel == variableId) {
-            setViewmodel((com.example.memoryroadapp.data.SignUpViewModel) variable);
+            setViewmodel((com.example.memoryroadapp.viewmodels.SignUpViewModel) variable);
         }
         else {
             variableSet = false;
@@ -235,7 +235,7 @@ public class ActivitySignUpBindingImpl extends ActivitySignUpBinding implements 
             return variableSet;
     }
 
-    public void setViewmodel(@Nullable com.example.memoryroadapp.data.SignUpViewModel Viewmodel) {
+    public void setViewmodel(@Nullable com.example.memoryroadapp.viewmodels.SignUpViewModel Viewmodel) {
         this.mViewmodel = Viewmodel;
         synchronized(this) {
             mDirtyFlags |= 0x200L;
@@ -387,7 +387,7 @@ public class ActivitySignUpBindingImpl extends ActivitySignUpBinding implements 
         boolean androidxDatabindingViewDataBindingSafeUnboxViewmodelValidPasswordGetValue = false;
         android.text.TextWatcher viewmodelPasswordTextWatcher = null;
         java.lang.Boolean viewmodelValidEmailGetValue = null;
-        com.example.memoryroadapp.data.SignUpViewModel viewmodel = mViewmodel;
+        com.example.memoryroadapp.viewmodels.SignUpViewModel viewmodel = mViewmodel;
 
         if ((dirtyFlags & 0x7ffL) != 0) {
 
@@ -584,7 +584,7 @@ public class ActivitySignUpBindingImpl extends ActivitySignUpBinding implements 
             androidx.databinding.adapters.TextViewBindingAdapter.setTextWatcher(this.firstNameEditTextRegistration, (androidx.databinding.adapters.TextViewBindingAdapter.BeforeTextChanged)null, (androidx.databinding.adapters.TextViewBindingAdapter.OnTextChanged)null, (androidx.databinding.adapters.TextViewBindingAdapter.AfterTextChanged)null, firstNameEditTextRegistrationandroidTextAttrChanged);
             androidx.databinding.adapters.TextViewBindingAdapter.setTextWatcher(this.lastNameEditTextRegistration, (androidx.databinding.adapters.TextViewBindingAdapter.BeforeTextChanged)null, (androidx.databinding.adapters.TextViewBindingAdapter.OnTextChanged)null, (androidx.databinding.adapters.TextViewBindingAdapter.AfterTextChanged)null, lastNameEditTextRegistrationandroidTextAttrChanged);
             androidx.databinding.adapters.TextViewBindingAdapter.setTextWatcher(this.passwordEditTextRegistration, (androidx.databinding.adapters.TextViewBindingAdapter.BeforeTextChanged)null, (androidx.databinding.adapters.TextViewBindingAdapter.OnTextChanged)null, (androidx.databinding.adapters.TextViewBindingAdapter.AfterTextChanged)null, passwordEditTextRegistrationandroidTextAttrChanged);
-            this.signUpButton.setOnClickListener(mCallback4);
+            this.signUpButton.setOnClickListener(mCallback3);
         }
         if ((dirtyFlags & 0x604L) != 0) {
             // api target 1
@@ -634,7 +634,7 @@ public class ActivitySignUpBindingImpl extends ActivitySignUpBinding implements 
         // viewmodel != null
         boolean viewmodelJavaLangObjectNull = false;
         // viewmodel
-        com.example.memoryroadapp.data.SignUpViewModel viewmodel = mViewmodel;
+        com.example.memoryroadapp.viewmodels.SignUpViewModel viewmodel = mViewmodel;
 
 
 

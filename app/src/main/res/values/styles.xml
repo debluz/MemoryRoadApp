@@ -10,8 +10,22 @@
         <item name="actionOverflowMenuStyle">@style/MyOverflowMenu</item>
     </style>
 
+    <style name="SplashActivityStyle" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@drawable/launch_screen</item>
+    </style>
+
     <style name="MyOverflowMenu" parent="Widget.AppCompat.PopupMenu.Overflow" >
         <item name="overlapAnchor">false</item>
+    </style>
+    
+    <style name="circleImageView" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">45%</item>
+    </style>
+
+    <style name="roundedCardView" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">15%</item>
     </style>
 
 </resources>

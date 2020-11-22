@@ -20,11 +20,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.memoryroadapp.utils.HelperClass
 import com.example.memoryroadapp.utils.GeofenceBroadcastReceiver
-import com.example.memoryroadapp.HelperClass
 import com.example.memoryroadapp.R
-import com.example.memoryroadapp.data.models.MyLocation
-import com.example.memoryroadapp.data.viewmodels.MainViewModel
+import com.example.memoryroadapp.models.MyLocation
+import com.example.memoryroadapp.viewmodels.MainViewModel
 import com.example.memoryroadapp.databinding.ActivityMainBinding
 import com.example.memoryroadapp.utils.MyAdapter
 import com.example.memoryroadapp.utils.OnItemListener
@@ -34,11 +34,16 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
 import com.google.android.material.snackbar.Snackbar
+import com.google.rpc.Help
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 
 class MainActivity : AppCompatActivity(), OnItemListener {
 
-    private val mainViewModel by lazy { ViewModelProvider(this).get(MainViewModel::class.java) }
+    private lateinit var mainViewModel: MainViewModel
     private lateinit var viewAdapter: MyAdapter
     private lateinit var binding: ActivityMainBinding
     private var isOnMapCheckBoxActive: Boolean = false
@@ -54,12 +59,15 @@ class MainActivity : AppCompatActivity(), OnItemListener {
         title = "My Locations"
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.lifecycleOwner = this
+        mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         binding.viewmodel = mainViewModel
 
         initAddLocationButton()
+        setAnimationForFAB()
         initRecyclerView()
         initSwipeToDelete()
         initShowOnMapButton()
+        checkGeofence()
 
         geofencingClient = LocationServices.getGeofencingClient(this)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
@@ -77,8 +85,10 @@ class MainActivity : AppCompatActivity(), OnItemListener {
         val intent = Intent(this, GeofenceBroadcastReceiver::class.java)
         HelperClass.logTestMessage("$EXTRA_LOCATIONS: ${locations.size}")
         intent.action = ACTION_GEOFENCE_EVENT
-        intent.putParcelableArrayListExtra("test", locations)
-        return PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val bundle = Bundle()
+        bundle.putParcelableArrayList(EXTRA_LOCATIONS, locations)
+        intent.putExtra(EXTRA_BUNDLE, bundle)
+        return PendingIntent.getBroadcast(this, REQUEST_PENDING_INTENT, intent, PendingIntent.FLAG_UPDATE_CURRENT)
     }
 
     private fun createGeofences(locations: ArrayList<MyLocation>): ArrayList<Geofence> {
@@ -118,34 +128,38 @@ class MainActivity : AppCompatActivity(), OnItemListener {
         }
 
         geofencePendingIntent = createGeofencePendingIntent(viewAdapter.locations)
-        geofencingClient.addGeofences(geofenceRequest, geofencePendingIntent).run {
-            addOnSuccessListener {
+        CoroutineScope(Dispatchers.Main).launch {
+            try {
+                geofencingClient.addGeofences(geofenceRequest, geofencePendingIntent).await()
                 HelperClass.logTestMessage("Geofences added")
-            }
-            addOnFailureListener {
-                HelperClass.logTestMessage("Failure to add geofences: ${it.message}")
+            } catch (e: Exception){
+                HelperClass.logTestMessage("Failed to add geofences... \n" +
+                        "$e : ${e.message}"
+                )
             }
         }
     }
 
     private fun removeGeofences(){
         if(this::geofencePendingIntent.isInitialized){
-            geofencingClient.removeGeofences(geofencePendingIntent).run {
-                addOnSuccessListener {
+            CoroutineScope(Dispatchers.Main).launch {
+                try {
+                    geofencingClient.removeGeofences(geofencePendingIntent).await()
                     HelperClass.logTestMessage("Geofences removed")
-                }
-                addOnFailureListener {
-                    HelperClass.logTestMessage("Failure to remove geofences: ${it.message}")
+                } catch (e: java.lang.Exception){
+                    HelperClass.logTestMessage("Failed to remove geofences... \n" +
+                            "$e : ${e.message}")
                 }
             }
         } else {
             geofencePendingIntent = createGeofencePendingIntent(viewAdapter.locations)
-            geofencingClient.removeGeofences(geofencePendingIntent).run {
-                addOnSuccessListener {
+            CoroutineScope(Dispatchers.Main).launch {
+                try {
+                    geofencingClient.removeGeofences(geofencePendingIntent).await()
                     HelperClass.logTestMessage("Geofences removed")
-                }
-                addOnFailureListener {
-                    HelperClass.logTestMessage("Failure to remove geofences: ${it.message}")
+                } catch (e: java.lang.Exception){
+                    HelperClass.logTestMessage("Failed to remove geofences... \n" +
+                            "$e : ${e.message}")
                 }
             }
         }
@@ -162,11 +176,14 @@ class MainActivity : AppCompatActivity(), OnItemListener {
         val builder = LocationSettingsRequest.Builder()
             .addLocationRequest(locationRequest)
         val client = LocationServices.getSettingsClient(this)
-        val task = client.checkLocationSettings(builder.build())
-            .addOnFailureListener {exception ->
-                if(exception is ResolvableApiException){
+        CoroutineScope(Dispatchers.Main).launch {
+            try {
+                val task = client.checkLocationSettings(builder.build()).await()
+                HelperClass.logTestMessage("checkLocationRequestSettings: OK")
+            } catch (e: Exception){
+                if(e is ResolvableApiException){
                     try {
-                        exception.startResolutionForResult(this@MainActivity, REQUEST_TURN_DEVICE_LOCATION_ON)
+                        e.startResolutionForResult(this@MainActivity, REQUEST_TURN_DEVICE_LOCATION_ON)
                     } catch (sendEx: IntentSender.SendIntentException){
                         HelperClass.logTestMessage("Error getting location settings resolution: ${sendEx.message}")
                     }
@@ -178,10 +195,7 @@ class MainActivity : AppCompatActivity(), OnItemListener {
                         .show()
                 }
             }
-            .addOnSuccessListener {
-                HelperClass.logTestMessage("checkLocationRequestSettings: OK")
-                //startLocationsUpdates(locationRequest)
-            }
+        }
     }
 
     private fun checkLocationPermissions() {
@@ -205,13 +219,28 @@ class MainActivity : AppCompatActivity(), OnItemListener {
             checkLocationRequestSettings()
             val geofenceRequest = createGeofencingRequest(viewAdapter.locations)
             addGeofencesToClient(geofenceRequest)
+            mainViewModel.setGeofenceActive(true)
             Toast.makeText(this, "Geofence starts working...", Toast.LENGTH_SHORT).show()
         } else {
             //stopLocationUpdates()
             removeGeofences()
-            Toast.makeText(this, "Geofence has stopped working", Toast.LENGTH_SHORT).show()
+            mainViewModel.setGeofenceActive(false)
+            Toast.makeText(this, "Geofence has stopped working.", Toast.LENGTH_SHORT).show()
         }
         item.isChecked = !item.isChecked
+    }
+
+    private fun checkGeofence(){
+        mainViewModel.checkGeofence()
+        mainViewModel.isGeofenceActive.observe(this, Observer {
+            HelperClass.logTestMessage("GeofenceActive: $it")
+            optionMenu.findItem(R.id.geofence_option).isChecked = it
+            if(it){
+                checkLocationRequestSettings()
+                val geofenceRequest = createGeofencingRequest(viewAdapter.locations)
+                addGeofencesToClient(geofenceRequest)
+            }
+        })
     }
 
     override fun onRequestPermissionsResult(
@@ -253,10 +282,12 @@ class MainActivity : AppCompatActivity(), OnItemListener {
         mainViewModel.getAllLocations()
         mainViewModel.allLocations.observe(this, Observer { locations ->
             viewAdapter.setLocations(locations)
-            val geofenceMenuItem = optionMenu.findItem(R.id.geofence_option)
-            if(geofenceMenuItem.isChecked){
-                val geofenceRequest = createGeofencingRequest(locations)
-                addGeofencesToClient(geofenceRequest)
+            if(this::optionMenu.isInitialized){
+                val geofenceMenuItem = optionMenu.findItem(R.id.geofence_option)
+                if(geofenceMenuItem.isChecked){
+                    val geofenceRequest = createGeofencingRequest(locations)
+                    addGeofencesToClient(geofenceRequest)
+                }
             }
         })
     }
@@ -281,11 +312,11 @@ class MainActivity : AppCompatActivity(), OnItemListener {
 
     private fun switchButtons() {
         if (viewAdapter.getCheckBoxFlag()) {
-            binding.addLocationFAB.visibility = View.GONE
-            binding.showOnMapFAB.visibility = View.VISIBLE
+            binding.addLocationFAB.hide()
+            binding.showOnMapFAB.show()
         } else {
-            binding.addLocationFAB.visibility = View.VISIBLE
-            binding.showOnMapFAB.visibility = View.GONE
+            binding.addLocationFAB.show()
+            binding.showOnMapFAB.hide()
         }
     }
 
@@ -301,6 +332,7 @@ class MainActivity : AppCompatActivity(), OnItemListener {
         when (item.itemId) {
             R.id.sign_out_button -> {
                 Toast.makeText(this, "Logout successful!", Toast.LENGTH_SHORT).show()
+                removeGeofences()
                 goToLoginActivity()
                 finish()
                 return true
@@ -330,10 +362,15 @@ class MainActivity : AppCompatActivity(), OnItemListener {
             .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .build()
         val googleSignInClient = GoogleSignIn.getClient(this, gso)
-        googleSignInClient.signOut()
-            .addOnCompleteListener(this) { _ ->
+        CoroutineScope(Dispatchers.Main).launch {
+            try {
+                googleSignInClient.signOut().await()
                 HelperClass.logTestMessage("googleSignInClient has been signed out")
+            } catch (e: Exception){
+                HelperClass.logTestMessage("Failed to sign out from google client... \n " +
+                        "$e: ${e.message}")
             }
+        }
         mainViewModel.signOut()
         val intent = Intent(this, AuthActivity::class.java)
         startActivity(intent)
@@ -388,13 +425,24 @@ class MainActivity : AppCompatActivity(), OnItemListener {
             }).attachToRecyclerView(recyclerView)
     }
 
+    private fun setAnimationForFAB(){
+        binding.recyclerView.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+            if (scrollY > oldScrollY){
+                binding.addLocationFAB.hide()
+            } else {
+                binding.addLocationFAB.show()
+            }
+        }
+    }
+
 
     companion object {
-        private const val EXTRA_ID = "com.example.memoryroadapp.ui.EXTRA_ID"
-        private const val EXTRA_NAME = "com.example.memoryroadapp.ui.EXTRA_NAME"
-        private const val SELECTED_LOCATIONS = "com.example.memoryroadapp.ui.SELECTED_LOCATIONS"
+        internal const val EXTRA_ID = "com.example.memoryroadapp.EXTRA_ID"
+        internal const val EXTRA_NAME = "com.example.memoryroadapp.EXTRA_NAME"
+        internal const val SELECTED_LOCATIONS = "com.example.memoryroadapp.SELECTED_LOCATIONS"
         internal const val ACTION_GEOFENCE_EVENT = "MainActivity.geofence.action.ACTION_GEOFENCE_EVENT"
         internal const val EXTRA_LOCATIONS = "com.example.memoryroadapp.EXTRA_LOCATIONS"
+        internal const val EXTRA_BUNDLE = "com.example.memoryroadapp.EXTRA_BUNDLE"
     }
 }
 

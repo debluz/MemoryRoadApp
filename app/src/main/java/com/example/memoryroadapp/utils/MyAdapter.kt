@@ -1,14 +1,10 @@
 package com.example.memoryroadapp.utils
 
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.example.memoryroadapp.HelperClass
-import com.example.memoryroadapp.R
-import com.example.memoryroadapp.data.models.MyLocation
+import com.example.memoryroadapp.models.MyLocation
 import com.example.memoryroadapp.databinding.ItemLocationBinding
 import kotlinx.android.synthetic.main.item_location.view.*
 
@@ -23,20 +19,12 @@ class MyAdapter(private val onItemListener: OnItemListener)
     private var _locations: ArrayList<MyLocation> = ArrayList()
     val locations: ArrayList<MyLocation>
     get() {
-        return if(_locations != null){
-            _locations
-        } else {
-            ArrayList()
-        }
+        return _locations
     }
     private var selectedLocations: ArrayList<MyLocation> = ArrayList()
     private var checkBoxFlag : Boolean = false
 
 
-    // Provide a reference to the views for each data item
-    // Complex data items may need more than one view per item, and
-    // you provide access to all the views for a data item in a view holder.
-    // Each data item is just a string in this case that is shown in a TextView.
     inner class MyViewHolder(val binding: ItemLocationBinding, private val onItemListener: OnItemListener) : RecyclerView.ViewHolder(binding.root), View.OnClickListener{
         init {
             itemView.setOnClickListener(this)
@@ -55,7 +43,7 @@ class MyAdapter(private val onItemListener: OnItemListener)
 
     }
 
-    // Create new views (invoked by the layout manager)
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ItemLocationBinding.inflate(inflater, parent, false)
@@ -63,10 +51,8 @@ class MyAdapter(private val onItemListener: OnItemListener)
         return MyViewHolder(binding, onItemListener)
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
+
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        // - get element from your dataset at this position
-        // - replace the contents of the view with that element
         val location = _locations[position]
 
         if(checkBoxFlag){
@@ -80,10 +66,8 @@ class MyAdapter(private val onItemListener: OnItemListener)
         holder.itemView.checkBox.setOnCheckedChangeListener { _, isChecked ->
             if(isChecked){
                 selectedLocations.add(location)
-                HelperClass.logTestMessage("Added to selectedLocations: ${location.name}")
             } else {
                 selectedLocations.remove(location)
-                HelperClass.logTestMessage("Removed from selectedLocations: ${location.name}")
             }
         }
 
@@ -92,18 +76,6 @@ class MyAdapter(private val onItemListener: OnItemListener)
             this.executePendingBindings()
         }
 
-        val imageView = holder.itemView.location_image_view
-        val uri = Uri.parse(location.imageUrl)
-
-        if(!location.imageUrl.isNullOrEmpty()){
-            Glide.with(holder.itemView.context)
-                .load(uri)
-                .into(imageView)
-        } else {
-            Glide.with(holder.itemView.context)
-                .clear(imageView)
-            imageView.setImageResource(R.drawable.ic_baseline_photo_size_select_actual_40)
-        }
     }
 
     fun setCheckBoxFlag(flag: Boolean){

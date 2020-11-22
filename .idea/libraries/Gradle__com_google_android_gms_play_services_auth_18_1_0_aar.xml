@@ -1,16 +1,12 @@
 <component name="libraryTable">
   <library name="Gradle: com.google.android.gms:play-services-auth:18.1.0@aar">
     <CLASSES>
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/dd3b940f1e392f4a9a42ceb29020d19c/jetified-play-services-auth-18.1.0/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/dd3b940f1e392f4a9a42ceb29020d19c/jetified-play-services-auth-18.1.0/AndroidManifest.xml" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/dd3b940f1e392f4a9a42ceb29020d19c/jetified-play-services-auth-18.1.0/jars/classes.jar!/" />
-      <root url="jar://E:/Android/Gradle/caches/transforms-2/files-2.1/a822bcd6da713a6aa1521fa2c8202e06/jetified-play-services-auth-18.1.0/jars/classes.jar!/" />
-      <root url="file://E:/Android/Gradle/caches/transforms-2/files-2.1/a822bcd6da713a6aa1521fa2c8202e06/jetified-play-services-auth-18.1.0/res" />
-      <root url="file://E:/Android/Gradle/caches/transforms-2/files-2.1/a822bcd6da713a6aa1521fa2c8202e06/jetified-play-services-auth-18.1.0/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/a822bcd6da713a6aa1521fa2c8202e06/jetified-play-services-auth-18.1.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/a822bcd6da713a6aa1521fa2c8202e06/jetified-play-services-auth-18.1.0/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/a822bcd6da713a6aa1521fa2c8202e06/jetified-play-services-auth-18.1.0/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.android.gms/play-services-auth/18.1.0/8e2bc2fe205549f7dccf3fe0919e3a41d26792c3/play-services-auth-18.1.0-javadoc.jar!/" />
-      <root url="jar://E:/Android/Gradle/caches/modules-2/files-2.1/com.google.android.gms/play-services-auth/18.1.0/8e2bc2fe205549f7dccf3fe0919e3a41d26792c3/play-services-auth-18.1.0-javadoc.jar!/" />
     </JAVADOC>
     <SOURCES />
   </library>
