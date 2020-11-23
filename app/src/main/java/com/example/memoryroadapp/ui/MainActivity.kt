@@ -392,7 +392,7 @@ class MainActivity : AppCompatActivity(), OnItemListener {
             isOnMapCheckBoxActive = false
             switchButtons()
         } else {
-            super.onBackPressed()
+            minimizeApp()
         }
     }
 
@@ -435,6 +435,15 @@ class MainActivity : AppCompatActivity(), OnItemListener {
         }
     }
 
+    private fun minimizeApp(){
+        val intent = Intent(Intent.ACTION_MAIN)
+        intent.addCategory(Intent.CATEGORY_HOME)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        startActivity(intent)
+    }
+
+
+
 
     companion object {
         internal const val EXTRA_ID = "com.example.memoryroadapp.EXTRA_ID"
@@ -443,10 +452,13 @@ class MainActivity : AppCompatActivity(), OnItemListener {
         internal const val ACTION_GEOFENCE_EVENT = "MainActivity.geofence.action.ACTION_GEOFENCE_EVENT"
         internal const val EXTRA_LOCATIONS = "com.example.memoryroadapp.EXTRA_LOCATIONS"
         internal const val EXTRA_BUNDLE = "com.example.memoryroadapp.EXTRA_BUNDLE"
+        private const val LOCATION_PERMISSIONS_REQUEST = 111
+        private const val ACCESS_FINE_LOCATION_REQUEST = 123
+        private const val REQUEST_TURN_DEVICE_LOCATION_ON = 321
+        private const val REQUEST_PENDING_INTENT = 1234
     }
+
+
 }
 
-private const val LOCATION_PERMISSIONS_REQUEST = 111
-private const val ACCESS_FINE_LOCATION_REQUEST = 123
-private const val REQUEST_TURN_DEVICE_LOCATION_ON = 321
-private const val REQUEST_PENDING_INTENT = 1234
+

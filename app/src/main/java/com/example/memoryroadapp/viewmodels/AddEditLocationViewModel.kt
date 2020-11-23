@@ -39,9 +39,11 @@ class AddEditLocationViewModel : ViewModel(){
     }
 
     fun onSaveClick() = viewModelScope.launch(Dispatchers.IO){
-        if(!nameEditTextContent.value.isNullOrEmpty()
-            && !descriptionEditTextContent.value.isNullOrEmpty() && !latitudeEditTextContent.value.isNullOrEmpty()
-            && !longitudeEditTextContent.value.isNullOrEmpty() && !diameterEditTextContent.value.isNullOrEmpty())
+        if(!nameEditTextContent.value.isNullOrEmpty() &&
+            !descriptionEditTextContent.value.isNullOrEmpty() &&
+            !latitudeEditTextContent.value.isNullOrEmpty() &&
+            !longitudeEditTextContent.value.isNullOrEmpty() &&
+            !diameterEditTextContent.value.isNullOrEmpty())
         {
             val name = nameEditTextContent.value.toString()
             val description = descriptionEditTextContent.value.toString()
