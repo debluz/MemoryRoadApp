@@ -57,7 +57,7 @@ class AuthRepository {
         firebaseAuth.createUserWithEmailAndPassword(email, password).await()
         val currentUser = firebaseAuth.currentUser
         val user = User(currentUser?.uid!!, email, name)
-        usersRef.document(currentUser.uid).set(user)
+        usersRef.document(currentUser.uid).set(user).await()
         user.isCreated = true
         signOut()
 
